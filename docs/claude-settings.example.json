@@ -1,0 +1,16 @@
+{
+  "_comment": "EXAMPLE ONLY. Copy to .claude/settings.json to activate. Read it before you do - it is a real permission grant. 'allow' lets Claude write and revise Gmail drafts without prompting. 'ask' means send, reply and forward still stop for your approval every time. Do not move send_message into allow.",
+  "permissions": {
+    "allow": [
+      "mcp__Gmail__create_draft",
+      "mcp__Gmail__update_draft",
+      "mcp__Gmail__get_draft",
+      "mcp__Gmail__list_drafts"
+    ],
+    "ask": [
+      "mcp__Gmail__send_message",
+      "mcp__Gmail__reply",
+      "mcp__Gmail__forward"
+    ]
+  }
+}

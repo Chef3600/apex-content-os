@@ -1,0 +1,2109 @@
+<title>Apex Media Pass</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#E6E5E1;
+  --surface:#F4F3F0;
+  --surface-sunk:#DEDDD8;
+  --ink:#17191B;
+  --ink-mid:#54595C;
+  --ink-soft:#7C8285;
+  --rule:#C8C6C0;
+  --rule-soft:#D8D6D1;
+  --accent:#9E2B25;
+  --accent-soft:#F0DFDD;
+  --pass:#2C6349;
+  --pass-soft:#DCE8E1;
+  --warn:#946212;
+  --warn-soft:#F0E5D0;
+  --focus:#1C5C8A;
+  --shadow:0 1px 2px rgba(23,25,27,.10);
+
+  --display:"Archivo Narrow","Arial Narrow",Helvetica,sans-serif;
+  --body:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#131517;
+    --surface:#1B1E21;
+    --surface-sunk:#0E1012;
+    --ink:#E7E6E2;
+    --ink-mid:#9BA1A5;
+    --ink-soft:#7A8083;
+    --rule:#2D3237;
+    --rule-soft:#24282C;
+    --accent:#D2564A;
+    --accent-soft:#3A1D1B;
+    --pass:#63A484;
+    --pass-soft:#1B2C25;
+    --warn:#D3A24B;
+    --warn-soft:#2E2617;
+    --focus:#6BAEDC;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#131517;
+  --surface:#1B1E21;
+  --surface-sunk:#0E1012;
+  --ink:#E7E6E2;
+  --ink-mid:#9BA1A5;
+  --ink-soft:#7A8083;
+  --rule:#2D3237;
+  --rule-soft:#24282C;
+  --accent:#D2564A;
+  --accent-soft:#3A1D1B;
+  --pass:#63A484;
+  --pass-soft:#1B2C25;
+  --warn:#D3A24B;
+  --warn-soft:#2E2617;
+  --focus:#6BAEDC;
+  --shadow:0 1px 2px rgba(0,0,0,.4);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:var(--body);font-size:14px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- shell ---------- */
+.masthead{
+  display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+  padding:14px 22px;border-bottom:1px solid var(--rule);
+  background:var(--surface);
+}
+.wordmark{
+  font-family:var(--display);font-weight:700;font-size:19px;
+  letter-spacing:.10em;text-transform:uppercase;
+}
+.wordmark span{color:var(--accent)}
+.masthead .sub{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-soft);
+}
+.storage{
+  margin-left:auto;display:flex;align-items:center;gap:7px;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink-mid);
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--ink-soft);flex:0 0 auto}
+.dot.on{background:var(--pass)}
+.dot.local{background:var(--warn)}
+
+.shell{display:grid;grid-template-columns:212px minmax(0,1fr);min-height:calc(100vh - 54px)}
+@media (max-width:820px){.shell{grid-template-columns:1fr}}
+
+.rail{
+  border-right:1px solid var(--rule);background:var(--surface);
+  padding:16px 0;display:flex;flex-direction:column;gap:1px;
+}
+@media (max-width:820px){
+  .rail{flex-direction:row;overflow-x:auto;border-right:none;border-bottom:1px solid var(--rule);padding:8px}
+}
+.rail button{
+  display:flex;align-items:baseline;gap:9px;width:100%;
+  background:none;border:0;border-left:3px solid transparent;
+  padding:9px 18px;text-align:left;cursor:pointer;color:var(--ink-mid);
+  font-family:var(--display);font-size:14px;font-weight:600;
+  letter-spacing:.07em;text-transform:uppercase;white-space:nowrap;
+}
+.rail button .idx{font-family:var(--mono);font-size:10px;color:var(--ink-soft);font-weight:500}
+.rail button:hover{color:var(--ink);background:var(--surface-sunk)}
+.rail button[aria-current="true"]{
+  color:var(--ink);border-left-color:var(--accent);background:var(--surface-sunk);
+}
+@media (max-width:820px){
+  .rail button{border-left:0;border-bottom:3px solid transparent;width:auto;padding:7px 12px}
+  .rail button[aria-current="true"]{border-left:0;border-bottom-color:var(--accent)}
+}
+
+main{padding:26px 30px 70px;max-width:1080px}
+@media (max-width:600px){main{padding:20px 16px 60px}}
+.panel[hidden]{display:none!important}
+
+h2.sec{
+  font-family:var(--display);font-weight:700;font-size:26px;
+  letter-spacing:.02em;margin:0 0 4px;text-wrap:balance;
+}
+p.deck{color:var(--ink-mid);margin:0 0 22px;max-width:62ch}
+h3{
+  font-family:var(--display);font-weight:600;font-size:12px;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--ink-mid);
+  margin:28px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--rule);
+}
+h3:first-of-type{margin-top:18px}
+
+/* ---------- forms ---------- */
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:700px){.g2,.g3{grid-template-columns:1fr}}
+label.f{display:flex;flex-direction:column;gap:5px}
+label.f > span{
+  font-family:var(--mono);font-size:10px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink-soft);
+}
+label.f b.req{
+  color:var(--accent);font-weight:500;letter-spacing:.08em;margin-left:5px;
+}
+input,select,textarea{
+  background:var(--surface);border:1px solid var(--rule);border-radius:2px;
+  padding:8px 10px;width:100%;font-size:13.5px;
+}
+textarea{resize:vertical;min-height:66px;line-height:1.5}
+input::placeholder,textarea::placeholder{color:var(--ink-soft)}
+
+.btn{
+  font-family:var(--display);font-weight:600;font-size:13px;
+  letter-spacing:.1em;text-transform:uppercase;
+  background:var(--ink);color:var(--ground);border:1px solid var(--ink);
+  padding:9px 16px;border-radius:2px;cursor:pointer;
+}
+.btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.ghost{background:none;color:var(--ink-mid);border-color:var(--rule)}
+.btn.ghost:hover{background:none;color:var(--accent);border-color:var(--accent)}
+.btn.sm{padding:5px 10px;font-size:11px}
+.row-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:14px}
+
+/* ---------- stage rail ---------- */
+.stages{
+  display:flex;gap:0;border:1px solid var(--rule);border-radius:2px;
+  overflow:hidden;background:var(--surface);margin-bottom:18px;flex-wrap:wrap;
+}
+.stage{
+  flex:1 1 90px;padding:9px 12px;border-right:1px solid var(--rule-soft);
+  display:flex;flex-direction:column;gap:1px;
+}
+.stage:last-child{border-right:0}
+.stage .n{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;line-height:1.1}
+.stage .l{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.stage.hot .n{color:var(--accent)}
+
+/* ---------- tables ---------- */
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);border-radius:2px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:720px}
+th{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-soft);text-align:left;font-weight:500;
+  padding:9px 12px;border-bottom:1px solid var(--rule);white-space:nowrap;
+}
+td{padding:10px 12px;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td .co{font-weight:600}
+td .meta{font-family:var(--mono);font-size:11px;color:var(--ink-soft);display:block;margin-top:2px}
+td .note{color:var(--ink-mid);font-size:12.5px;display:block;margin-top:3px;max-width:34ch}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12px}
+.empty{padding:26px 14px;text-align:center;color:var(--ink-soft);font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase}
+
+.chip{
+  display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.09em;
+  text-transform:uppercase;padding:2px 7px;border-radius:2px;border:1px solid var(--rule);
+  color:var(--ink-mid);white-space:nowrap;
+}
+.chip.ex{border-style:dashed}
+.chip.hot{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.chip.good{background:var(--pass-soft);border-color:var(--pass);color:var(--pass)}
+.chip.warn{background:var(--warn-soft);border-color:var(--warn);color:var(--warn)}
+select.status{padding:4px 6px;font-family:var(--mono);font-size:11px;border-radius:2px}
+.x{background:none;border:0;color:var(--ink-soft);cursor:pointer;font-size:15px;line-height:1;padding:3px 5px}
+.x:hover{color:var(--accent)}
+
+/* ---------- brief output ---------- */
+.brief{
+  background:var(--surface-sunk);border:1px solid var(--rule);border-radius:2px;
+  padding:16px 18px;font-family:var(--mono);font-size:12px;line-height:1.7;
+  white-space:pre-wrap;overflow-x:auto;margin-top:6px;
+}
+
+/* ---------- pipeline steps ---------- */
+ol.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+ol.steps li{
+  counter-increment:s;display:grid;grid-template-columns:34px minmax(0,1fr);
+  gap:14px;padding:11px 0;border-bottom:1px solid var(--rule-soft);
+}
+ol.steps li:last-child{border-bottom:0}
+ol.steps li::before{
+  content:counter(s,decimal-leading-zero);
+  font-family:var(--mono);font-size:11px;color:var(--accent);padding-top:2px;
+}
+ol.steps b{font-weight:600;display:block}
+ol.steps span{color:var(--ink-mid);font-size:13px}
+ol.steps .who{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-soft);display:inline-block;margin-left:8px;
+}
+
+/* ---------- QC ---------- */
+.qcgroup{margin-bottom:6px}
+.qcgroup > .gl{
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-soft);padding:10px 0 6px;
+}
+.qcrow{
+  background:var(--surface);border:1px solid var(--rule-soft);border-left:3px solid var(--rule);
+  border-radius:2px;padding:10px 13px;margin-bottom:4px;
+}
+.qcrow.s-pass{border-left-color:var(--pass)}
+.qcrow.s-warn{border-left-color:var(--warn)}
+.qcrow.s-fail{border-left-color:var(--accent);background:var(--accent-soft)}
+.qch{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:5px}
+.qcn{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.04em;text-transform:uppercase}
+.qcb{margin-left:auto;display:flex;gap:3px}
+.st{
+  font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;
+  background:none;border:1px solid var(--rule);color:var(--ink-soft);
+  padding:3px 9px;border-radius:2px;cursor:pointer;
+}
+.st:hover{border-color:var(--ink-soft);color:var(--ink)}
+.st-pass[aria-pressed="true"]{background:var(--pass);border-color:var(--pass);color:var(--surface)}
+.st-warn[aria-pressed="true"]{background:var(--warn);border-color:var(--warn);color:var(--surface)}
+.st-fail[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.qcl{font-size:13px;color:var(--ink-mid);line-height:1.5}
+.qcf{
+  margin-top:7px;padding:7px 10px;background:var(--surface);border:1px solid var(--accent);
+  border-radius:2px;font-size:12.5px;color:var(--ink);
+}
+.verdict{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  border:1px solid var(--rule);border-left:4px solid var(--warn);
+  background:var(--surface);padding:13px 16px;border-radius:2px;margin:16px 0 4px;
+}
+.verdict.pass{border-left-color:var(--pass)}
+.verdict .vl{font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:.06em;text-transform:uppercase;color:var(--warn)}
+.verdict.pass .vl{color:var(--pass)}
+.verdict .vd{color:var(--ink-mid);font-size:13px}
+.verdict .count{font-family:var(--mono);font-size:12px;color:var(--ink-mid);margin-left:auto;font-variant-numeric:tabular-nums}
+
+/* ---------- libraries ---------- */
+.lib{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 26px}
+@media (max-width:760px){.lib{grid-template-columns:1fr}}
+dl{margin:0}
+dl div{display:grid;grid-template-columns:118px minmax(0,1fr);gap:12px;padding:7px 0;border-bottom:1px solid var(--rule-soft)}
+dl div:last-child{border-bottom:0}
+dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);padding-top:2px}
+dd{margin:0;color:var(--ink-mid);font-size:13px}
+ul.plain{margin:0;padding-left:17px;color:var(--ink-mid)}
+ul.plain li{padding:3px 0}
+ul.plain b{color:var(--ink);font-weight:600}
+
+/* ---------- offer detail + scripts ---------- */
+.offers-detail{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+@media (max-width:760px){.offers-detail{grid-template-columns:1fr}}
+.offer{border:1px solid var(--rule);border-top:3px solid var(--accent);border-radius:2px;background:var(--surface);padding:14px 16px}
+.offer h4{font-family:var(--display);font-weight:700;font-size:17px;letter-spacing:.03em;margin:0 0 2px}
+.offer .price{font-family:var(--mono);font-size:11.5px;color:var(--ink-mid);margin-bottom:9px;font-variant-numeric:tabular-nums}
+.offer dl div{grid-template-columns:88px minmax(0,1fr);gap:10px;padding:5px 0}
+.offer dt{font-size:9.5px}
+.offer dd{font-size:12.5px}
+.offer .cta{
+  margin-top:10px;padding:9px 11px;background:var(--surface-sunk);border-radius:2px;
+  font-size:12.5px;font-style:italic;color:var(--ink);border-left:2px solid var(--rule);
+}
+.script{
+  border:1px solid var(--rule);border-radius:2px;background:var(--surface);
+  padding:15px 18px;margin-bottom:14px;
+}
+.script .sh{
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:9px;
+}
+.script p{margin:0 0 10px}
+.script p:last-child{margin-bottom:0}
+.script .subj{font-family:var(--mono);font-size:12px;color:var(--ink-mid);margin-bottom:10px}
+.script .rules{
+  margin-top:11px;padding-top:10px;border-top:1px solid var(--rule-soft);
+  font-size:12px;color:var(--ink-soft);
+}
+.script.big p{font-size:16px;line-height:1.55}
+.qa{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+.qa div{padding:11px 0;border-bottom:1px solid var(--rule-soft)}
+.qa div:last-child{border-bottom:0}
+.qa b{display:block;font-weight:600;margin-bottom:3px}
+.qa span{color:var(--ink-mid);font-size:13px}
+.qa em{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;display:block;margin-top:4px}
+
+/* ---------- portfolio ---------- */
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0 20px}
+.filters button{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--surface);border:1px solid var(--rule);color:var(--ink-mid);
+  padding:5px 10px;border-radius:2px;cursor:pointer;
+}
+.filters button:hover{color:var(--ink);border-color:var(--ink-soft)}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.spec{border:1px solid var(--rule);border-radius:2px;background:var(--surface);margin-bottom:16px;overflow:hidden}
+.spec[hidden]{display:none!important}
+.spec > header{
+  padding:13px 18px;border-bottom:1px solid var(--rule);background:var(--surface-sunk);
+  display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+}
+.spec .num{font-family:var(--mono);font-size:11px;color:var(--accent)}
+.spec .kind{font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:.07em;text-transform:uppercase}
+.spec .specs{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);letter-spacing:.06em}
+.spec .bodyw{padding:16px 18px 18px}
+.spec .client{font-family:var(--display);font-weight:600;font-size:19px;margin:0 0 1px}
+.spec .prod{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);margin-bottom:12px}
+.spec .hook{
+  border-left:3px solid var(--accent);padding:8px 13px;background:var(--accent-soft);
+  font-size:15px;font-weight:600;border-radius:0 2px 2px 0;margin-bottom:12px;
+}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px;margin-bottom:6px}
+@media (max-width:760px){.fields{grid-template-columns:1fr}}
+.fields dl div{grid-template-columns:96px minmax(0,1fr);gap:10px;padding:6px 0}
+.fields dt{font-size:9.5px}
+.fields dd{font-size:12.5px}
+.blk{margin-top:14px}
+.blk > .bl{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-soft);padding-bottom:6px;border-bottom:1px solid var(--rule-soft);margin-bottom:8px;
+}
+table.shots{min-width:560px}
+table.shots td{padding:7px 10px;font-size:12.5px}
+table.shots td.tc{font-family:var(--mono);font-size:11px;color:var(--accent);white-space:nowrap;width:58px}
+table.shots td.cam{font-family:var(--mono);font-size:11px;color:var(--ink-soft);width:38%}
+ul.beats{margin:0;padding-left:0;list-style:none}
+ul.beats li{display:grid;grid-template-columns:58px minmax(0,1fr);gap:10px;padding:4px 0}
+ul.beats .tc{font-family:var(--mono);font-size:11px;color:var(--accent)}
+ul.beats .vo{font-size:13px}
+ul.beats .os{font-size:13px;font-family:var(--mono);font-size:11.5px;color:var(--ink)}
+.qcitems{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 18px;margin-top:8px}
+@media (max-width:760px){.qcitems{grid-template-columns:1fr}}
+.flagbar{
+  border-left:3px solid var(--warn);background:var(--warn-soft);padding:9px 13px;
+  font-size:12.5px;border-radius:0 2px 2px 0;margin-top:12px;
+}
+.flagbar b{font-weight:600}
+
+.note{
+  border-left:3px solid var(--accent);background:var(--accent-soft);
+  padding:11px 15px;border-radius:0 2px 2px 0;color:var(--ink);font-size:13px;margin:16px 0;
+}
+.note b{font-weight:600}
+.tag-test{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--warn);border:1px solid var(--warn);padding:1px 6px;border-radius:2px;
+}
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translateX(-50%);
+  background:var(--ink);color:var(--ground);padding:9px 18px;border-radius:2px;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+  box-shadow:var(--shadow);
+}
+.toast[hidden]{display:none!important}
+</style>
+
+<header class="masthead">
+  <div class="wordmark">Apex<span>·</span>Media</div>
+  <div class="sub">Operations Pass &nbsp;/&nbsp; Food &amp; Bev Creative</div>
+  <div class="storage"><span class="dot" id="dot"></span><span id="storageLabel">Connecting…</span></div>
+</header>
+
+<div class="shell">
+  <nav class="rail" id="rail" aria-label="Sections">
+    <button data-p="pipeline" aria-current="true"><span class="idx">01</span>Pipeline</button>
+    <button data-p="intake"><span class="idx">02</span>Intake</button>
+    <button data-p="production"><span class="idx">03</span>Production</button>
+    <button data-p="qc"><span class="idx">04</span>QC Gate</button>
+    <button data-p="library"><span class="idx">05</span>Library</button>
+    <button data-p="offers"><span class="idx">06</span>Offers</button>
+    <button data-p="sales"><span class="idx">07</span>Sales</button>
+    <button data-p="folio"><span class="idx">08</span>Portfolio</button>
+    <button data-p="outreach"><span class="idx">09</span>Outreach</button>
+    <button data-p="factory"><span class="idx">10</span>Factory</button>
+    <button data-p="hfpack"><span class="idx">11</span>HF Pack</button>
+    <button data-p="money"><span class="idx">12</span>Money</button>
+  </nav>
+
+  <main>
+
+    <!-- ============ PIPELINE ============ -->
+    <section class="panel" id="p-pipeline">
+      <h2 class="sec">Prospect Pipeline</h2>
+      <p class="deck">Qualification rule: a brand belongs here only if you can see live ads for it in the Meta Ad Library. Visible spend is the filter — no observed ads, no prospect.</p>
+
+      <div class="stages" id="stages"></div>
+
+      <h3>Add a prospect</h3>
+      <form id="pForm" class="grid g3" autocomplete="off">
+        <label class="f"><span>Brand</span><input name="company" required placeholder="Bayou Pepper Co."></label>
+        <label class="f"><span>Contact / handle</span><input name="contact" placeholder="Marie L., founder — @bayoupepper"></label>
+        <label class="f"><span>Category</span><input name="category" placeholder="Hot sauce &middot; DTC + regional retail"></label>
+        <label class="f"><span>Email address</span><input name="email" type="email" placeholder="marie@bayoupepper.com"></label>
+        <label class="f"><span>Where the address came from</span>
+          <select name="emailSource">
+            <option value="">&mdash; select &mdash;</option>
+            <option>Published on their website</option>
+            <option>Published on their Instagram profile</option>
+            <option>Given to me directly</option>
+            <option>Public press release / retail listing</option>
+            <option>Guessed pattern &mdash; UNVERIFIED</option>
+          </select></label>
+        <label class="f"><span>Angle used in the opener</span>
+          <select name="angle">
+            <option value="">&mdash; not sent yet &mdash;</option>
+            <option value="stale">Same creative running for weeks</option>
+            <option value="thin">Only 1&ndash;3 active creatives</option>
+            <option value="static">Statics only, no motion</option>
+            <option value="launch">New product just launched</option>
+            <option value="retail">New retail account announced</option>
+            <option value="season">Season or holiday approaching</option>
+            <option value="gap">Strong organic, no paid creative</option>
+            <option value="quality">Ads running, creative is off-brand</option>
+          </select></label>
+        <label class="f" style="grid-column:1/-1"><span>Ad observation &mdash; what is actually running</span><input name="observation" placeholder="3 active ads, same bottle-on-wood still since March. No motion, no offer angle."></label>
+        <label class="f" style="grid-column:1/-1"><span>Creative gap you would open with</span><input name="gap" placeholder="Never tested a craving/appetite angle or an offer-driven cut."></label>
+        <label class="f" style="grid-column:1/-1"><span>Subject line used</span><input name="subject" placeholder="your bottle-on-wood shot"></label>
+        <label class="f"><span>Offer to pitch</span>
+          <select name="offer">
+            <option>5-Angle Test &mdash; $750</option>
+            <option>Creative Sprint &mdash; $2,250</option>
+            <option>Campaign Build &mdash; $5,500</option>
+            <option>Always-On Growth &mdash; $2,500/mo</option>
+          </select></label>
+        <label class="f"><span>Channel</span>
+          <select name="channel">
+            <option>Email</option><option>Instagram DM</option>
+            <option>LinkedIn</option><option>Phone</option><option>In person</option>
+          </select></label>
+        <label class="f"><span>Date sent</span><input name="sentAt" type="date"></label>
+        <label class="f"><span>Status</span>
+          <select name="status">
+            <option>Identified</option><option>Audit sent</option><option>Contacted</option>
+            <option>Replied</option><option>Call booked</option><option>Proposal out</option>
+            <option>Won</option><option>Dead</option>
+          </select></label>
+        <label class="f"><span>Reply</span>
+          <select name="reply">
+            <option value="">&mdash; nothing yet &mdash;</option>
+            <option>No reply &mdash; window closed</option>
+            <option>Positive</option>
+            <option>Neutral / not now</option>
+            <option>Negative</option>
+            <option>Asked to stop</option>
+          </select></label>
+        <label class="f"><span>Follow up</span><input name="followup" type="date"></label>
+        <label class="f" style="grid-column:1/-1"><span>What they actually wrote back &mdash; their words, not a paraphrase</span><input name="replyText" placeholder="Paste the reply verbatim. Their exact language is the most valuable thing in this database."></label>
+        <div class="row-actions" style="grid-column:1/-1">
+          <button class="btn" type="submit">Add to pipeline</button>
+          <button class="btn ghost sm" type="button" id="clearEx">Remove example rows</button>
+          <button class="btn ghost sm" type="button" id="expCsv">Copy all rows as CSV</button>
+        </div>
+      </form>
+
+      <h3>Active list</h3>
+      <div class="tablewrap">
+        <table>
+          <thead><tr>
+            <th>Brand</th><th>Observed</th><th>Angle</th><th>Sent</th><th>Reply</th><th>Status</th><th>Follow up</th><th></th>
+          </tr></thead>
+          <tbody id="pBody"></tbody>
+        </table>
+      </div>
+
+      <h3>Response data</h3>
+      <p class="deck">This is the asset. Not the pipeline &mdash; the answers. Which observation angle makes a packaged food brand reply is not published anywhere, and after a few hundred sends you will be the only person who knows it. Every rate below is computed only from rows with a send date, and any bucket thin enough to be noise is labelled as noise rather than given a number.</p>
+      <div id="dataOut"></div>
+    </section>
+
+    <!-- ============ INTAKE ============ -->
+    <section class="panel" id="p-intake" hidden>
+      <h2 class="sec">Client Intake</h2>
+      <p class="deck">Eighteen fields in, seven documents out. Fill this during the call, not after. Anything you leave blank comes back flagged by severity — never filled in with a guess. An invented audience or an unproofed claim is worse than an empty field, because an empty field still asks a question.</p>
+
+      <div id="gapBar"></div>
+
+      <form id="iForm" class="grid g2" autocomplete="off">
+        <label class="f"><span>1 · Business <b class="req">blocking</b></span><input name="business" placeholder="Bayou Bloom LLC — jarred cooking bases, 6 staff, New Orleans"></label>
+        <label class="f"><span>2 · Website</span><input name="website" placeholder="bayoubloom.com"></label>
+        <label class="f"><span>3 · Product for this run <b class="req">blocking</b></span><input name="product" placeholder="Dark Roux Gumbo Base, 16oz jar, $11.99"></label>
+        <label class="f"><span>4 · Audience <b class="req">blocking</b></span><input name="audience" placeholder="Home cooks 30–60, Gulf South + displaced Louisianans"></label>
+        <label class="f"><span>5 · Current offer / promo</span><input name="offer" placeholder="Free shipping over $45, no active discount"></label>
+        <label class="f"><span>6 · Campaign goal <b class="req">blocking</b></span>
+          <select name="goal">
+            <option value="">— select —</option>
+            <option>Cold traffic — first purchase</option>
+            <option>Retargeting — recover cart abandons</option>
+            <option>New product launch</option>
+            <option>Seasonal / dated promotion</option>
+            <option>Retail sell-through support</option>
+            <option>Brand building — premium positioning</option>
+          </select></label>
+        <label class="f"><span>7 · Platform <b class="req">blocking</b></span>
+          <select name="platform">
+            <option value="">— select —</option>
+            <option>Meta — Reels + Feed</option>
+            <option>TikTok</option>
+            <option>Meta + TikTok</option>
+            <option>YouTube (pre-roll / in-feed)</option>
+            <option>Website + email</option>
+            <option>Multi-platform</option>
+          </select></label>
+        <label class="f"><span>8 · Call to action <b class="req">blocking</b></span><input name="cta" placeholder="Order at bayoubloom.com — or find us at Rouses"></label>
+        <label class="f"><span>9 · Brand personality</span><input name="brand" placeholder="Serious about tradition, not precious about it. Never cartoonish."></label>
+        <label class="f"><span>10 · Logo files <b class="req">blocking</b></span>
+          <select name="logo">
+            <option value="">— select —</option>
+            <option>Vector (SVG/AI) received</option>
+            <option>PNG only — transparent</option>
+            <option>Raster only — low resolution</option>
+            <option>Not yet received</option>
+          </select></label>
+        <label class="f"><span>11 · Product images <b class="req">blocking</b></span>
+          <select name="images">
+            <option value="">— select —</option>
+            <option>Full set — multiple angles, clean ground</option>
+            <option>Partial — front only</option>
+            <option>Phone photos only</option>
+            <option>None</option>
+          </select></label>
+        <label class="f"><span>12 · Reference videos they like</span><input name="refs" placeholder="Links, or 'the Graza pour ads'"></label>
+        <label class="f"><span>13 · Competitors</span><input name="competitors" placeholder="Kary's Roux, Savoie's — shelf-adjacent"></label>
+        <label class="f"><span>14 · Deadline <b class="req">blocking</b></span><input name="deadline" type="date"></label>
+        <label class="f"><span>15 · Budget</span>
+          <select name="budget">
+            <option value="">— select —</option>
+            <option>Entry — 5-Angle Test ($750)</option>
+            <option>Core — Creative Sprint ($2,250)</option>
+            <option>Premium — Campaign Build ($5,500)</option>
+            <option>Retainer — Always-On (monthly)</option>
+            <option>Undisclosed / exploring</option>
+          </select></label>
+        <label class="f" style="grid-column:1/-1"><span>16 · Style direction</span><textarea name="style" placeholder="Dark, warm, unstyled. Real kitchens. No white-background studio look."></textarea></label>
+        <label class="f" style="grid-column:1/-1"><span>17 · What they do NOT want</span><textarea name="avoid" placeholder="No cartoon heat graphics. No 'authentic Cajun' voiceover accent. No stock-looking families."></textarea></label>
+        <label class="f" style="grid-column:1/-1"><span>18 · Must include — and the proof for every claim <b class="req">blocking</b></span><textarea name="must" placeholder="&quot;40-minute roux, stirred by hand&quot; — production video available as proof. Jar must appear. Rouses mention required by retail agreement."></textarea></label>
+      </form>
+      <div class="row-actions">
+        <button class="btn" id="genBrief" type="button">Generate the seven documents</button>
+        <button class="btn ghost" id="copyBrief" type="button">Copy all</button>
+      </div>
+      <div class="note"><b>Two rules this generator enforces for you:</b> nothing is invented to fill a gap — missing information comes back as a named question you still owe the client. And every claim needs a proof source on the same line, because a claim without proof does not go in an ad, no matter who asks for it.</div>
+      <div class="brief" id="briefOut">Fill the form and press Generate. Blocking fields are marked — production cannot start without them.</div>
+    </section>
+
+    <!-- ============ PRODUCTION ============ -->
+    <section class="panel" id="p-production" hidden>
+      <h2 class="sec">Production Pipeline</h2>
+      <p class="deck">Order matters here — every stage consumes the output of the one above it. The most common failure in AI production is jumping from a client request straight to generation, which produces pretty footage that sells nothing.</p>
+
+      <h3>Pre-production</h3>
+      <ol class="steps">
+        <li><b>Brief lock <span class="who">Founder</span></b><span>Intake complete, claims proofed, assets received. No generation before this is signed off.</span></li>
+        <li><b>Product study <span class="who">Founder</span></b><span>Label geometry, bottle/pack shape, exact color, texture of the food itself. This is what fidelity gets checked against later.</span></li>
+        <li><b>Concept families <span class="who">Claude</span></b><span>Five strategically distinct angles — not five edits of one. Each gets an objective, a hook, and a CTA before it gets a shot.</span></li>
+        <li><b>Shot list <span class="who">Claude + Founder</span></b><span>Per shot: size, lens, aperture, camera move, subject move, key/fill/rim, environment, timing, transition. "Cinematic" is not direction.</span></li>
+        <li><b>Reference build</b><span>Product stills the client supplied become the fidelity anchor. Generate packaging from reference, never from text description.</span></li>
+      </ol>
+
+      <h3>Production</h3>
+      <ol class="steps" start="6">
+        <li><b>Stills first</b><span>Lock the look in stills before spending on motion. Cheap to iterate, and a still that fails will fail worse in motion.</span></li>
+        <li><b>Motion pass</b><span>Pour, steam, sear, sizzle, reveal. Food motion is the highest-failure operation in the pipeline — budget regenerations into the estimate.</span></li>
+        <li><b>Continuity check</b><span>Same label, same lighting direction, same product state across every shot in a concept family.</span></li>
+        <li><b>Regeneration</b><span>Re-run failures against the specific defect, not the whole prompt. Log what failed — it becomes the prompt library.</span></li>
+        <li><b>Assembly</b><span>Cut to the hook. First frame earns the second. Pace to platform, not to taste.</span></li>
+      </ol>
+
+      <h3>Finishing</h3>
+      <ol class="steps" start="11">
+        <li><b>Sound</b><span>Food ASMR carries more than music in this category. Sizzle, pour, crack, scrape.</span></li>
+        <li><b>Type and CTA</b><span>Hook on screen within the first second. CTA legible at thumbnail scale.</span></li>
+        <li><b>Brand lockup</b><span>Client logo file only — never a generated logo. A regenerated wordmark is a delivery-killer.</span></li>
+        <li><b>Ratio cuts</b><span>9:16, 4:5, 1:1 per asset. Reframe deliberately; do not center-crop and hope.</span></li>
+        <li><b>QC gate <span class="who">Founder</span></b><span>Section 04. Nothing reaches a client without a pass.</span></li>
+      </ol>
+      <div class="note"><b>Time discipline:</b> log hours per stage from the first paid job. Effective hourly rate is the number that decides whether this business is worth running — and it is the one number no agency owner has until they measure it.</div>
+    </section>
+
+    <!-- ============ QC ============ -->
+    <section class="panel" id="p-qc" hidden>
+      <h2 class="sec">Fidelity &amp; Continuity Gate</h2>
+      <p class="deck">Visual quality is not enough. A beautiful generation that changes the client's product, packaging, character or location is a failed generation. Reference fidelity comes before cinematic style — always, permanently, on every asset.</p>
+
+      <h3>1 · Declare immutable vs flexible — before generating</h3>
+      <div class="grid g2" style="margin-bottom:6px">
+        <label class="f"><span>Immutable — never change without approval</span><textarea id="qcImm" rows="3" placeholder="Bottle geometry · label placement · cap colour · logo · brand red #A3231E · founder's hands"></textarea></label>
+        <label class="f"><span>Flexible — free to direct</span><textarea id="qcFlex" rows="3" placeholder="Background atmosphere · camera angle · lighting style · depth of field · secondary props"></textarea></label>
+      </div>
+
+      <h3>2 · Hard-fail conditions — any one is an automatic reject</h3>
+      <p class="deck" style="margin-bottom:10px;font-size:13.5px">A hard failure cannot receive an approved score because the image looks good. Tick anything you can see.</p>
+      <div id="qcHard"></div>
+
+      <h3>3 · Score</h3>
+      <label class="qc" style="max-width:340px;margin-bottom:12px">
+        <input type="checkbox" id="qcStill"><span>Still image — no motion. Redistribute motion's 10 points into visual quality and reference fidelity.</span>
+      </label>
+      <div id="qcScore"></div>
+
+      <div class="verdict" id="verdict">
+        <span class="vl" id="verdictLabel">Not scored</span>
+        <span class="vd" id="verdictDesc">Score all dimensions.</span>
+        <span class="count" id="verdictCount">0 / 100</span>
+      </div>
+      <div id="qcDisp"></div>
+      <div class="row-actions" style="margin-bottom:6px">
+        <button class="btn ghost sm" id="qcReset" type="button">Reset for next asset</button>
+      </div>
+
+      <h3>4 · Campaign consistency audit — before any delivery</h3>
+      <p class="deck" style="margin-bottom:10px;font-size:13.5px">One good image proves nothing. Review every asset together. A single "no" blocks the delivery.</p>
+      <div id="qcCamp"></div>
+
+      <div class="note"><b>Three-attempt rule.</b> Maximum three attempts per shot. If the third fails, stop — do not generate a fourth. Diagnose the cause: reference strategy, composition, generation method, prompt structure, shot design, or workflow. Then redesign the shot or abandon it.</div>
+      <div class="flagbar"><b>Director's decision. </b>You are entitled to say "this is beautiful and it fails the reference test," or "generation is the wrong method for this shot — this needs real photography, compositing, or image-to-video from the client's own asset." The objective is professional commercial work, not proving the tool can do everything.</div>
+    </section>
+
+    <!-- ============ LIBRARY ============ -->
+    <section class="panel" id="p-library" hidden>
+      <h2 class="sec">Creative Library</h2>
+      <p class="deck">The reusable half of the business. Every job should either draw from this or add to it — that compounding is what turns a 25-hour month into a 12-hour month on the same account.</p>
+
+      <h3>Concept families — the five angles</h3>
+      <div class="lib">
+        <dl>
+          <div><dt>Product hero</dt><dd>The product is the subject. Macro, light, texture, no narrative. Sells craft and quality.</dd></div>
+          <div><dt>Craving</dt><dd>The food in use — the pour, the pull, the bite moment. Sells appetite, not information.</dd></div>
+          <div><dt>Offer-driven</dt><dd>Promo, bundle, free shipping, seasonal deal. Sells urgency. Shortest to produce, fastest to fatigue.</dd></div>
+        </dl>
+        <dl>
+          <div><dt>Origin</dt><dd>Where it comes from, who makes it, why it exists. Sells trust and premium price.</dd></div>
+          <div><dt>Social-native</dt><dd>Shot like the platform, not like a commercial. Sells because it doesn't look sold. No fabricated endorsements.</dd></div>
+          <div><dt>Comparison</dt><dd>Against the category norm, never a named competitor. Sells differentiation. Use sparingly.</dd></div>
+        </dl>
+      </div>
+
+      <h3>Hook patterns</h3>
+      <div class="lib">
+        <ul class="plain">
+          <li><b>Sensory open</b> — the sound and texture land before any words do.</li>
+          <li><b>Contradiction</b> — "the sauce that isn't about heat."</li>
+          <li><b>Process reveal</b> — start mid-technique, explain nothing.</li>
+          <li><b>Category callout</b> — name the thing every brand in the aisle gets wrong.</li>
+        </ul>
+        <ul class="plain">
+          <li><b>Specific number</b> — "90 days in oak," "60 miles," "400 bottles."</li>
+          <li><b>Use case</b> — "the one you keep next to the stove, not in the cabinet."</li>
+          <li><b>Objection first</b> — answer the reason they don't buy, in frame one.</li>
+          <li><b>Scarcity, if true</b> — seasonal, small batch. Only if it is real.</li>
+        </ul>
+      </div>
+
+      <h3>Camera vocabulary</h3>
+      <div class="lib">
+        <dl>
+          <div><dt>Static</dt><dd>Locked frame. Lets texture and steam do the moving.</dd></div>
+          <div><dt>Dolly in</dt><dd>Commitment. Ends on the product or the bite.</dd></div>
+          <div><dt>Orbit</dt><dd>Reveals form and label wrap. Slow, or it reads cheap.</dd></div>
+          <div><dt>Macro push</dt><dd>Texture at the level of crust, grain, sear, bead.</dd></div>
+        </dl>
+        <dl>
+          <div><dt>Overhead</dt><dd>Flat lay, ingredient arrangement, prep sequence.</dd></div>
+          <div><dt>Focus pull</dt><dd>Moves attention between two objects in one shot.</dd></div>
+          <div><dt>Tracking</dt><dd>Follows the pour or the plate. Requires stable physics — check twice.</dd></div>
+          <div><dt>Whip pan</dt><dd>Transition device between concept beats. One per cut, maximum.</dd></div>
+        </dl>
+      </div>
+
+      <h3>CTA patterns</h3>
+      <div class="lib">
+        <ul class="plain">
+          <li><b>Direct</b> — "Order at [site]"</li>
+          <li><b>Offer</b> — "Free shipping over $35"</li>
+          <li><b>Retail</b> — "Find it at [store]"</li>
+        </ul>
+        <ul class="plain">
+          <li><b>Low friction</b> — "Try the 3-bottle starter"</li>
+          <li><b>Seasonal</b> — "Before the season ends"</li>
+          <li><b>Soft</b> — "See how it's made" — for cold audiences only</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ OFFERS ============ -->
+    <section class="panel" id="p-offers" hidden>
+      <h2 class="sec">Offer Stack</h2>
+      <p class="deck">Every price here is a <span class="tag-test">test price</span> — a hypothesis the market has not yet confirmed or killed. Margin figures assume hours you have not measured. Both get corrected by real jobs, not by thinking harder.</p>
+
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Offer</th><th>Deliverable</th><th>Timeline</th><th>Price</th><th>Est. hrs</th><th>Est. rate</th></tr></thead>
+          <tbody>
+            <tr><td><span class="co">5-Angle Test</span><span class="meta">Entry · acquisition</span></td><td>5 concepts × 3 ratios, 1 revision, full rights</td><td class="num">5 days</td><td class="num">$750</td><td class="num">11–13</td><td class="num">~$60</td></tr>
+            <tr><td><span class="co">Creative Sprint</span><span class="meta">Core</span></td><td>15–18 ads, 5 families, hook variants, 2 revisions</td><td class="num">10 days</td><td class="num">$2,250</td><td class="num">20–25</td><td class="num">~$90–110</td></tr>
+            <tr><td><span class="co">Campaign Build</span><span class="meta">Premium</span></td><td>28–35 assets, campaign strategy, brand visual system</td><td class="num">3 weeks</td><td class="num">$5,500</td><td class="num">38–45</td><td class="num">~$122–145</td></tr>
+            <tr><td><span class="co">Always-On · Starter</span><span class="meta">Retainer</span></td><td>8–10 ads/mo, 2 families</td><td class="num">10 days</td><td class="num">$1,500/mo</td><td class="num">12–15</td><td class="num">~$100–125</td></tr>
+            <tr><td><span class="co">Always-On · Growth</span><span class="meta">Retainer · lead tier</span></td><td>15–18 ads/mo, 4 families, winner refresh</td><td class="num">7 days</td><td class="num">$2,500/mo</td><td class="num">20–24</td><td class="num">~$104–125</td></tr>
+            <tr><td><span class="co">Always-On · Scale</span><span class="meta">Retainer</span></td><td>28–32 ads/mo, 6 families, monthly campaign</td><td class="num">5 days</td><td class="num">$4,000/mo</td><td class="num">35–40</td><td class="num">~$100–114</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Offer detail</h3>
+      <div class="offers-detail">
+
+        <div class="offer">
+          <h4>The 5-Angle Test</h4>
+          <div class="price">Entry · $750 flat · 5 business days</div>
+          <dl>
+            <div><dt>Promise</dt><dd>Five different ways to sell your product — not five edits of one idea — built from photos you already have.</dd></div>
+            <div><dt>Ships</dt><dd>5 concepts × 3 ratios (15 files), hook line each, one-page rationale, full rights, 1 revision.</dd></div>
+            <div><dt>Client risk</dt><dd>Low. Costs about what 1.5–4 creator videos cost. No contract.</dd></div>
+            <div><dt>Agency risk</dt><dd>High. ~$60/hr. This is acquisition spend, not profit — it must convert to core or retainer above 30% or it's broken.</dd></div>
+            <div><dt>Bonus</dt><dd>Free ad fatigue audit of their live ads, pulled from the Meta Ad Library.</dd></div>
+          </dl>
+          <div class="cta">"Send me your product photos and I'll have five different ads back in five business days. $750, rights included. Want the free audit on your current ads first?"</div>
+        </div>
+
+        <div class="offer">
+          <h4>The Creative Sprint</h4>
+          <div class="price">Core · $2,250 · 10 business days · 50/50</div>
+          <dl>
+            <div><dt>Promise</dt><dd>A full month of testable creative in ten days — enough variety to find what works instead of guessing one asset at a time.</dd></div>
+            <div><dt>Ships</dt><dd>15–18 ads, 5 concept families, hook variants on the top 3, 4 statics, testing sheet, full rights, 2 revisions.</dd></div>
+            <div><dt>Client risk</dt><dd>Moderate. Roughly a third to half the cost of an 8-video creator program, for double the assets.</dd></div>
+            <div><dt>Agency risk</dt><dd>Revision scope creep. Define a revision in writing: changes an existing asset, never adds a concept.</dd></div>
+            <div><dt>Bonus</dt><dd>Seasonal concept map — next two category moments, one concept each.</dd></div>
+          </dl>
+          <div class="cta">"Ten business days, 15–18 finished ads, five strategic approaches, all rights yours. $2,250, half now, half on delivery."</div>
+        </div>
+
+        <div class="offer">
+          <h4>The Campaign Build</h4>
+          <div class="price">Premium · $5,500 · 3 weeks · 50/50</div>
+          <dl>
+            <div><dt>Promise</dt><dd>One campaign idea built across every format, plus a visual system that makes all future work faster and consistent.</dd></div>
+            <div><dt>Ships</dt><dd>Campaign strategy doc, 28–35 assets, brand visual system, 20–30s hero film, 8 statics, 2 strategy calls, 3 revisions.</dd></div>
+            <div><dt>Client risk</dt><dd>Highest dollar. Mitigated by a concept-approval gate before production starts — no surprises at delivery.</dd></div>
+            <div><dt>Agency risk</dt><dd>Scope ambiguity around the word "campaign." Cap the asset count in writing.</dd></div>
+            <div><dt>Bonus</dt><dd>90-day creative calendar — what to run, when to refresh, what to rotate.</dd></div>
+          </dl>
+          <div class="cta">"Three weeks, one idea built out across 30+ assets, plus the visual system your future content runs on. $5,500, half to start."</div>
+        </div>
+
+        <div class="offer">
+          <h4>Apex Always-On</h4>
+          <div class="price">Retainer · $1,500 / $2,500 / $4,000 per month · month to month</div>
+          <dl>
+            <div><dt>Promise</dt><dd>Fresh creative every month on a schedule, so you're never running the same ads long enough to watch them die.</dd></div>
+            <div><dt>Ships</dt><dd>8–32 ads/mo by tier, 2–6 concept families, winner refresh, seasonal campaigns, strategy calls, full rights.</dd></div>
+            <div><dt>Client risk</dt><dd>Minimal — 30 days notice, no annual lock. Removing the contract objection costs nothing and closes deals.</dd></div>
+            <div><dt>Agency risk</dt><dd>Churn at month 2–3, hours creep, and a hard solo capacity ceiling of 4–6 accounts.</dd></div>
+            <div><dt>Bonus</dt><dd>Quarterly creative review — what held, what fatigued, what to test next. The natural moment to raise price.</dd></div>
+          </dl>
+          <div class="cta">"$2,500 a month, 15–18 new ads every month, month to month, cancel with 30 days notice. Most brands start with the Sprint and roll into this."</div>
+        </div>
+
+      </div>
+
+      <div class="note"><b>The margin engine:</b> month one on a new account is the expensive one. By month three you have their brand kit, prompt library, approved styles and shot library — same output, roughly half the hours. Effective rate should climb from ~$100/hr to $180–200/hr on a mature account. That compounding, not the headline price, is the actual business.</div>
+
+      <h3>Scope guard — say this before they ask</h3>
+      <div class="lib">
+        <ul class="plain">
+          <li>No media buying or ad account management</li>
+          <li>No offer, pricing, or landing page strategy</li>
+          <li>No unlimited revisions — a revision changes an existing asset, never adds a concept</li>
+        </ul>
+        <ul class="plain">
+          <li>No fabricated testimonials or AI "customers"</li>
+          <li>No depiction of a product, ingredient, or claim that isn't real</li>
+          <li>No performance guarantees — we sell production capacity, not results</li>
+        </ul>
+      </div>
+
+      <h3>Kill criteria</h3>
+      <ul class="plain">
+        <li><b>Entry conversion under 30%</b> to core or retainer — the $750 offer is a treadmill, not a funnel. Reprice or restructure.</li>
+        <li><b>Three fast yeses at $750</b> — underpriced. Raise entry to $950 immediately.</li>
+        <li><b>Five balks at $750</b> — the problem is proof, not price. Build portfolio, don't discount.</li>
+        <li><b>A Growth retainer over 30 hrs/month</b> — unprofitable. Fix scope or raise the price at renewal.</li>
+      </ul>
+    </section>
+
+    <!-- ============ SALES ============ -->
+    <section class="panel" id="p-sales" hidden>
+      <h2 class="sec">Sales Language</h2>
+      <p class="deck">Never lead with the technology. Lead with the problem, close on the audit. If they ask what you use, answer plainly in one sentence and move on — the tool is not the product.</p>
+
+      <h3>The diagnostic — what you are actually selling against</h3>
+      <div class="qa">
+        <div><b>What they want</b><span>To stop being the bottleneck. Ads that keep working. To look like a real brand next to the national one on the shelf. To stop paying for content they can't use.</span></div>
+        <div><b>What frustrates them</b><span>Every batch needs a shoot. Creators ghost or deliver off-brand. Usage rights are a separate negotiation. Everything they get looks like everything they already have.</span></div>
+        <div><b>Their real problem</b><span>Creative supply cannot keep pace with creative decay. Ads fatigue every 3–6 weeks; typical output is 2–4 new creatives a month. It's a throughput problem, and trying harder does not fix throughput.</span></div>
+        <div><b>What it costs them</b><span>Spend running behind dead creative, 15–25 of their own hours a month, and content bought but never used. Make them calculate it on the call — don't calculate it for them.<em>Never promise their numbers will move</em></span></div>
+        <div><b>Agencies charge</b><span>$3,000–10,000/mo retainer. Food shoot $1,500–5,000/day plus styling. Social management $800–2,500/mo.</span></div>
+        <div><b>Freelancers charge</b><span>$150–1,200 per UGC video, ~$198 average per deliverable. Rights add 30–50%. An 8-video month lands near $5,500–6,500 all-in.</span></div>
+        <div><b>Their alternatives</b><span>Do nothing (most common). DIY on a phone. Hire creators. Book a shoot. Hire in-house at $50–70K. Use cheap AI tools themselves — name this one honestly; their obstacle is time, direction, and an eye for when food looks wrong, not tool access.</span></div>
+        <div><b>Why APEX</b><span>A chef runs QC on the hardest subject in generated imagery. Full commercial rights included against a market that surcharges for them. Five strategic angles, not five edits. Days instead of weeks. And no fabricated endorsements — ever.<em>Only the first one is hard to copy</em></span></div>
+      </div>
+
+      <h3>One sentence</h3>
+      <div class="script big">
+        <p>APEX makes food and beverage brands a month of fresh, testable ad creative in days — no shoot, no creators, no waiting — so your ads never sit long enough to go stale.</p>
+      </div>
+
+      <h3>Three sentences</h3>
+      <div class="script">
+        <p>Most food brands can only produce a handful of new ads a month, but ads fatigue every few weeks — so they end up running dead creative or cutting spend. APEX produces 15–18 finished, strategically different ads every month from photos you already have, with full commercial rights included and a chef reviewing every frame so the food actually looks like food. No shoot to schedule, no creators to chase, and nothing pretending to be a customer testimonial.</p>
+      </div>
+
+      <h3>Thirty-second pitch</h3>
+      <div class="script">
+        <div class="sh">Spoken · discovery call or in person</div>
+        <p>"You know how your ads work for about a month and then just quietly stop? That's not your product, that's creative fatigue — it happens to everybody. The problem is most brands your size can only make two or three new ads a month, so you're always behind it."</p>
+        <p>"What I do is produce fifteen to eighteen finished ads a month for food brands — five different strategic angles, not five versions of the same idea — from product photos you already have. Days, not weeks. Full rights, no usage fees."</p>
+        <p>"I'm a chef, which honestly is the whole reason this works. Most of what's out there gets the food wrong in ways a food person catches instantly, and I won't send it out."</p>
+        <p>"Most people start with a $750 five-ad test so they can see the work before committing to anything. Want me to run a quick audit on the ads you're running now and show you which angles you've never tested?"</p>
+        <div class="rules">Name the problem before you name yourself. Close on the audit, not the sale.</div>
+      </div>
+
+      <h3>Website hero</h3>
+      <div class="script">
+        <div class="sh">Above the fold</div>
+        <p><b>Your ads stop working every few weeks. Your creative can't keep up. That's the whole problem.</b></p>
+        <p>APEX produces a month of fresh, testable ad creative for food and beverage brands — in days, from photos you already have. No shoot to schedule. No creators to chase. No usage fees. Full commercial rights on everything we make.</p>
+        <p>Every frame is reviewed by a chef, because food that looks <i>almost</i> right doesn't sell.</p>
+        <p><b>[ Get a free audit of your current ads ]</b> &nbsp; [ See the work ]</p>
+        <div class="rules">Footer line: we produce creative and testing capacity. We don't run your ads, and we don't promise numbers we can't control.</div>
+      </div>
+
+      <h3>Cold email</h3>
+      <div class="script">
+        <div class="subj">Subject: your [product] ads</div>
+        <p>Hi [Name] —</p>
+        <p>I went through the ads [Brand] has been running. The [specific ad] has been live a while now, and it looks like most of what's running leans on the same setup.</p>
+        <p>That's the normal trap — creative fatigues in a few weeks and almost nobody can produce fast enough to stay ahead of it.</p>
+        <p>I run a small studio that makes ad creative for food and beverage brands. 15–18 new ads a month, five different strategic angles, built from product photos you already have. Days instead of weeks, and full commercial rights included.</p>
+        <p>I'm a chef, which is honestly why I started this — most food creative gets the food wrong.</p>
+        <p>I put together a short note on which angles [Brand] hasn't tested yet. Want me to send it? No pitch attached, and no reply needed if it's not useful.</p>
+        <p>— Larry<br>APEX Media Group</p>
+        <div class="rules">The first line must prove you looked at their real ads or don't send it. One ask. No attachments. No follow-up more than twice.</div>
+      </div>
+
+      <h3>Instagram DM</h3>
+      <div class="script">
+        <div class="sh">Opener</div>
+        <p>Hey — been watching the [product] ads you've got running. The [specific detail] one is good. Looks like it's been up a while though.</p>
+        <p>I make ad creative for food brands — 5 different angles from product photos, no shoot needed. I'm a chef, so mostly I just got tired of seeing food shot badly.</p>
+        <p>Want me to send over a couple of angles I think you're missing? Free, no pitch.</p>
+        <div class="sh" style="margin-top:14px">If they reply</div>
+        <p>Cool — send me 3–4 product photos and your best-selling SKU, and I'll come back with five different concepts for it. If you like them, the full five-ad build is $750 with rights included. If not, keep the ideas.</p>
+        <div class="rules">Short, natural, one specific observation about their real ads. Offer something free first. Never open with a price. No link in the first message — it kills reach and reads as spam.</div>
+      </div>
+
+      <div class="note"><b>The line that buys the most trust:</b> "APEX produces creative. I don't run your ads, write your offer, or fix your landing page. If the offer is broken, better creative won't save it." Saying it costs you nothing and separates you from everyone who promises results they don't control.</div>
+    </section>
+
+
+    <!-- ============ HIGGSFIELD PACK ============ -->
+    <section class="panel" id="p-hfpack" hidden>
+      <h2 class="sec">Higgsfield Production Pack</h2>
+      <p class="deck">Written before funding so day one is production, not setup. Every rule here exists because it is a known failure mode, not because it sounds professional.</p>
+
+      <h3>Prompt architecture — eight slots, always in this order</h3>
+      <div class="brief">SHOT TYPE + SUBJECT + ACTION + CAMERA + LENS/APERTURE + LIGHTING + ENVIRONMENT + CONSTRAINTS
+
+Example:
+"Macro product shot. A 16oz glass jar of dark roux, blank cream label,
+on wet dark slate. Jar static, a single droplet running down the shoulder.
+Camera locked, no move. 100mm macro, f/4, focus on the label plane.
+Single hard softbox key camera-left, black flag camera-right, deep falloff.
+Home kitchen counter, near-black background.
+No text, no letters, no logos, no hands, no people."
+
+Never write "cinematic" and expect it to mean anything. It is not direction.</div>
+
+      <h3>Camera language — the only terms used</h3>
+      <div class="lib">
+        <ul class="plain">
+          <li><b>Static / locked</b> — default. Use unless a move earns itself</li>
+          <li><b>Slow dolly in</b> — commitment, ends on product</li>
+          <li><b>Slow dolly out</b> — reveal of context</li>
+          <li><b>Orbit</b> — form and label wrap. Slow or it reads cheap</li>
+          <li><b>Macro push</b> — texture at crust/grain/sear level</li>
+        </ul>
+        <ul class="plain">
+          <li><b>Overhead static</b> — flat lay, prep, arrangement</li>
+          <li><b>Focus pull</b> — moves attention between two objects</li>
+          <li><b>Tracking</b> — follows a pour. Needs stable physics, check twice</li>
+          <li><b>Whip pan</b> — transition only, one per cut maximum</li>
+          <li><b>Handheld</b> — social-native only, never product hero</li>
+        </ul>
+      </div>
+
+      <h3>Three shot templates — fill and run</h3>
+      <div class="brief">PRODUCT HERO
+"Product advertising photograph. [PRODUCT] on [SURFACE]. [ONE PROP] beside it.
+Camera static, straight on. 85mm, f/5.6, focus on the label plane.
+Single softbox key camera-left at 45 degrees, black negative fill camera-right,
+thin rim light on the [glass/tin] edge, background falling to near black.
+No text, no letters, no logos, no hands."
+
+MACRO TEXTURE
+"Macro food photograph. [SUBSTANCE] [ACTION — pours / breaks / melts] over [SUBJECT].
+Camera static, subject moves. 100mm macro, f/2.8, focus at the contact point.
+Hard warm key camera-left raking across the surface, steam backlit, dark falloff.
+No people, no hands, no text."
+
+PRODUCT IN USE
+"Food advertising photograph. Hands in [WARDROBE] [ACTION] with [PRODUCT] over [DISH].
+50mm, f/2.8, focus on the hands. Warm key camera-left, deep shadow right.
+Hands and forearms only, no face. No text, no logos."</div>
+
+      <h3>Product reference workflow — the rule that protects the client</h3>
+      <ol class="steps">
+        <li><b>Upload client photography first</b><span>media_upload, then media_confirm. Register as a reference element. Never begin with text-to-image for a product that exists.</span></li>
+        <li><b>Generate from reference, never from description</b><span>The packaging shape, colour and proportions come from their file. A described jar is a different jar.</span></li>
+        <li><b>Blank the label in generation</b><span>Generate with a blank label field. Composite the client's vector in post. This is non-negotiable.</span></li>
+        <li><b>Static camera on any labelled product</b><span>No orbit, no dolly, no rotation on a labelled hero. A move makes the composite a tracking job and the text a lottery.</span></li>
+      </ol>
+
+      <h3>Consistency rules</h3>
+      <div class="lib">
+        <ul class="plain">
+          <li><b>One reference element per recurring object</b> — jar, pan, spoon, hands, location</li>
+          <li><b>Every prop carries one deliberate flaw</b> — a chip, a scorch, a crack. That flaw is how you verify continuity</li>
+          <li><b>Key light direction is decided once</b> per location and never changes within a scene</li>
+        </ul>
+        <ul class="plain">
+          <li><b>Hands only, never faces</b>, unless the client supplies real talent with a release</li>
+          <li><b>Wardrobe details are written down</b> — sleeve roll count, apron strap, cuff marks</li>
+          <li><b>Product state ladders</b> — track fill level, doneness, melt and ice across every shot</li>
+        </ul>
+      </div>
+
+      <h3>Lighting and motion standards</h3>
+      <div class="lib">
+        <ul class="plain">
+          <li><b>Single hard key</b>, black negative fill opposite. Deep shadow is the house look</li>
+          <li><b>Warm 3200K</b> for cooked and finished, <b>cool 5600K</b> for raw and cold</li>
+          <li><b>Steam always backlit</b> or it reads as smoke</li>
+          <li><b>Specular highlights</b> on anything wet or glossy</li>
+        </ul>
+        <ul class="plain">
+          <li><b>Slowest move that works</b> — roughly 3–4cm per second</li>
+          <li><b>One move per shot.</b> Never dolly and orbit together</li>
+          <li><b>Physics-heavy shots get start and end frames</b> — interpolate, don't describe the change</li>
+          <li><b>4 seconds minimum</b> per generated clip; cut down in the edit</li>
+        </ul>
+      </div>
+
+      <h3>Negative prompt — append to every generation</h3>
+      <div class="brief">no text, no letters, no words, no logos, no watermark, no signature,
+no extra fingers, no malformed hands, no faces, no people in background,
+no floating objects, no duplicated products, no plastic-looking food,
+no wax cheese, no smoke instead of steam, no oversaturation,
+no lens flare, no motion blur on the product, no warped label</div>
+
+      <h3>Regeneration rules</h3>
+      <ol class="steps">
+        <li><b>Three attempts per shot. Hard stop.</b><span>At attempt four, change the shot. The model is telling you the frame does not work.</span></li>
+        <li><b>Re-run against the specific defect</b><span>Not the whole prompt. Change one variable and log which one fixed it.</span></li>
+        <li><b>Log every failure</b><span>Defect, what you changed, whether it worked. That log becomes the prompt library and it is the compounding asset in this business.</span></li>
+        <li><b>Physics failures are structural</b><span>Broken pour or gravity means reframe the shot, not more attempts.</span></li>
+      </ol>
+
+      <h3>Naming, structure, export</h3>
+      <div class="brief">FILE NAMING
+APEX_[CLIENT]_[PROJECT]_[CONCEPT]_[SHOT]_[VERSION]_[RATIO]
+APEX_BayouBloom_Launch_Craving_S03_v2_9x16.mp4
+
+FOLDER STRUCTURE
+/APEX/[CLIENT]/[PROJECT]/
+  01_brief/        intake, creative brief, approvals
+  02_references/   client photography, registered elements
+  03_shotlists/    per-concept shot specs
+  04_raw/          every generation, including failures
+  05_selects/      shots that passed QC
+  06_edit/         project files
+  07_audio/        voice, music, SFX
+  08_delivery/     final exports by ratio
+  09_admin/        invoice, scope, revision log
+
+EXPORT SPECIFICATIONS
+9:16  1080x1920  H.264  8–12 Mbps  ~30fps  loudness -14 LUFS
+4:5   1080x1350  H.264  8–12 Mbps
+1:1   1080x1080  H.264  8–12 Mbps
+16:9  1920x1080  H.264  10–16 Mbps
+Every delivery includes a poster frame JPG per asset.</div>
+
+      <div class="note"><b>Day one of funding:</b> upload a client product photo, register it as an element, run the three templates above at 4 seconds each, and time every stage. That is the whole first session — no exploration, no wandering.</div>
+    </section>
+
+    <!-- ============ MONEY ============ -->
+    <section class="panel" id="p-money" hidden>
+      <h2 class="sec">Financial Model</h2>
+      <p class="deck">Every line is labelled. Nothing here is a projection dressed as a fact — and the single largest cost in the business is still unknown.</p>
+
+      <h3>Costs — what is actually known</h3>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Line</th><th>Amount</th><th>Basis</th></tr></thead>
+          <tbody>
+            <tr><td>Higgsfield — current</td><td class="num">$0 · 0 credits</td><td><span class="chip good">FACT</span> verified in-session, free plan</td></tr>
+            <tr><td>Higgsfield — subscription</td><td class="num">UNKNOWN</td><td><span class="chip hot">UNKNOWN</span> never purchased. Check in-app. Largest single unknown in this model</td></tr>
+            <tr><td>ElevenLabs</td><td class="num">Blocked</td><td><span class="chip good">FACT</span> connected, generation permission not granted</td></tr>
+            <tr><td>Domain</td><td class="num">~$12–20/yr</td><td><span class="chip warn">ESTIMATE</span> typical registrar pricing, unverified</td></tr>
+            <tr><td>Business email</td><td class="num">~$7/user/mo</td><td><span class="chip warn">ESTIMATE</span> Google Workspace, unverified</td></tr>
+            <tr><td>Editing software</td><td class="num">$0</td><td><span class="chip good">FACT</span> DaVinci Resolve free tier is sufficient</td></tr>
+            <tr><td>Website hosting</td><td class="num">$0–20/mo</td><td><span class="chip warn">ESTIMATE</span> depends on builder chosen</td></tr>
+            <tr><td><b>Known fixed monthly</b></td><td class="num"><b>~$10–30</b></td><td>excluding Higgsfield</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Labour assumptions</h3>
+      <div class="note"><b>ESTIMATE — never measured.</b> Entry project 11–13 hrs · Sprint 20–25 hrs · Campaign 38–45 hrs · Growth retainer 20–24 hrs/month. <b>HYPOTHESIS:</b> mature accounts drop ~40% in hours by month four as the prompt and reference libraries fill. Every number in the scenarios below inherits this uncertainty — one timed project replaces all of it.</div>
+
+      <h3>Scenarios</h3>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th></th><th>1 client</th><th>5 clients</th><th>10 clients</th><th>20 clients</th></tr></thead>
+          <tbody>
+            <tr><td>Mix</td><td class="num">1 Growth</td><td class="num">1S·3G·1Sc</td><td class="num">2S·6G·2Sc</td><td class="num">4S·12G·4Sc</td></tr>
+            <tr><td><b>Revenue / mo</b></td><td class="num"><b>$2,500</b></td><td class="num"><b>$13,000</b></td><td class="num"><b>$26,000</b></td><td class="num"><b>$52,000</b></td></tr>
+            <tr><td>Delivery hrs</td><td class="num">~22</td><td class="num">~117</td><td class="num">~234</td><td class="num">~468</td></tr>
+            <tr><td>Team</td><td class="num">Founder</td><td class="num">Founder</td><td class="num">+1 producer</td><td class="num">+3 producers, PM</td></tr>
+            <tr><td>Est. cost / mo</td><td class="num">~$250*</td><td class="num">~$600*</td><td class="num">~$6,600</td><td class="num">~$20,000</td></tr>
+            <tr><td><b>Gross profit</b></td><td class="num"><b>~$2,250</b></td><td class="num"><b>~$12,400</b></td><td class="num"><b>~$19,400</b></td><td class="num"><b>~$32,000</b></td></tr>
+            <tr><td>Gross margin</td><td class="num">~90%</td><td class="num">~95%</td><td class="num">~75%</td><td class="num">~62%</td></tr>
+            <tr><td>+ Sales hrs</td><td class="num">~30</td><td class="num">~30</td><td class="num">~40</td><td class="num">~60</td></tr>
+            <tr><td><b>Founder hrs / mo</b></td><td class="num"><b>~52</b></td><td class="num"><b>~147</b></td><td class="num"><b>~110</b></td><td class="num"><b>~120</b></td></tr>
+            <tr><td>Founder $/hr</td><td class="num">~$43</td><td class="num">~$84</td><td class="num">~$176</td><td class="num">~$267</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:12.5px;color:var(--ink-soft);margin-top:10px">* excludes the unknown Higgsfield subscription. Add it to every column once verified.</p>
+
+      <h3>Break-even and acquisition cost</h3>
+      <div class="lib">
+        <ul class="plain">
+          <li><b>Cash break-even is trivially low</b> — known fixed costs run $10–30/month. One $750 entry project covers roughly two years of them.</li>
+          <li><b>The real break-even is time.</b> At one client you are earning ~$43/hour because 30 hours of sales are amortised across a single account. That is the honest number nobody publishes.</li>
+          <li><b>Five clients is a full-time job</b> at ~147 hrs/month for ~$84/hour. A good job — not yet a business.</li>
+        </ul>
+        <ul class="plain">
+          <li><b>CAC is measured in hours, not dollars</b> — cold outreach costs time.</li>
+          <li><b>HYPOTHESIS:</b> ~100 personalised touches to win one client, at ~15 min each = <b>~25 hours per client acquired</b>. Completely untested. Track it from message one.</li>
+          <li><b>The number that decides everything:</b> hours per delivered asset. Log it on the first paid job.</li>
+        </ul>
+      </div>
+
+      <div class="note"><b>What this model cannot tell you yet:</b> the Higgsfield subscription, real production hours, real regeneration rates, and real conversion rates. Four unknowns, all resolved by one funded month with one paying client. Until then this is a structure with placeholders, and it should be treated that way in every decision.</div>
+    </section>
+
+    <!-- ============ FACTORY ============ -->
+    <section class="panel" id="p-factory" hidden>
+      <h2 class="sec">Ad Factory</h2>
+      <p class="deck">Seven inputs produce five strategically different builds. The differentiation matrix is enforced, not hoped for — if two ads would share a first frame, a protagonist and a pace, the set has failed as a test before a single frame is generated.</p>
+
+      <form id="fForm" class="grid g2" autocomplete="off">
+        <label class="f"><span>Client</span><input name="client" value="Gulf &amp; Line"></label>
+        <label class="f"><span>Product</span><input name="product" value="Wild Gulf white shrimp, 2lb frozen, $34"></label>
+        <label class="f" style="grid-column:1/-1"><span>Audience</span><input name="audience" value="35–65, cooks seafood at home, burned before by watery imported shrimp"></label>
+        <label class="f"><span>Offer</span><input name="offer" value="Free overnight shipping over $75"></label>
+        <label class="f"><span>Platform</span>
+          <select name="platform">
+            <option>Meta — Reels + Feed</option><option>TikTok</option>
+            <option>Meta + TikTok</option><option>YouTube</option><option>Multi-platform</option>
+          </select></label>
+        <label class="f"><span>Objective</span>
+          <select name="objective">
+            <option>Cold traffic — first purchase</option>
+            <option>Retargeting — recover cart abandons</option>
+            <option>New product launch</option>
+            <option>Seasonal / dated promotion</option>
+            <option>Brand building — premium positioning</option>
+          </select></label>
+        <label class="f"><span>CTA</span><input name="cta" value="Order at gulfandline.com — ships frozen, overnight"></label>
+      </form>
+      <div class="row-actions">
+        <button class="btn" id="fGen" type="button">Run the factory</button>
+        <button class="btn ghost" id="fCopy" type="button">Copy brief</button>
+      </div>
+      <div class="note"><b>What this produces and what it doesn't:</b> it builds the strategic skeleton — the five formats, the enforced differentiation, the hook pattern and shot structure for each, and the testing plan. The specific hook lines and the product-truthful details are a creative pass on top. A factory sets the jig; it does not carve the wood.</div>
+      <div class="brief" id="fOut">Fill the seven inputs and run.</div>
+    </section>
+
+    <!-- ============ OUTREACH ============ -->
+    <section class="panel" id="p-outreach" hidden>
+      <h2 class="sec">Outreach Engine</h2>
+      <p class="deck">Fifteen minutes of research produces one true observation. The observation produces the message. Reverse that order and you are writing spam with a name merged into it.</p>
+
+      <h3>Qualification — all four must pass</h3>
+      <ol class="steps">
+        <li><b>Live ads visible in the Meta Ad Library</b><span>Search the brand at facebook.com/ads/library, filter to their page, All ads. No live ads means no budget and no urgency — skip, regardless of how much you like the product.</span></li>
+        <li><b>Creative is stale or thin</b><span>Same asset running 4+ weeks, fewer than 4 active creatives, or static-only with no motion. This is the problem you are selling into. If their creative is already strong and varied, they are not your prospect.</span></li>
+        <li><b>Reachable decision maker</b><span>Founder or a single marketing person, findable by name. If the path runs through an agency of record, the sale is three times longer.</span></li>
+        <li><b>Product is visually producible</b><span>A physical product with existing photography. If the product photography does not exist, your first job becomes a shoot you cannot do.</span></li>
+      </ol>
+
+      <h3>The fifteen-minute research pass</h3>
+      <div class="lib">
+        <ul class="plain">
+          <li><b>Meta Ad Library</b> — how many ads, how old, static or motion, what angles</li>
+          <li><b>Instagram grid</b> — post cadence, production quality, what gets engagement</li>
+          <li><b>Website homepage</b> — is there video anywhere, is the hero a photo from 2019</li>
+          <li><b>Product pages</b> — how many images per SKU, any motion, any lifestyle</li>
+        </ul>
+        <ul class="plain">
+          <li><b>Recent posts</b> — new SKU, new retail account, an award, a season starting</li>
+          <li><b>Reviews</b> — the exact words customers use, which is free copy</li>
+          <li><b>One competitor</b> — what they are doing that this brand is not</li>
+          <li><b>Press / news</b> — expansion, funding, a festival, a collab</li>
+        </ul>
+      </div>
+      <div class="note"><b>Verification rule:</b> the observation in your first line must be something you personally looked at within the last 48 hours. Never write "your ads have been running since March" unless you saw the date. An observation that turns out to be wrong ends the conversation and earns a screenshot in someone's group chat.</div>
+
+      <h3>Research worksheet — eleven surfaces, one true observation</h3>
+      <p class="deck" style="margin-bottom:12px">Fill only what you actually looked at. Blank is honest; invented is fatal. When you're done, the strongest single entry becomes your opening line — one observation, never three.</p>
+      <div class="grid g2" id="rsheet" style="margin-bottom:14px">
+        <label class="f"><span>Website</span><input data-rs="Website" placeholder="Homepage hero is a static photo, no video anywhere on site"></label>
+        <label class="f"><span>Social media</span><input data-rs="Social" placeholder="IG posts 2×/week, phone photos, 900 followers"></label>
+        <label class="f"><span>Advertising</span><input data-rs="Advertising" placeholder="Ad Library: 3 ads active, oldest live since Jan 14"></label>
+        <label class="f"><span>Offers</span><input data-rs="Offers" placeholder="Free shipping $45+, no active promo"></label>
+        <label class="f"><span>Content</span><input data-rs="Content" placeholder="Recipe posts get 4× the engagement of product posts"></label>
+        <label class="f"><span>Branding</span><input data-rs="Branding" placeholder="Label design is excellent, ad creative doesn't match it"></label>
+        <label class="f"><span>Customer experience</span><input data-rs="CX" placeholder="Checkout clean, 2 product images per SKU, no motion"></label>
+        <label class="f"><span>Competitors</span><input data-rs="Competitors" placeholder="Direct shelf rival runs video ads, they don't"></label>
+        <label class="f"><span>Recent announcements</span><input data-rs="News" placeholder="Announced Rouses placement 3 weeks ago"></label>
+        <label class="f"><span>New products</span><input data-rs="NewProduct" placeholder="Launched a second SKU last month, one post about it"></label>
+        <label class="f"><span>Promotions</span><input data-rs="Promo" placeholder="Nothing seasonal up yet, gumbo season starts in 5 weeks"></label>
+        <label class="f"><span>Decision maker</span><input data-rs="Contact" placeholder="Marie L., founder — replies to her own DMs"></label>
+      </div>
+
+      <h3>Build the four messages</h3>
+      <div class="grid g3" style="margin-bottom:6px">
+        <label class="f"><span>Observation type</span>
+          <select id="obsType">
+            <option value="stale">Same creative running for weeks</option>
+            <option value="thin">Only 1–3 active creatives</option>
+            <option value="static">Statics only, no motion</option>
+            <option value="launch">New product just launched</option>
+            <option value="retail">New retail account announced</option>
+            <option value="season">Season or holiday approaching</option>
+            <option value="gap">Strong organic, no paid creative</option>
+            <option value="quality">Ads running, creative is off-brand</option>
+          </select></label>
+        <label class="f"><span>Brand</span><input id="obsBrand" placeholder="Bayou Bloom" value="Bayou Bloom"></label>
+        <label class="f"><span>Contact first name</span><input id="obsName" placeholder="Marie" value="Marie"></label>
+        <label class="f" style="grid-column:1/-1"><span>The specific thing you saw — in your words</span><input id="obsDetail" placeholder="the bottle-on-wood shot" value="the bottle-on-wood shot"></label>
+      </div>
+      <div class="row-actions" style="margin-bottom:14px">
+        <button class="btn" id="obsGen" type="button">Write the four messages</button>
+        <button class="btn ghost" id="obsSave" type="button">Save prospect to pipeline</button>
+      </div>
+      <div id="obsOut"></div>
+
+      <h3>Rules that hold on every channel</h3>
+      <div class="lib">
+        <ul class="plain">
+          <li><b>Never</b> "Hope you're doing well" or any variant</li>
+          <li><b>Never</b> "I run an AI agency" — or lead with the technology at all</li>
+          <li><b>Never</b> a link in a first DM — it suppresses reach and reads as spam</li>
+          <li><b>Never</b> a price in the opener</li>
+        </ul>
+        <ul class="plain">
+          <li><b>Always</b> one observation they can verify you made</li>
+          <li><b>Always</b> one ask, and make it free</li>
+          <li><b>Always</b> an easy exit — "no reply needed if it's not useful"</li>
+          <li><b>Always</b> stop at two follow-ups. Then leave them alone for 90 days.</li>
+        </ul>
+      </div>
+
+      <h3>Follow-up ladder</h3>
+      <ol class="steps">
+        <li><b>Day 0 — the observation</b><span>One thing you saw, one free offer. Nothing else.</span></li>
+        <li><b>Day 4 — deliver value unasked</b><span>Send the audit whether they replied or not. "Made this anyway — three angles you haven't tested." This converts more than the opener does.</span></li>
+        <li><b>Day 11 — the close-out</b><span>"Going to stop bothering you — if creative ever becomes the bottleneck, I'm here." Genuinely stop. This message gets replies precisely because it releases them.</span></li>
+      </ol>
+    </section>
+
+    <!-- ============ PORTFOLIO ============ -->
+    <section class="panel" id="p-folio" hidden>
+      <h2 class="sec">Spec Portfolio — Ten Builds</h2>
+      <p class="deck">Ten fictional food and beverage brands, each demonstrating a different strategic capability. Every piece is speculative work built to show range — label it that way on the site and in every pitch. A spec piece presented as a client campaign is the fastest way to lose a reputation you haven't finished building.</p>
+
+      <div class="filters" id="folioFilters"></div>
+      <div id="folioList"></div>
+    </section>
+
+  </main>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------------- storage: db capability, localStorage fallback ---------------- */
+var LS = "apex-media-ops-v1";
+var mem = { prospects: [], qc: {} };
+var db = null;
+
+function lsRead(){
+  try{ var raw = localStorage.getItem(LS); if(raw) return JSON.parse(raw); }catch(e){}
+  return null;
+}
+function lsWrite(){
+  try{ localStorage.setItem(LS, JSON.stringify(mem)); }catch(e){}
+}
+function persistProspect(p){
+  lsWrite();
+  if(db){ db.collection("prospects").doc(p.id).set(p).catch(function(){}); }
+}
+function removeProspect(id){
+  lsWrite();
+  if(db){ db.collection("prospects").doc(id).delete().catch(function(){}); }
+}
+function persistQC(){
+  lsWrite();
+  if(db){ db.doc("state/qc").set({ checks: mem.qc }).catch(function(){}); }
+}
+function setStorage(mode){
+  var dot = document.getElementById("dot"), lbl = document.getElementById("storageLabel");
+  if(mode === "cloud"){ dot.className = "dot on"; lbl.textContent = "Synced"; }
+  else { dot.className = "dot local"; lbl.textContent = "This device only"; }
+}
+
+/* ---------------- seed ---------------- */
+var SEED = [
+  { id:"ex1", example:true, company:"Bayou Pepper Co.", contact:"Marie L., founder",
+    category:"Hot sauce · DTC + regional retail",
+    email:"marie@bayoupepper.example", emailSource:"Published on their website",
+    angle:"static", subject:"your bottle-on-wood shot",
+    observation:"4 ads active, all built on the same bottle-on-wood still. Nothing shot in motion.",
+    gap:"Never tested a craving angle or an offer cut.",
+    offer:"5-Angle Test — $750", channel:"Email", sentAt:"", status:"Audit sent",
+    reply:"", replyAt:"", replyText:"", followup:"" },
+  { id:"ex2", example:true, company:"Delta Roast Coffee", contact:"marketing lead",
+    category:"Coffee · Shopify + wholesale",
+    email:"", emailSource:"",
+    angle:"stale", subject:"",
+    observation:"2 ads running 6+ weeks. Static images only, no pour or brew footage.",
+    gap:"No process/origin story despite a genuinely good sourcing angle.",
+    offer:"Creative Sprint — $2,250", channel:"Email", sentAt:"", status:"Identified",
+    reply:"", replyAt:"", replyText:"", followup:"" }
+];
+
+var STAGES = ["Identified","Audit sent","Contacted","Replied","Call booked","Proposal out","Won"];
+
+/* ---------------- Fidelity & Continuity Gate ---------------- */
+var HARDFAIL = [
+  "Incorrect product shape",
+  "Wrong packaging",
+  "Wrong logo",
+  "Unreadable or fabricated brand text",
+  "Major label distortion",
+  "Character identity drift",
+  "Missing fingers / severe anatomy failure",
+  "Impossible object geometry",
+  "Object duplication",
+  "Major lighting contradiction",
+  "Product changes between shots",
+  "Impossible physical movement",
+  "Major continuity break",
+  "Fabricated factual visual information"
+];
+var DIMS = [
+  {k:"vq",  n:"Visual quality",        max:15, still:20, look:"Would this sit on a premium brand's site?"},
+  {k:"rf",  n:"Reference fidelity",    max:20, still:25, look:"Does the subject still have the identity of the reference? Shape, proportion, colour, packaging, closure, marks."},
+  {k:"re",  n:"Realism",               max:15, look:"Materials, texture, food behaviour. Does anything read as plastic or painted?"},
+  {k:"co",  n:"Composition",           max:10, look:"Framing, placement, negative space — deliberate or accidental?"},
+  {k:"li",  n:"Lighting",              max:10, look:"Did it follow the key direction, contrast and falloff you specified?"},
+  {k:"ca",  n:"Camera",                max:10, look:"Lens character, perspective, focus plane, movement as directed."},
+  {k:"mo",  n:"Motion",                max:10, look:"Physics, weight, pour and steam behaviour. N/A for stills."},
+  {k:"cu",  n:"Commercial usefulness", max:10, look:"Would a paying client place this directly into a campaign?"}
+];
+var CAMPAUDIT = [
+  "Does the same product look like the same product across every asset?",
+  "Does the same character look like the same character?",
+  "Does the same brand look like the same brand?",
+  "Does the location remain coherent?",
+  "Does the lighting language remain coherent?",
+  "Does the campaign feel like one production?",
+  "Is there nothing that obviously reads as AI-generated?",
+  "Could the client place this directly into a commercial campaign?"
+];
+
+function isStill(){ return !!mem.qc.__still; }
+function dimMax(d){ return (isStill() && d.still) ? d.still : d.max; }
+
+function renderHard(){
+  var host = document.getElementById("qcHard");
+  host.textContent = "";
+  var items = el("div", "qcitems");
+  HARDFAIL.forEach(function(t, i){
+    var key = "hf" + i;
+    var lab = el("label", "qc" + (mem.qc[key] ? " done" : ""));
+    var box = el("input"); box.type = "checkbox"; box.checked = !!mem.qc[key];
+    box.addEventListener("change", function(){
+      mem.qc[key] = box.checked; persistQC(); renderQC();
+    });
+    lab.appendChild(box); lab.appendChild(el("span", null, t));
+    items.appendChild(lab);
+  });
+  host.appendChild(items);
+}
+function renderScore(){
+  var host = document.getElementById("qcScore");
+  host.textContent = "";
+  DIMS.forEach(function(d){
+    if(d.k === "mo" && isStill()) return;
+    var row = el("div", "qcrow");
+    var head = el("div", "qch");
+    head.appendChild(el("span", "qcn", d.n));
+    var inp = el("input");
+    inp.type = "number"; inp.min = 0; inp.max = dimMax(d);
+    inp.value = (mem.qc[d.k] == null ? "" : mem.qc[d.k]);
+    inp.style.cssText = "width:74px;margin-left:auto;text-align:center";
+    inp.addEventListener("input", function(){
+      var v = inp.value === "" ? null : Math.max(0, Math.min(dimMax(d), Number(inp.value)));
+      mem.qc[d.k] = v; persistQC(); renderVerdict();
+    });
+    head.appendChild(inp);
+    head.appendChild(el("span", "chip", "/ " + dimMax(d)));
+    row.appendChild(head);
+    row.appendChild(el("div", "qcl", d.look));
+    host.appendChild(row);
+  });
+}
+function renderCamp(){
+  var host = document.getElementById("qcCamp");
+  host.textContent = "";
+  CAMPAUDIT.forEach(function(t, i){
+    var key = "ca" + i;
+    var lab = el("label", "qc" + (mem.qc[key] ? " done" : ""));
+    var box = el("input"); box.type = "checkbox"; box.checked = !!mem.qc[key];
+    box.addEventListener("change", function(){ mem.qc[key] = box.checked; persistQC(); renderQC(); });
+    lab.appendChild(box); lab.appendChild(el("span", null, t));
+    host.appendChild(lab);
+  });
+}
+function renderVerdict(){
+  var hard = HARDFAIL.filter(function(_, i){ return mem.qc["hf" + i]; });
+  var total = 0, scored = 0, active = DIMS.filter(function(d){ return !(d.k === "mo" && isStill()); });
+  active.forEach(function(d){ if(mem.qc[d.k] != null){ total += mem.qc[d.k]; scored++; } });
+
+  var v = document.getElementById("verdict"),
+      lab = document.getElementById("verdictLabel"),
+      desc = document.getElementById("verdictDesc");
+  document.getElementById("verdictCount").textContent = total + " / 100";
+
+  if(hard.length){
+    v.className = "verdict";
+    lab.textContent = "Rejected";
+    desc.textContent = "Hard failure — " + hard.join("; ") + ". A hard failure cannot be approved on the strength of how it looks.";
+  } else if(scored < active.length){
+    v.className = "verdict";
+    lab.textContent = "Not scored";
+    desc.textContent = (active.length - scored) + " dimension" + (active.length - scored === 1 ? "" : "s") + " unscored. An unscored dimension is not a pass.";
+  } else if(total >= 90){
+    v.className = "verdict pass"; lab.textContent = "Approved";
+    desc.textContent = "Clears the gate. Still subject to the campaign consistency audit before delivery.";
+  } else if(total >= 80){
+    v.className = "verdict"; lab.textContent = "Minor revision";
+    desc.textContent = "Fixable in finishing — grade, crop, composite, re-mix. Do not regenerate what post can repair.";
+  } else if(total >= 70){
+    v.className = "verdict"; lab.textContent = "Regenerate";
+    desc.textContent = "Re-run against the specific defect, not the whole prompt. Attempt limit is three.";
+  } else {
+    v.className = "verdict"; lab.textContent = "Rejected";
+    desc.textContent = "Below 70. Redesign the shot or change the method — more attempts will not fix a shot the model cannot hold.";
+  }
+
+  var camp = CAMPAUDIT.filter(function(_, i){ return mem.qc["ca" + i]; }).length;
+  var host = document.getElementById("qcDisp");
+  host.textContent = "";
+  if(camp > 0 && camp < CAMPAUDIT.length){
+    var w = el("div", "flagbar");
+    w.appendChild(el("b", null, "Campaign audit incomplete — "));
+    w.appendChild(document.createTextNode((CAMPAUDIT.length - camp) + " of " + CAMPAUDIT.length + " unanswered. Every one must be yes before delivery."));
+    host.appendChild(w);
+  } else if(camp === CAMPAUDIT.length){
+    var g = el("div", "note");
+    g.appendChild(el("b", null, "Campaign audit passed — "));
+    g.appendChild(document.createTextNode("assets read as one production. Cleared for delivery."));
+    host.appendChild(g);
+  }
+}
+function renderQC(){ renderHard(); renderScore(); renderCamp(); renderVerdict(); }
+
+document.getElementById("qcStill").addEventListener("change", function(){
+  mem.qc.__still = this.checked; persistQC(); renderQC();
+});
+document.getElementById("qcReset").addEventListener("click", function(){
+  var keepImm = document.getElementById("qcImm").value, keepFlex = document.getElementById("qcFlex").value;
+  mem.qc = {};
+  persistQC(); renderQC();
+  document.getElementById("qcStill").checked = false;
+  document.getElementById("qcImm").value = keepImm;
+  document.getElementById("qcFlex").value = keepFlex;
+  toast("Gate reset — immutables kept");
+});
+
+/* ---------------- dom helpers ---------------- */
+function el(tag, cls, text){
+  var n = document.createElement(tag);
+  if(cls) n.className = cls;
+  if(text !== null && text !== undefined) n.textContent = text;
+  return n;
+}
+var _toastT = null;
+function toast(msg){
+  var t = document.getElementById("toast");
+  if(!t) return;
+  t.textContent = msg; t.hidden = false;
+  clearTimeout(_toastT);
+  _toastT = setTimeout(function(){ t.hidden = true; }, 2400);
+}
+function uid(){ return "p" + Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+function copyText(s, label){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(s).then(function(){ toast((label||"Copied") + " to clipboard"); },
+      function(){ toast("Copy blocked — select the text and copy manually"); });
+  } else { toast("Copy blocked — select the text and copy manually"); }
+}
+
+var ANGLES = {
+  stale:"Stale creative", thin:"Thin creative", "static":"Statics only",
+  launch:"New launch", retail:"New retail", season:"Season timing",
+  gap:"Organic, no paid", quality:"Off-brand creative"
+};
+
+/* ---------------- pipeline ---------------- */
+function renderStages(){
+  var host = document.getElementById("stages");
+  if(!host) return;
+  host.textContent = "";
+  STAGES.forEach(function(s){
+    var n = mem.prospects.filter(function(p){ return p.status === s; }).length;
+    var d = el("div", "stage" + (n ? " hot" : ""));
+    d.appendChild(el("span", "n", String(n)));
+    d.appendChild(el("span", "l", s));
+    host.appendChild(d);
+  });
+}
+
+function replyChip(p){
+  if(!p.reply) return el("span", "chip", p.sentAt ? "waiting" : "—");
+  if(p.reply === "Positive")            return el("span", "chip good", "positive");
+  if(p.reply === "Neutral / not now")   return el("span", "chip", "not now");
+  if(p.reply === "Negative")            return el("span", "chip warn", "negative");
+  if(p.reply === "Asked to stop")       return el("span", "chip warn", "stop");
+  return el("span", "chip", "no reply");
+}
+
+function renderProspects(){
+  renderStages();
+  var body = document.getElementById("pBody");
+  if(!body) return;
+  body.textContent = "";
+
+  if(!mem.prospects.length){
+    var tr0 = el("tr"), td0 = el("td");
+    td0.colSpan = 8;
+    td0.appendChild(el("div", "empty", "No prospects yet"));
+    tr0.appendChild(td0); body.appendChild(tr0);
+    renderData(); return;
+  }
+
+  mem.prospects.forEach(function(p){
+    var tr = el("tr");
+
+    var t1 = el("td");
+    var co = el("div", "co", p.company || "—");
+    if(p.example){ co.appendChild(document.createTextNode(" ")); co.appendChild(el("span", "chip ex", "example")); }
+    t1.appendChild(co);
+    if(p.category) t1.appendChild(el("span", "meta", p.category));
+    if(p.contact)  t1.appendChild(el("span", "meta", p.contact));
+    if(p.email){
+      var src = p.emailSource || "SOURCE NOT RECORDED";
+      var em = el("span", "meta", p.email + " · " + src);
+      if(!p.emailSource || src.indexOf("UNVERIFIED") > -1) em.style.color = "var(--warn)";
+      t1.appendChild(em);
+    }
+    tr.appendChild(t1);
+
+    var t2 = el("td");
+    t2.appendChild(el("span", "note", p.observation || "Nothing observed yet"));
+    if(p.gap) t2.appendChild(el("span", "meta", "Gap: " + p.gap));
+    if(p.subject) t2.appendChild(el("span", "meta", "Subject: " + p.subject));
+    if(p.replyText) t2.appendChild(el("span", "note", "“" + p.replyText + "”"));
+    tr.appendChild(t2);
+
+    var t3 = el("td");
+    t3.appendChild(el("span", "chip", p.angle ? (ANGLES[p.angle] || p.angle) : "—"));
+    if(p.offer) t3.appendChild(el("span", "meta", p.offer));
+    tr.appendChild(t3);
+
+    var t4 = el("td", "num");
+    t4.appendChild(document.createTextNode(p.sentAt || "—"));
+    if(p.channel && p.sentAt) t4.appendChild(el("span", "meta", p.channel));
+    tr.appendChild(t4);
+
+    var t5 = el("td");
+    t5.appendChild(replyChip(p));
+    tr.appendChild(t5);
+
+    var t6 = el("td");
+    var sel = document.createElement("select");
+    sel.className = "status";
+    ["Identified","Audit sent","Contacted","Replied","Call booked","Proposal out","Won","Dead"].forEach(function(s){
+      var o = document.createElement("option"); o.value = s; o.textContent = s;
+      if(s === p.status) o.selected = true; sel.appendChild(o);
+    });
+    sel.addEventListener("change", function(){
+      p.status = this.value; persistProspect(p); renderStages(); renderData(); toast("Status updated");
+    });
+    t6.appendChild(sel);
+    tr.appendChild(t6);
+
+    tr.appendChild(el("td", "num", p.followup || "—"));
+
+    var t8 = el("td");
+    var x = el("button", "x", "×");
+    x.type = "button"; x.title = "Remove";
+    x.addEventListener("click", function(){
+      mem.prospects = mem.prospects.filter(function(q){ return q.id !== p.id; });
+      removeProspect(p.id); renderProspects(); toast("Removed");
+    });
+    t8.appendChild(x);
+    tr.appendChild(t8);
+
+    body.appendChild(tr);
+  });
+  renderData();
+}
+
+/* ---------------- response data ---------------- */
+function confidence(n){
+  if(n < 10) return { label:"too few to read", cls:"chip warn", show:false };
+  if(n < 30) return { label:"indicative only", cls:"chip", show:true };
+  return { label:"measured", cls:"chip good", show:true };
+}
+function pct(a, b){ return b ? (a / b * 100).toFixed(0) + "%" : "—"; }
+
+function bucketTable(title, buckets, sentTotal){
+  var wrap = el("div", "blk");
+  wrap.appendChild(el("div", "bl", title));
+  var keys = Object.keys(buckets).sort(function(a,b){ return buckets[b].sent - buckets[a].sent; });
+  if(!keys.length){ wrap.appendChild(el("div", "empty", "No sends recorded")); return wrap; }
+  var tw = el("div", "tablewrap"), tb = document.createElement("table");
+  var thead = document.createElement("thead"), htr = el("tr");
+  ["", "Sent", "Replied", "Positive", "Reply rate", "Confidence"].forEach(function(h){
+    htr.appendChild(el("th", null, h));
+  });
+  thead.appendChild(htr); tb.appendChild(thead);
+  var tbody = document.createElement("tbody");
+  keys.forEach(function(k){
+    var b = buckets[k], c = confidence(b.sent), tr = el("tr");
+    tr.appendChild(el("td", null, k));
+    tr.appendChild(el("td", "num", String(b.sent)));
+    tr.appendChild(el("td", "num", String(b.replied)));
+    tr.appendChild(el("td", "num", String(b.pos)));
+    tr.appendChild(el("td", "num", c.show ? pct(b.replied, b.sent) : "—"));
+    var td = el("td"); td.appendChild(el("span", c.cls, c.label)); tr.appendChild(td);
+    tbody.appendChild(tr);
+  });
+  tb.appendChild(tbody); tw.appendChild(tb); wrap.appendChild(tw);
+  return wrap;
+}
+
+function renderData(){
+  var host = document.getElementById("dataOut");
+  if(!host) return;
+  host.textContent = "";
+
+  var real    = mem.prospects.filter(function(p){ return !p.example; });
+  var sent    = real.filter(function(p){ return !!p.sentAt; });
+  var replied = sent.filter(function(p){ return p.reply && p.reply.indexOf("No reply") !== 0; });
+  var pos     = sent.filter(function(p){ return p.reply === "Positive"; });
+  var unver   = real.filter(function(p){ return p.email && (!p.emailSource || p.emailSource.indexOf("UNVERIFIED") > -1); });
+
+  var top = el("div", "stages");
+  [["Prospects", real.length], ["Sent", sent.length], ["Replied", replied.length],
+   ["Positive", pos.length], ["Reply rate", confidence(sent.length).show ? pct(replied.length, sent.length) : "—"]
+  ].forEach(function(pair){
+    var d = el("div", "stage" + (pair[1] ? " hot" : ""));
+    d.appendChild(el("span", "n", String(pair[1])));
+    d.appendChild(el("span", "l", pair[0]));
+    top.appendChild(d);
+  });
+  host.appendChild(top);
+
+  var c = confidence(sent.length);
+  if(!c.show){
+    var f = el("div", "flagbar");
+    f.appendChild(el("b", null, "Not enough sends to compute a rate — "));
+    f.appendChild(document.createTextNode(sent.length + " recorded. Under 10 the number moves several points per reply, so no rate is shown rather than a misleading one. Around 30 it starts to mean something; around 100 you can act on it."));
+    host.appendChild(f);
+  }
+  if(unver.length){
+    var u = el("div", "flagbar");
+    u.appendChild(el("b", null, unver.length + " address" + (unver.length === 1 ? "" : "es") + " unverified or unsourced — "));
+    u.appendChild(document.createTextNode("record where every address came from. A guessed address that bounces damages the sending domain and the row it produces is worthless data."));
+    host.appendChild(u);
+  }
+
+  var byAngle = {}, byCat = {}, byChan = {};
+  function add(map, key, p){
+    if(!key) key = "Unrecorded";
+    if(!map[key]) map[key] = { sent:0, replied:0, pos:0 };
+    map[key].sent++;
+    if(p.reply && p.reply.indexOf("No reply") !== 0) map[key].replied++;
+    if(p.reply === "Positive") map[key].pos++;
+  }
+  sent.forEach(function(p){
+    add(byAngle, p.angle ? (ANGLES[p.angle] || p.angle) : "", p);
+    add(byCat,   p.category || "", p);
+    add(byChan,  p.channel || "", p);
+  });
+
+  host.appendChild(bucketTable("Reply rate by opening angle — the number nobody else has", byAngle, sent.length));
+  host.appendChild(bucketTable("Reply rate by category", byCat, sent.length));
+  host.appendChild(bucketTable("Reply rate by channel", byChan, sent.length));
+
+  var n = el("div", "note");
+  n.appendChild(el("b", null, "How to read this: "));
+  n.appendChild(document.createTextNode("the angle table is the one that compounds. Every send is one more data point on which observation makes a packaged food brand answer a stranger. That is a proprietary dataset, it cannot be bought, and it is worth more than any single client you win with it."));
+  host.appendChild(n);
+}
+
+function csvOut(){
+  var cols = ["company","category","contact","email","emailSource","angle","subject","channel","sentAt","status","reply","replyAt","replyText","offer","observation","gap","followup"];
+  function q(v){ v = (v === null || v === undefined) ? "" : String(v); return '"' + v.replace(/"/g, '""') + '"'; }
+  var rows = [cols.join(",")];
+  mem.prospects.filter(function(p){ return !p.example; }).forEach(function(p){
+    rows.push(cols.map(function(c){ return q(p[c]); }).join(","));
+  });
+  return rows.join("\n");
+}
+
+/* ---------------- pipeline wiring ---------------- */
+(function(){
+  var f = document.getElementById("pForm");
+  if(!f) return;
+  f.addEventListener("submit", function(e){
+    e.preventDefault();
+    var d = new FormData(f), p = { id: uid() };
+    d.forEach(function(v, k){ p[k] = String(v).trim(); });
+    if(!p.company){ toast("Brand is required"); return; }
+    if(p.reply && !p.replyAt) p.replyAt = new Date().toISOString().slice(0, 10);
+    mem.prospects.unshift(p);
+    persistProspect(p);
+    renderProspects();
+    f.reset();
+    toast("Added to pipeline");
+  });
+  var ce = document.getElementById("clearEx");
+  if(ce) ce.addEventListener("click", function(){
+    var gone = mem.prospects.filter(function(p){ return p.example; });
+    mem.prospects = mem.prospects.filter(function(p){ return !p.example; });
+    gone.forEach(function(p){ removeProspect(p.id); });
+    lsWrite(); renderProspects(); toast(gone.length ? "Example rows removed" : "No example rows");
+  });
+  var ec = document.getElementById("expCsv");
+  if(ec) ec.addEventListener("click", function(){
+    var real = mem.prospects.filter(function(p){ return !p.example; });
+    if(!real.length){ toast("Nothing to export yet"); return; }
+    copyText(csvOut(), real.length + " rows copied");
+  });
+})();
+
+/* ---------------- intake: eighteen fields, seven documents ---------------- */
+var BLOCKING = {
+  business:"1 · Business", product:"3 · Product for this run", audience:"4 · Audience",
+  goal:"6 · Campaign goal", platform:"7 · Platform", cta:"8 · Call to action",
+  logo:"10 · Logo files", images:"11 · Product images", deadline:"14 · Deadline",
+  must:"18 · Must include + proof"
+};
+function intakeVals(){
+  var f = document.getElementById("iForm"), o = {};
+  if(!f) return o;
+  Array.prototype.forEach.call(f.elements, function(e){
+    if(e.name) o[e.name] = String(e.value || "").trim();
+  });
+  return o;
+}
+function missingBlocking(){
+  var v = intakeVals();
+  return Object.keys(BLOCKING).filter(function(k){ return !v[k]; });
+}
+function renderGapBar(){
+  var host = document.getElementById("gapBar");
+  if(!host) return;
+  host.textContent = "";
+  var miss = missingBlocking();
+  if(miss.length){
+    var w = el("div", "flagbar");
+    w.appendChild(el("b", null, miss.length + " blocking field" + (miss.length === 1 ? "" : "s") + " unanswered — "));
+    w.appendChild(document.createTextNode(miss.map(function(k){ return BLOCKING[k]; }).join(" · ")));
+    host.appendChild(w);
+  } else {
+    var g = el("div", "note");
+    g.appendChild(el("b", null, "All ten blocking fields answered — "));
+    g.appendChild(document.createTextNode("intake is complete enough to brief production."));
+    host.appendChild(g);
+  }
+}
+function askOr(v, question){ return v ? v : "[ UNANSWERED — ask: " + question + " ]"; }
+
+function buildBrief(){
+  var v = intakeVals();
+  var miss = missingBlocking();
+  var L = [];
+  function h(t){ L.push("", "=".repeat(64), t.toUpperCase(), "=".repeat(64)); }
+
+  h("Document 1 · Client profile");
+  L.push("Business      : " + askOr(v.business, "legal name, size, location"));
+  L.push("Website       : " + (v.website || "[ not supplied ]"));
+  L.push("Personality   : " + (v.brand || "[ not supplied — infer nothing, ask ]"));
+  L.push("Competitors   : " + (v.competitors || "[ not supplied ]"));
+
+  h("Document 2 · Product and claim sheet");
+  L.push("Product       : " + askOr(v.product, "exact SKU, size, shelf price"));
+  L.push("Current offer : " + (v.offer || "[ none stated ]"));
+  L.push("");
+  L.push("CLAIMS AND THEIR PROOF — no claim ships without a source on its own line:");
+  var claims = (v.must || "").split(/\n+/).filter(function(x){ return x.trim(); });
+  if(!claims.length) L.push("  [ UNANSWERED — every factual claim needs a proof source before it can appear in an ad ]");
+  claims.forEach(function(c){
+    var hasProof = /proof|source|certif|lab|invoice|document|video|photo|record/i.test(c);
+    L.push("  - " + c.trim() + (hasProof ? "" : "   <-- NO PROOF SOURCE STATED. Cannot be used until supplied."));
+  });
+
+  h("Document 3 · Audience and positioning");
+  L.push("Audience      : " + askOr(v.audience, "who buys this, age, region, what they already believe"));
+  L.push("Objective     : " + askOr(v.goal, "what this campaign is for"));
+  L.push("Platform      : " + askOr(v.platform, "where it runs"));
+  L.push("CTA           : " + askOr(v.cta, "exact action and where"));
+
+  h("Document 4 · Creative brief");
+  L.push("Style         : " + (v.style || "[ not supplied — do not invent a look, ask ]"));
+  L.push("References    : " + (v.refs || "[ none supplied ]"));
+  L.push("Prohibited    : " + (v.avoid || "[ none stated — ask, this is the cheapest revision you will ever avoid ]"));
+
+  h("Document 5 · Asset and reference requirements");
+  L.push("Logo          : " + askOr(v.logo, "vector files"));
+  L.push("Product images: " + askOr(v.images, "multiple angles on clean ground"));
+  L.push("");
+  L.push("REFERENCE FIDELITY RULE — non-negotiable on this job:");
+  L.push("  The supplied assets are the source of truth for identity.");
+  L.push("  Product shape, packaging, closure, label, logo and colour must survive every shot.");
+  L.push("  A beautiful frame that changes the product is a failed frame, not a style choice.");
+  if(v.images === "None" || v.images === "Phone photos only"){
+    L.push("");
+    L.push("  *** RISK: reference photography is " + v.images.toLowerCase() + ". Reference-locked");
+    L.push("      generation degrades sharply without clean product images. Either obtain");
+    L.push("      better photography before production, or price the risk into the quote. ***");
+  }
+
+  h("Document 6 · Constraints and prohibitions");
+  L.push("Deadline      : " + askOr(v.deadline, "hard date"));
+  L.push("Budget band   : " + (v.budget || "[ undisclosed ]"));
+  L.push("");
+  L.push("Standing prohibitions on every Apex job:");
+  L.push("  - No invented ingredients, origins, prices, awards or certifications.");
+  L.push("  - No fabricated testimonials, and no generated person implying an endorsement.");
+  L.push("  - No generated imagery implying an event that did not happen.");
+  L.push("  - No on-image text treated as final until a human has read it letter by letter.");
+
+  h("Document 7 · Open questions still owed to the client");
+  if(!miss.length){
+    L.push("None. Every blocking field is answered.");
+  } else {
+    L.push("Production does not start until these are answered. Nothing below is guessed.");
+    L.push("");
+    miss.forEach(function(k, i){ L.push("  " + (i + 1) + ". " + BLOCKING[k]); });
+  }
+  L.push("");
+  L.push("Generated " + new Date().toISOString().slice(0, 10) + " · APEX MEDIA GROUP · internal production document");
+  return L.join("\n").replace(/^\n/, "");
+}
+(function(){
+  var g = document.getElementById("genBrief"), c = document.getElementById("copyBrief"),
+      out = document.getElementById("briefOut"), f = document.getElementById("iForm");
+  if(f) f.addEventListener("input", renderGapBar);
+  if(f) f.addEventListener("change", renderGapBar);
+  if(g) g.addEventListener("click", function(){
+    out.textContent = buildBrief();
+    renderGapBar();
+    toast("Seven documents generated");
+  });
+  if(c) c.addEventListener("click", function(){ copyText(out.textContent, "Brief"); });
+})();
+
+/* ---------------- ad factory ---------------- */
+var FORMATS = [
+  { n:"Craving cut",        frame:"Extreme macro on the food itself, already in motion",           who:"No person. The product is the protagonist.", pace:"Fast — 5 cuts in 6 seconds",  hook:"Sensory. Sound and texture before any word.",   struct:"Macro texture → pull to product → hand enters → CTA card" },
+  { n:"Problem to solution",frame:"The bad version. The failure the customer knows.",              who:"Hands only, anonymous.",                     pace:"Slow then fast at the turn",  hook:"Named frustration in the first three words.",   struct:"The failure → the turn → the product working → proof line → CTA" },
+  { n:"Process proof",      frame:"Wide of the making. Equipment, hands, real space.",             who:"A maker, seen working, face optional.",      pace:"Deliberate — long holds",     hook:"A number or a duration stated flat.",           struct:"Wide of process → two macro details → finished product → the claim + its proof → CTA" },
+  { n:"Founder direct",     frame:"A person mid-sentence, looking at the lens.",                   who:"The founder, named.",                        pace:"Conversational, one long take", hook:"An admission, not a boast.",                  struct:"Direct address → product held → one reason → CTA spoken, not supered" },
+  { n:"Offer cut",          frame:"The product with the offer already legible.",                   who:"None, or a hand for scale.",                 pace:"Brisk, no lingering",         hook:"The offer stated in full, immediately.",        struct:"Offer super → product beauty → terms in plain words → deadline → CTA" }
+];
+function buildFactory(){
+  var f = document.getElementById("fForm"), v = {};
+  Array.prototype.forEach.call(f.elements, function(e){ if(e.name) v[e.name] = String(e.value || "").trim(); });
+  var L = [];
+  L.push("APEX AD FACTORY — FIVE-BUILD DIFFERENTIATION SET");
+  L.push("=".repeat(64));
+  L.push("Client    : " + (v.client || "[ unnamed ]"));
+  L.push("Product   : " + (v.product || "[ unspecified ]"));
+  L.push("Audience  : " + (v.audience || "[ unspecified ]"));
+  L.push("Offer     : " + (v.offer || "[ none ]"));
+  L.push("Platform  : " + v.platform);
+  L.push("Objective : " + v.objective);
+  L.push("CTA       : " + (v.cta || "[ unspecified ]"));
+  FORMATS.forEach(function(F, i){
+    L.push("", "-".repeat(64));
+    L.push("BUILD " + (i + 1) + " — " + F.n.toUpperCase());
+    L.push("-".repeat(64));
+    L.push("First frame   : " + F.frame);
+    L.push("Protagonist   : " + F.who);
+    L.push("Pace          : " + F.pace);
+    L.push("Hook pattern  : " + F.hook);
+    L.push("Shot structure: " + F.struct);
+    L.push("Carries offer : " + (F.n === "Offer cut" ? (v.offer || "[ no offer supplied — this build cannot run ]") : "no — offer withheld so the test stays clean"));
+    L.push("Ends on       : " + (v.cta || "[ CTA not supplied ]"));
+  });
+  L.push("", "=".repeat(64));
+  L.push("DIFFERENTIATION CHECK — all five must be true before generation");
+  L.push("=".repeat(64));
+  L.push("  1. No two builds open on the same first frame.        " + (new Set(FORMATS.map(function(x){ return x.frame; })).size === 5 ? "PASS" : "FAIL"));
+  L.push("  2. No two builds share a protagonist.                 " + (new Set(FORMATS.map(function(x){ return x.who; })).size === 5 ? "PASS" : "FAIL"));
+  L.push("  3. No two builds share a pace.                        " + (new Set(FORMATS.map(function(x){ return x.pace; })).size === 5 ? "PASS" : "FAIL"));
+  L.push("  4. No two builds share a hook pattern.                " + (new Set(FORMATS.map(function(x){ return x.hook; })).size === 5 ? "PASS" : "FAIL"));
+  L.push("  5. Exactly one build carries the offer.               PASS");
+  L.push("");
+  L.push("TESTING PLAN");
+  L.push("  Run all five to cold traffic at equal spend. Do not optimise for 72 hours.");
+  L.push("  Kill on hook rate at 3 seconds, not on purchases — purchases are too slow a signal.");
+  L.push("  The winner is a direction, not an ad. Rebuild three variants inside the winning direction.");
+  L.push("");
+  L.push("WHAT THIS DOCUMENT IS NOT");
+  L.push("  These are strategic skeletons. The hook lines, the product-true details and every");
+  L.push("  factual claim are a creative pass on top of this, written against the client's");
+  L.push("  proof sheet. Nothing here should be read as approved copy.");
+  return L.join("\n");
+}
+(function(){
+  var g = document.getElementById("fGen"), c = document.getElementById("fCopy"), out = document.getElementById("fOut");
+  if(g) g.addEventListener("click", function(){ out.textContent = buildFactory(); toast("Five builds generated"); });
+  if(c) c.addEventListener("click", function(){ copyText(out.textContent, "Factory brief"); });
+})();
+
+/* ---------------- outreach messages ---------------- */
+var OBSLINE = {
+  stale:  function(d){ return "your " + d + " has been carrying the whole account for a while now"; },
+  thin:   function(d){ return "you're running " + d + " and not much else"; },
+  "static": function(d){ return d + " is doing the work, but none of it moves"; },
+  launch: function(d){ return "you launched " + d + " and it only got the one post"; },
+  retail: function(d){ return "I saw the " + d + " announcement"; },
+  season: function(d){ return d + " is about five weeks out and nothing's up yet"; },
+  gap:    function(d){ return d + " is genuinely good organically, and none of it is running paid"; },
+  quality:function(d){ return d + " doesn't look like the rest of your brand"; }
+};
+function bestResearch(){
+  var rows = document.querySelectorAll("#rsheet input[data-rs]"), best = null;
+  Array.prototype.forEach.call(rows, function(i){
+    var v = String(i.value || "").trim();
+    if(v && (!best || v.length > best.v.length)) best = { k: i.getAttribute("data-rs"), v: v };
+  });
+  return best;
+}
+function buildMessages(){
+  var t = document.getElementById("obsType").value,
+      b = String(document.getElementById("obsBrand").value || "").trim() || "[brand]",
+      n = String(document.getElementById("obsName").value || "").trim() || "[first name]",
+      d = String(document.getElementById("obsDetail").value || "").trim() || "[the thing you saw]";
+  var obs = (OBSLINE[t] || OBSLINE.stale)(d);
+  var res = bestResearch();
+
+  var email =
+    "Subject: " + d + "\n\n" +
+    n + " — " + obs + ".\n\n" +
+    (res ? "Also noticed: " + res.v + "\n\n" : "") +
+    "I make food and drink ads. I'd like to build you three angles you haven't tested — " +
+    "using your own product photos, so it's your product and not a lookalike. Free, no call needed.\n\n" +
+    "If it's useful we can talk. If not, no reply needed.\n\n" +
+    "Larry\nApex Media Group";
+
+  var dm =
+    n + " — " + obs + ". I make food and drink ads and I'd like to build you three angles " +
+    "you haven't tested, free, using your own photos. No call needed. Want me to?";
+
+  var li =
+    n + ", " + obs + ".\n\n" +
+    "I build ad creative for packaged food and drink brands. I'd like to make you three " +
+    "angles you haven't run — off your existing product photography, so the product stays exactly your product.\n\n" +
+    "No charge and nothing owed. Worth a look?";
+
+  var fu =
+    n + " — made these anyway.\n\n" +
+    "Three angles for " + b + " you're not currently running. Attached.\n\n" +
+    "If creative ever becomes the bottleneck, I'm here. Otherwise I'll leave you alone.\n\nLarry";
+
+  return [
+    ["Email — day 0", email],
+    ["Instagram DM — day 0", dm],
+    ["LinkedIn — day 0", li],
+    ["Follow-up — day 4, sent whether or not they replied", fu]
+  ];
+}
+(function(){
+  var g = document.getElementById("obsGen"), s = document.getElementById("obsSave"), out = document.getElementById("obsOut");
+  if(g) g.addEventListener("click", function(){
+    out.textContent = "";
+    buildMessages().forEach(function(pair){
+      var blk = el("div", "blk");
+      blk.appendChild(el("div", "bl", pair[0]));
+      var pre = el("div", "brief", pair[1]);
+      blk.appendChild(pre);
+      var row = el("div", "row-actions");
+      var btn = el("button", "btn ghost sm", "Copy");
+      btn.type = "button";
+      btn.addEventListener("click", function(){ copyText(pair[1], pair[0]); });
+      row.appendChild(btn);
+      blk.appendChild(row);
+      out.appendChild(blk);
+    });
+    var warn = el("div", "note");
+    warn.appendChild(el("b", null, "Before you send: "));
+    warn.appendChild(document.createTextNode("the observation in line one has to be something you looked at yourself in the last 48 hours. If you did not verify it, delete it and go look. One wrong observation ends the conversation and gets screenshotted."));
+    out.appendChild(warn);
+    toast("Four messages written");
+  });
+  if(s) s.addEventListener("click", function(){
+    var res = bestResearch();
+    var p = {
+      id: uid(),
+      company: String(document.getElementById("obsBrand").value || "").trim(),
+      contact: String(document.getElementById("obsName").value || "").trim(),
+      angle: document.getElementById("obsType").value,
+      observation: String(document.getElementById("obsDetail").value || "").trim(),
+      gap: res ? (res.k + ": " + res.v) : "",
+      subject: String(document.getElementById("obsDetail").value || "").trim(),
+      offer: "5-Angle Test — $750",
+      channel: "Email",
+      status: "Identified"
+    };
+    if(!p.company){ toast("Brand is required"); return; }
+    mem.prospects.unshift(p);
+    persistProspect(p);
+    renderProspects();
+    toast("Saved to pipeline — add the verified address before sending");
+  });
+})();
+
+/* ---------------- spec portfolio ---------------- */
+var FOLIO = [
+  { cap:"Craving", brand:"Bayou Bloom", prod:"Dark Roux Gumbo Base · 16oz jar", hook:"Forty minutes of stirring, already done.", fmt:"9:16 · 8s · Meta Reels", note:"Macro roux in motion; jar never leaves frame long enough to be forgotten." },
+  { cap:"Problem", brand:"Gulf & Line", prod:"Wild Gulf white shrimp · 2lb frozen", hook:"You've bought watery shrimp before.", fmt:"9:16 · 12s · Meta + TikTok", note:"Opens on the failure the buyer already knows, turns on the product." },
+  { cap:"Process", brand:"Mesa Verde Chile Co.", prod:"Hatch green chile · roasted, frozen", hook:"Roasted in the field. Frozen in four hours.", fmt:"4:5 · 15s · Feed", note:"Duration claims carry an on-screen proof source; nothing stated without one." },
+  { cap:"Founder", brand:"Third Coast Roasters", prod:"Single-origin drip · 12oz bag", hook:"We got the first batch wrong.", fmt:"9:16 · 18s · TikTok", note:"Admission-led. Sells honesty in a category that oversells." },
+  { cap:"Offer", brand:"Marrow & Co.", prod:"Beef bone broth · 32oz", hook:"Two cases, free shipping, ends Sunday.", fmt:"1:1 · 6s · Retargeting", note:"Offer legible in frame one. Terms in plain words, no asterisk." },
+  { cap:"Launch", brand:"Petite Sœur", prod:"Cultured butter · 8oz block", hook:"A second flavour, finally.", fmt:"9:16 · 10s · Reels", note:"Built for a launch window; date-stamped and disposable by design." },
+  { cap:"Retail", brand:"Higgins Pickle Works", prod:"Half-sour spears · 24oz", hook:"Aisle nine now.", fmt:"4:5 · 8s · Geo-targeted feed", note:"Retail-support creative — drives to shelf, not to a cart." },
+  { cap:"Season", brand:"Ember Hill Cider", prod:"Dry cider · 4-pack cans", hook:"Five weeks to the first cold night.", fmt:"9:16 · 12s · Meta", note:"Seasonal build shipped ahead of the season, not during it." },
+  { cap:"Premium", brand:"Saltcellar", prod:"Flake finishing salt · 4oz tin", hook:"The last thing you add.", fmt:"1:1 · 7s · Brand", note:"No offer, no urgency. Positioning only — the hardest brief to do well." },
+  { cap:"Range", brand:"Verde Verde", prod:"Salsa verde · three heat levels", hook:"Mild is not an apology.", fmt:"9:16 · 14s · TikTok", note:"One product line, three SKUs, one continuous look across all three." }
+];
+function renderFolio(){
+  var fh = document.getElementById("folioFilters"), lh = document.getElementById("folioList");
+  if(!fh || !lh) return;
+  var caps = ["All"].concat(FOLIO.map(function(x){ return x.cap; }));
+  fh.textContent = ""; lh.textContent = "";
+
+  FOLIO.forEach(function(x, i){
+    var s = el("div", "spec");
+    s.setAttribute("data-cap", x.cap);
+    var hd = el("header");
+    hd.appendChild(el("span", "num", String(i + 1).padStart(2, "0")));
+    hd.appendChild(el("span", "kind", x.cap));
+    hd.appendChild(el("span", "specs", x.fmt));
+    s.appendChild(hd);
+    var bw = el("div", "bodyw");
+    bw.appendChild(el("h4", "client", x.brand));
+    bw.appendChild(el("div", "prod", x.prod + "  ·  CONCEPT / SPECULATIVE — fictional brand, no client relationship"));
+    bw.appendChild(el("div", "hook", "“" + x.hook + "”"));
+    bw.appendChild(el("div", null, x.note));
+    s.appendChild(bw);
+    lh.appendChild(s);
+  });
+
+  caps.forEach(function(c){
+    var b = el("button", null, c);
+    b.type = "button";
+    b.setAttribute("aria-pressed", c === "All" ? "true" : "false");
+    b.addEventListener("click", function(){
+      Array.prototype.forEach.call(fh.querySelectorAll("button"), function(x){ x.setAttribute("aria-pressed", "false"); });
+      b.setAttribute("aria-pressed", "true");
+      Array.prototype.forEach.call(lh.querySelectorAll(".spec"), function(s){
+        s.hidden = !(c === "All" || s.getAttribute("data-cap") === c);
+      });
+    });
+    fh.appendChild(b);
+  });
+}
+
+/* ---------------- nav ---------------- */
+var rail = document.getElementById("rail");
+rail.addEventListener("click", function(e){
+  var b = e.target.closest("button[data-p]");
+  if(!b) return;
+  Array.prototype.forEach.call(rail.querySelectorAll("button"), function(x){
+    x.setAttribute("aria-current", x === b ? "true" : "false");
+  });
+  ["pipeline","intake","production","qc","library","offers","sales","folio","outreach","factory","hfpack","money"].forEach(function(p){
+    document.getElementById("p-" + p).hidden = (p !== b.dataset.p);
+  });
+  window.scrollTo(0, 0);
+});
+
+/* ---------------- boot ---------------- */
+var saved = lsRead();
+if(saved && saved.prospects){ mem = { prospects: saved.prospects, qc: saved.qc || {} }; }
+else { mem.prospects = SEED.slice(); }
+renderProspects();
+renderQC();
+renderGapBar();
+renderFolio();
+setStorage("local");
+
+if(window.claude && typeof window.claude.use === "function"){
+  window.claude.use("db").then(function(d){
+    if(!d) return;
+    db = d;
+    setStorage("cloud");
+    return Promise.all([
+      db.collection("prospects").get().then(function(snap){
+        if(!snap || !snap.docs || !snap.docs.length){
+          mem.prospects.forEach(function(p){ db.collection("prospects").doc(p.id).set(p).catch(function(){}); });
+          return;
+        }
+        mem.prospects = snap.docs.map(function(doc){
+          var data = doc.data() || {};
+          data.id = data.id || doc.id;
+          return data;
+        });
+        renderProspects();
+      }).catch(function(){}),
+      db.doc("state/qc").get().then(function(snap){
+        if(snap && snap.exists){
+          var data = snap.data() || {};
+          if(data.checks){ mem.qc = data.checks; renderQC(); }
+        }
+      }).catch(function(){})
+    ]);
+  }).catch(function(){});
+}
+})();
+</script>
