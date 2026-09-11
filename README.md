@@ -1,7 +1,20 @@
 # apex-content-os
 
-Operating system for **Apex Media Group** — the content and outreach arm.
+**APEX CONTENT OS** — the internal operating system for **APEX AI CONTENT STUDIO**.
 Separate from `apex-kitchen-intelligence`, which is the software product.
+
+## Brand architecture
+
+| Layer | Name |
+|---|---|
+| Legal entity | Apex Hospitality Group LLC |
+| Customer-facing brand | **APEX AI CONTENT STUDIO** |
+| Internal software / OS | **APEX CONTENT OS** |
+| Repository | `apex-content-os` (internal technical name) |
+
+All customer-facing material — website, sales, offers, client documents,
+outreach, portfolio, presentations, marketing — uses **APEX AI CONTENT
+STUDIO**. "Apex Media Group" is retired as a customer-facing brand.
 
 ## What this is
 
@@ -17,7 +30,7 @@ is what this business sells.
 | Path | What |
 |---|---|
 | `site/index.html` | Public site. Single file, no build step. |
-| `ops/apex-media-ops.html` | Internal operating pass — pipeline, intake, QC gate, offers. Source for the published artifact. |
+| `ops/apex-content-os.html` | Internal operating pass — pipeline, intake, QC gate, offers. Source for the published artifact. |
 | `data/prospects.json` | Prospect + response dataset. See `data/README.md`. |
 | `outreach/emails/` | Live outreach drafts, one file per prospect. |
 | `docs/` | Standing rules, SOPs, offer stack. |

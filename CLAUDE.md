@@ -9,7 +9,27 @@ asking a question.
 
 ---
 
-## 0 · What this business is
+## 0 · BRAND ARCHITECTURE — permanent
+
+| Layer | Name | Used for |
+|---|---|---|
+| Legal entity | **Apex Hospitality Group LLC** | Contracts, invoices, filings, banking |
+| Customer-facing brand | **APEX AI CONTENT STUDIO** | Website, sales materials, offers, client documents, outreach, portfolio, presentations, marketing |
+| Internal software / OS | **APEX CONTENT OS** | This repository, the ops app, internal tooling |
+| Repository name | `apex-content-os` | Internal technical name. Does not need to match the customer-facing brand. |
+
+**"Apex Media Group" is retired as a customer-facing brand.** Do not use it
+going forward unless a specific existing legal or marketing asset temporarily
+requires it — and say so explicitly when that happens.
+
+Never change the legal entity name. No legal filings or external legal
+changes are made from this repository.
+
+Technical identifiers (storage keys, file names, IDs) are **not** brand
+strings. Do not rename one to match a brand — `apex-media-ops-v1` in the ops
+app stays as it is, because renaming it orphans every viewer's saved data.
+
+## 1 · What this business is
 
 A creative production business for **packaged food and beverage brands**.
 Packaged F&B is the primary ICP. Restaurants are secondary.
@@ -29,7 +49,7 @@ asset; protect it.
 
 ---
 
-## 1 · VISUAL FIDELITY & CONTINUITY PROTOCOL — permanent
+## 2 · VISUAL FIDELITY & CONTINUITY PROTOCOL — permanent
 
 > **NEVER SACRIFICE IDENTITY FOR BEAUTY.**
 > **REFERENCE FIDELITY COMES BEFORE CINEMATIC STYLE.**
@@ -49,7 +69,7 @@ asset; protect it.
 - **AI-generated material must never be presented as authentic footage when it
   is not.** Never use generated imagery to imply something happened that did
   not.
-- **Every significant asset must pass QC** (§2). No exceptions for deadline.
+- **Every significant asset must pass QC** (§3). No exceptions for deadline.
 - **Failed generations must be diagnosed, not blindly regenerated.** Name the
   defect and re-run against it.
 - **Maximum three attempts per shot.** If the third fails, **STOP.** Do not
@@ -79,7 +99,7 @@ everything.
 
 ---
 
-## 2 · QC GATE
+## 3 · QC GATE
 
 ### Hard-fail conditions — any one is an automatic reject
 
@@ -132,7 +152,7 @@ blocks delivery.
 
 ---
 
-## 3 · ONE-BUTTON MODE
+## 4 · ONE-BUTTON MODE
 
 Default operating posture. Execute; do not narrate options.
 
@@ -156,7 +176,7 @@ One concise question, not five. Do not stop execution over a minor unknown.
 
 ---
 
-## 4 · BUSINESS MODE — priority order
+## 5 · BUSINESS MODE — priority order
 
 1. **Revenue**
 2. **Client delivery**
@@ -173,7 +193,7 @@ alternative.
 
 ---
 
-## 5 · HIGGSFIELD
+## 6 · HIGGSFIELD
 
 - **Internal production infrastructure.** Not the product, and never the
   pitch. Never lead with the technology.
@@ -196,7 +216,7 @@ alternative.
 
 ---
 
-## 6 · UNIT ECONOMICS — track on every job
+## 7 · UNIT ECONOMICS — track on every job
 
 | Metric | Notes |
 |---|---|
@@ -221,15 +241,24 @@ Kill criteria are in `docs/offers.md` and are binding.
 
 ---
 
-## 7 · CLIENT PROTECTION
+## 8 · CLIENT PROTECTION
 
 - **Never fabricate.** Anything. See §1.
 - **Never guarantee results.** We sell production capacity, not performance.
 - **Never silently expand scope.** Scope changes are quoted, not absorbed.
-- **Two revision rounds included by default.** Where a specific offer in
-  `docs/offers.md` states a different count, that offer governs for that
-  engagement.
+- **Two revision rounds included by default.**
+- **When a specific package states a revision limit, that package limit
+  governs.**
+
+  | Package | Revisions included |
+  |---|---|
+  | 5-Angle Test | 1 |
+  | Creative Sprint | 2 |
+  | Campaign Build | 3 |
+  | (anything unstated) | 2 — the default |
+
 - **Additional revisions are billable.**
+- **Do not change pricing or revision limits without explicit instruction.**
 - A revision **changes an existing asset**; it never adds a concept.
 
 Not included, and say it before they ask: media buying, ad account
@@ -237,7 +266,7 @@ management, offer/pricing/landing-page strategy, unlimited revisions.
 
 ---
 
-## 8 · SALES & OUTREACH
+## 9 · SALES & OUTREACH
 
 Full rules in `docs/outreach-rules.md`. Binding summary:
 
@@ -259,7 +288,7 @@ competitors. Track it as its own angle.
 
 ---
 
-## 9 · THE DATASET
+## 10 · THE DATASET
 
 `data/prospects.json` is the compounding asset — not the pipeline, the
 answers. Which observation angle makes a packaged food brand reply is not
@@ -275,12 +304,12 @@ manufacture it away.
 
 ---
 
-## 10 · REPOSITORY
+## 11 · REPOSITORY
 
 | Path | What |
 |---|---|
 | `site/index.html` | Public site. Single file, no build step. |
-| `ops/apex-media-ops.html` | Internal operating pass. Source for the published artifact. |
+| `ops/apex-content-os.html` | Internal operating pass. Source for the published artifact. |
 | `data/prospects.json` | Prospect + response dataset. Schema in `data/README.md`. |
 | `outreach/emails/` | Live outreach drafts, one per prospect. |
 | `docs/fidelity-gate.md` | Long-form fidelity protocol. |
@@ -288,13 +317,13 @@ manufacture it away.
 | `docs/offers.md` | Offer stack, margin engine, kill criteria. |
 | `docs/claude-settings.example.json` | Example Gmail permission grant. Inert until copied to `.claude/settings.json`. |
 
-Before editing `ops/apex-media-ops.html`, verify it in a browser — it is a
+Before editing `ops/apex-content-os.html`, verify it in a browser — it is a
 single-file app with no test suite, and a ReferenceError at boot kills the
 entire page silently. This has happened once already.
 
 ---
 
-## 11 · REPORTING STANDARD
+## 12 · REPORTING STANDARD
 
 Separate **VERIFIED FACT**, **SOURCE INFORMATION**, **INFERENCE**, and
 **STRATEGIC OPINION**. Never present one as another.

@@ -7,7 +7,7 @@ or killed. Hour estimates are unmeasured. Both get corrected by real jobs.
 |---|---|---|---|---|---|
 | 5-Angle Test | 5 concepts x 3 ratios, 1 revision, full rights | 5 days | $750 | 11–13 | ~$60 |
 | Creative Sprint | 15–18 ads, 5 angles, hook variants, 2 revisions | 10 days | $2,250 | 20–25 | ~$90–110 |
-| Campaign Build | 28–35 assets, strategy, brand visual system | 3 weeks | $5,500 | 38–45 | ~$122–145 |
+| Campaign Build | 28–35 assets, strategy, brand visual system, 3 revisions | 3 weeks | $5,500 | 38–45 | ~$122–145 |
 | Always-On Starter | 8–10 ads/mo | monthly | $1,500/mo | 12–15 | ~$100–125 |
 | Always-On Growth | 15–18 ads/mo, winner refresh | monthly | $2,500/mo | 20–24 | ~$104–125 |
 | Always-On Scale | 28–32 ads/mo | monthly | $4,000/mo | 35–40 | ~$100–114 |

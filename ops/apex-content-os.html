@@ -1,4 +1,4 @@
-<title>Apex Media Pass</title>
+<title>Apex Content OS</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
 :root{
@@ -399,7 +399,7 @@ ul.beats .os{font-size:13px;font-family:var(--mono);font-size:11.5px;color:var(-
 </style>
 
 <header class="masthead">
-  <div class="wordmark">Apex<span>·</span>Media</div>
+  <div class="wordmark">Apex<span>·</span>Content OS</div>
   <div class="sub">Operations Pass &nbsp;/&nbsp; Food &amp; Bev Creative</div>
   <div class="storage"><span class="dot" id="dot"></span><span id="storageLabel">Connecting…</span></div>
 </header>
@@ -882,7 +882,7 @@ ul.beats .os{font-size:13px;font-family:var(--mono);font-size:11.5px;color:var(-
         <p>I run a small studio that makes ad creative for food and beverage brands. 15–18 new ads a month, five different strategic angles, built from product photos you already have. Days instead of weeks, and full commercial rights included.</p>
         <p>I'm a chef, which is honestly why I started this — most food creative gets the food wrong.</p>
         <p>I put together a short note on which angles [Brand] hasn't tested yet. Want me to send it? No pitch attached, and no reply needed if it's not useful.</p>
-        <p>— Larry<br>APEX Media Group</p>
+        <p>— Larry<br>APEX AI CONTENT STUDIO</p>
         <div class="rules">The first line must prove you looked at their real ads or don't send it. One ask. No attachments. No follow-up more than twice.</div>
       </div>
 
@@ -1244,6 +1244,9 @@ Every delivery includes a poster frame JPG per asset.</div>
 "use strict";
 
 /* ---------------- storage: db capability, localStorage fallback ---------------- */
+/* Storage key is a technical identifier, NOT a brand string.
+   Do not rename it to match the brand: changing it orphans every
+   viewer's locally saved pipeline data. */
 var LS = "apex-media-ops-v1";
 var mem = { prospects: [], qc: {} };
 var db = null;
@@ -1825,7 +1828,7 @@ function buildBrief(){
     miss.forEach(function(k, i){ L.push("  " + (i + 1) + ". " + BLOCKING[k]); });
   }
   L.push("");
-  L.push("Generated " + new Date().toISOString().slice(0, 10) + " · APEX MEDIA GROUP · internal production document");
+  L.push("Generated " + new Date().toISOString().slice(0, 10) + " · APEX AI CONTENT STUDIO · internal production document");
   return L.join("\n").replace(/^\n/, "");
 }
 (function(){
@@ -1934,7 +1937,7 @@ function buildMessages(){
     "I make food and drink ads. I'd like to build you three angles you haven't tested — " +
     "using your own product photos, so it's your product and not a lookalike. Free, no call needed.\n\n" +
     "If it's useful we can talk. If not, no reply needed.\n\n" +
-    "Larry\nApex Media Group";
+    "Larry\nApex AI Content Studio";
 
   var dm =
     n + " — " + obs + ". I make food and drink ads and I'd like to build you three angles " +
