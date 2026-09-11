@@ -66,7 +66,7 @@ professional commercial work, not proving the tool can do everything.
   rule this is a fabricated testimonial and the advertiser carries liability.
 - AI-generated text in an image is unreliable until a human reads it letter
   by letter.
-- Speculative work is labelled **CONCEPT / SPECULATIVE**, always.
+- Speculative work is labeled **CONCEPT / SPECULATIVE**, always.
 
 ## Campaign consistency — before any delivery
 

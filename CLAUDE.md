@@ -86,7 +86,7 @@ No AI-generated person appearing to endorse a product. Under the FTC's 2024
 rule that is a fabricated testimonial and the advertiser carries the
 liability. This constraint is a differentiator, not a limitation — say so.
 
-Speculative work is labelled **CONCEPT / SPECULATIVE**, always, on the site
+Speculative work is labeled **CONCEPT / SPECULATIVE**, always, on the site
 and in every pitch.
 
 ### Director's authority

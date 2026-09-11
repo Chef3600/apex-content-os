@@ -60,8 +60,13 @@ const stripped = html.replace(/<[^>]+>/g, '');
 const hits = [...stripped.matchAll(/apex[^A-Za-z0-9]{0,12}media/gi)].map(m => m[0]);
 if (hits.length) { hits.forEach(h => bad(`retired brand string in customer-facing text: "${h}"`)); }
 else ok('no "Apex Media" in rendered text');
-if (!/Apex AI Content Studio/i.test(html)) bad('customer-facing brand "Apex AI Content Studio" not found');
-else ok('Apex AI Content Studio present');
+// Customer-facing brand carries NO "AI". "Apex AI Content Studio" is retired
+// alongside "Apex Media Group" — internal names (APEX CONTENT OS) are unaffected.
+const aiHits = [...stripped.matchAll(/apex[^A-Za-z0-9]{0,12}ai\b/gi)].map(m => m[0]);
+if (aiHits.length) { aiHits.forEach(h => bad(`retired brand string in customer-facing text: "${h}"`)); }
+else ok('no "Apex AI" in rendered text');
+if (!/Apex Content Studio/i.test(stripped)) bad('customer-facing brand "Apex Content Studio" not found');
+else ok('Apex Content Studio present');
 if (!/Apex Hospitality Group LLC/.test(html)) bad('legal entity missing from footer');
 else ok('legal entity present');
 

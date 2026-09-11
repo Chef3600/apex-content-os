@@ -38,7 +38,7 @@ is what this business sells.
 ## Status — read this before claiming anything works
 
 - Site: **built, not deployed.** No domain attached.
-- Portfolio: **speculative.** Every piece is concept work with no client relationship. Labelled that way on the site and it stays that way.
+- Portfolio: **speculative.** Every piece is concept work with no client relationship. Labeled that way on the site and it stays that way.
 - Clients: **none.**
 - Revenue: **none.**
 - Prospects: 8 researched, **0 qualified** — the Ad Library check has not been run on any of them.

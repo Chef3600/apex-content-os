@@ -7,7 +7,7 @@ Save the gold APEX logo you already own here as `site/images/apex-logo.png`.
 **Do not generate it.** A regenerated wordmark is a hard-fail defect under
 `docs/fidelity-gate.md` — the same rule we apply to client logos applies to
 ours. Until the real file is here the nav falls back to a text wordmark, which
-is correct behaviour, not a placeholder to be filled with a generated image.
+is correct behavior, not a placeholder to be filled with a generated image.
 
 ## portfolio/
 

@@ -1,690 +1,482 @@
-<title>Apex AI Content Studio</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap">
+<meta charset="UTF-8">
+<title>Apex Content Studio &mdash; Commercial Content Production for Food, Product &amp; Hospitality Brands</title>
+<meta name="description" content="Apex Content Studio is a commercial creative studio producing food, product, hospitality and brand content for advertising, social media, e-commerce and campaigns. Commercial photography, short-form video and campaign production.">
+<meta name="keywords" content="commercial content studio, commercial photography, commercial video production, food photography, product photography, brand content, advertising creative, short-form video, content production">
+<meta property="og:title" content="Apex Content Studio">
+<meta property="og:description" content="Commercial content production for brands that want to be seen. Food, product, hospitality and brand content built for advertising, social and e-commerce.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#FBFAF7">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap">
 <style>
 :root{
-  --ground:#0B0C0E;
-  --raise:#131518;
-  --raise-2:#191C20;
-  --bone:#EDEAE3;
-  --bone-dim:#A9ADB0;
-  --bone-faint:#767B7F;
-  --rule:#24282C;
-  --rule-soft:#1B1E22;
-  --ember:#C9A15A;
-  --ember-soft:#241C0F;
-  --oxblood:#8E3B32;
+  --ground:#FBFAF7; --raise:#F2EFE9; --raise-2:#E8E3DA;
+  --ink:#16181A; --ink-mid:#4C5257; --ink-soft:#7E858B;
+  --rule:#DED8CE; --rule-soft:#EBE6DD;
+  --ember:#A8762C; --ember-soft:#F6EEE0;
+  --dark:#101214; --dark-raise:#191C1F;
+  --bone:#F2EFE9; --bone-dim:#AEB4B8; --bone-faint:#7C8286;
   --display:"Fraunces",Georgia,"Times New Roman",serif;
   --body:"Archivo",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --maxw:1120px;
+  --maxw:1160px;
 }
 *{box-sizing:border-box}
-body{
-  margin:0;background:var(--ground);color:var(--bone);
-  font-family:var(--body);font-size:16px;line-height:1.65;
-  -webkit-font-smoothing:antialiased;
-}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
 img{max-width:100%}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--ember);outline-offset:3px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
 @media (max-width:600px){.wrap{padding:0 20px}}
-
-.eyebrow{
-  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--ember);font-weight:600;margin-bottom:14px;
-}
-h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.08;margin:0;text-wrap:balance;letter-spacing:-.01em}
-h1{font-size:clamp(38px,6.4vw,74px)}
+.eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ember);font-weight:600;margin-bottom:14px}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.08;margin:0;text-wrap:balance;letter-spacing:-.015em}
+h1{font-size:clamp(40px,7vw,78px);letter-spacing:.01em}
 h2{font-size:clamp(28px,4.2vw,46px)}
 h3{font-size:20px;line-height:1.25}
 p{margin:0 0 18px;max-width:62ch}
-.lead{font-size:clamp(17px,1.9vw,20px);color:var(--bone-dim);line-height:1.6}
-
-/* nav */
-nav{
-  position:sticky;top:0;z-index:40;background:rgba(11,12,14,.92);
-  backdrop-filter:blur(10px);border-bottom:1px solid var(--rule-soft);
-}
-nav .inner{display:flex;align-items:center;gap:26px;height:62px;max-width:var(--maxw);margin:0 auto;padding:0 28px}
+.lead{font-size:clamp(17px,1.9vw,20px);color:var(--ink-mid);line-height:1.6}
+.dark{background:var(--dark);color:var(--bone)}
+.dark h1,.dark h2,.dark h3{color:var(--bone)}
+.dark .lead,.dark p{color:var(--bone-dim)}
+.dark .eyebrow{color:var(--ember)}
+.dark .shot{background:var(--dark-raise);border-color:#24282C}
+.dark .shot::after{color:var(--bone-faint)}
+nav{position:sticky;top:0;z-index:40;background:rgba(251,250,247,.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule-soft)}
+nav .inner{display:flex;align-items:center;gap:26px;height:64px;max-width:var(--maxw);margin:0 auto;padding:0 28px}
 .mark{font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:.02em;white-space:nowrap}
 .mark i{font-style:normal;color:var(--ember)}
-nav .links{display:flex;gap:22px;margin-left:auto;font-size:13.5px;color:var(--bone-dim)}
+nav .links{display:flex;gap:22px;margin-left:auto;font-size:13.5px;color:var(--ink-mid)}
 nav .links a{text-decoration:none}
-nav .links a:hover{color:var(--bone)}
-@media (max-width:820px){nav .links{display:none}}
-/* Small screens: the wordmark + CTA must fit 360px. Matters most while
-   images/apex-logo.png is absent and the nav falls back to text. */
-@media (max-width:560px){
-  nav .inner{gap:10px;padding:0 16px}
-  .btn.sm .lg{display:none}
-  .btn.sm .sm-only{display:inline}
-  .mark{font-size:13.5px;letter-spacing:0}
-  .logomark{height:26px}
-  .btn.sm{padding:8px 11px;font-size:10.5px;letter-spacing:.06em}
-}
-.btn{
-  display:inline-block;font-family:var(--body);font-size:13px;font-weight:600;
-  letter-spacing:.11em;text-transform:uppercase;text-decoration:none;
-  padding:12px 22px;border-radius:1px;border:1px solid var(--ember);
-  background:var(--ember);color:#0B0C0E;white-space:nowrap;
-}
-.btn:hover{background:#DDB878;border-color:#DDB878}
-.btn.ghost{background:none;color:var(--bone);border-color:var(--rule)}
+nav .links a:hover{color:var(--ink)}
+@media (max-width:900px){nav .links{display:none}}
+.btn{display:inline-block;font-family:var(--body);font-size:13px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;text-decoration:none;padding:13px 24px;border-radius:2px;border:1px solid var(--ember);background:var(--ember);color:#fff;white-space:nowrap}
+.btn:hover{background:#8F6224;border-color:#8F6224}
+.btn.ghost{background:none;color:var(--ink);border-color:var(--rule)}
 .btn.ghost:hover{border-color:var(--ember);color:var(--ember);background:none}
+.dark .btn.ghost{color:var(--bone);border-color:#2C3135}
 .btn.sm{padding:9px 16px;font-size:11.5px}
 .btn.sm .sm-only{display:none}
-.ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
-
-section{padding:82px 0;border-top:1px solid var(--rule-soft)}
-section:first-of-type{border-top:0}
-@media (max-width:600px){section{padding:58px 0}}
-
-/* hero */
-.hero{padding:96px 0 84px;border-top:0}
-.hero .kicker{
-  font-family:var(--body);font-size:12px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--bone-faint);margin-bottom:20px;
-}
-.hero h1{max-width:16ch}
-.hero .sub{margin-top:24px;max-width:56ch;font-size:clamp(17px,2vw,20px);color:var(--bone-dim)}
-.hero .under{
-  margin-top:34px;padding-top:22px;border-top:1px solid var(--rule);
-  display:flex;gap:38px;flex-wrap:wrap;font-size:13.5px;color:var(--bone-faint);
-}
+.ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+section{padding:88px 0;border-top:1px solid var(--rule-soft)}
+section.dark{border-top:0}
+@media (max-width:600px){section{padding:60px 0}}
+.hero{padding:0;border-top:0}
+.hero .herowrap{max-width:var(--maxw);margin:0 auto;padding:76px 28px 0}
+@media (max-width:600px){.hero .herowrap{padding:52px 20px 0}}
+.hero .kicker{font-family:var(--body);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--ember);margin-bottom:20px;font-weight:600}
+.hero h1{max-width:14ch}
+.hero .sub{margin-top:22px;max-width:52ch;font-size:clamp(17px,2vw,21px);color:var(--bone-dim)}
+.hero .under{margin-top:40px;padding:22px 0 76px;border-top:1px solid #24282C;display:flex;gap:38px;flex-wrap:wrap;font-size:13.5px;color:var(--bone-faint)}
 .hero .under b{display:block;color:var(--bone);font-weight:600;font-size:15px;margin-bottom:2px}
-
-/* problem strip */
-.strip{background:var(--raise);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.herofull{width:100%}
+.shot{position:relative;overflow:hidden;background:var(--raise-2);border:1px solid var(--rule)}
+.shot::after{content:attr(data-slot);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);line-height:1.8;overflow-wrap:anywhere;word-break:break-word}
+.shot img{position:relative;z-index:2;display:block;width:100%;height:100%;object-fit:cover}
+.shot.p45{aspect-ratio:4/5}
+.shot.p169{aspect-ratio:16/9}
+.shot.p11{aspect-ratio:1/1}
+.shot.p219{aspect-ratio:21/9}
+.logomark{height:44px;width:auto;display:block}
+.logoslot{display:flex;align-items:center;gap:10px;text-decoration:none}
 .strip .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:34px;margin-top:34px}
 @media (max-width:820px){.strip .grid{grid-template-columns:1fr;gap:26px}}
 .stat{border-left:2px solid var(--ember);padding-left:16px}
 .stat .n{font-family:var(--display);font-size:34px;font-weight:600;line-height:1.1}
-.stat p{font-size:14px;color:var(--bone-dim);margin:6px 0 0}
-
-/* services */
+.stat p{font-size:14px;color:var(--ink-mid);margin:6px 0 0}
 .svc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--rule-soft);margin-top:40px;border:1px solid var(--rule-soft)}
 @media (max-width:760px){.svc{grid-template-columns:1fr}}
 .svc > div{background:var(--ground);padding:28px 26px}
 .svc .no{font-size:11px;letter-spacing:.2em;color:var(--ember);font-weight:600;margin-bottom:10px}
 .svc h3{margin-bottom:8px}
-.svc p{font-size:14.5px;color:var(--bone-dim);margin:0}
-
-/* image slots — real <img> over a labelled placeholder */
-.shot{position:relative;overflow:hidden;background:var(--raise-2);border-bottom:1px solid var(--rule-soft)}
-.shot::after{
-  content:attr(data-slot);position:absolute;inset:0;display:flex;
-  align-items:center;justify-content:center;text-align:center;padding:18px;
-  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--bone-faint);line-height:1.8;
-  overflow-wrap:anywhere;word-break:break-word;
-}
-.shot img{position:relative;z-index:2;display:block;width:100%;height:100%;object-fit:cover}
-.shot.p45{aspect-ratio:4/5}
-.shot.p169{aspect-ratio:16/9}
-.logomark{
-  height:34px;width:auto;display:block;
-  font-family:var(--display);font-weight:700;font-size:17px;
-  letter-spacing:.02em;color:var(--bone);white-space:nowrap;
-}
-.logoslot{display:flex;align-items:center;gap:10px}
-.hero .heroshot{margin-top:44px;border:1px solid var(--rule)}
-.bandshot{border:1px solid var(--rule)}
-
-/* portfolio */
-.reel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:38px}
+.svc p{font-size:14.5px;color:var(--ink-mid);margin:0}
+.craft{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:36px}
+@media (max-width:880px){.craft{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.studio2{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center;margin-top:14px}
+@media (max-width:880px){.studio2{grid-template-columns:1fr;gap:28px}}
+.studiogrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ba{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:20px;align-items:center;margin-top:38px}
+@media (max-width:980px){.ba{grid-template-columns:1fr;gap:16px}.ba .arrow{transform:rotate(90deg);justify-self:center}}
+.ba .arrow{font-size:24px;color:var(--ember);line-height:1}
+.balabel{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px;font-weight:600}
+.plan{border:1px solid var(--rule);background:var(--raise);padding:20px 22px;border-radius:2px}
+.plan ul{list-style:none;margin:0;padding:0;font-size:14px;color:var(--ink-mid)}
+.plan li{padding:5px 0 5px 16px;position:relative}
+.plan li::before{content:"";position:absolute;left:0;top:13px;width:7px;height:1px;background:var(--ember)}
+.reel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:38px}
 @media (max-width:880px){.reel{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:560px){.reel{grid-template-columns:1fr}}
-.card{border:1px solid var(--rule);background:var(--raise);display:flex;flex-direction:column}
-.card .top{
-  padding:16px 18px;border-bottom:1px solid var(--rule-soft);
-  display:flex;align-items:baseline;gap:10px;
-}
-.card .type{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ember);font-weight:600}
-.card .len{margin-left:auto;font-size:11px;color:var(--bone-faint)}
-.card .body{padding:18px}
-.card .name{font-family:var(--display);font-size:19px;font-weight:600;margin-bottom:3px}
-.card .cat{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--bone-faint);margin-bottom:12px}
-.card .hookline{font-size:14.5px;color:var(--bone);line-height:1.5;border-left:2px solid var(--rule);padding-left:12px}
-.spec-note{
-  margin-top:26px;padding:14px 18px;border:1px dashed var(--rule);
-  font-size:13.5px;color:var(--bone-dim);
-}
-.spec-note b{color:var(--bone)}
-
-/* process */
+.card{display:flex;flex-direction:column}
+.card .meta{padding:12px 2px 0}
+.card .type{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ember);font-weight:600}
+.card .name{font-family:var(--display);font-size:17px;font-weight:600;margin-top:4px}
+.card .cat{font-size:12px;color:var(--ink-soft)}
+.spec-note{margin-top:28px;padding:14px 18px;border:1px dashed var(--rule);font-size:13.5px;color:var(--ink-mid);border-radius:2px}
+.spec-note b{color:var(--ink)}
 ol.proc{list-style:none;margin:38px 0 0;padding:0;counter-reset:p}
-ol.proc li{
-  counter-increment:p;display:grid;grid-template-columns:52px minmax(0,1fr);gap:20px;
-  padding:20px 0;border-bottom:1px solid var(--rule-soft);
-}
+ol.proc li{counter-increment:p;display:grid;grid-template-columns:52px minmax(0,1fr);gap:20px;padding:20px 0;border-bottom:1px solid var(--rule-soft)}
 ol.proc li:last-child{border-bottom:0}
-ol.proc li::before{
-  content:counter(p,decimal-leading-zero);
-  font-family:var(--display);font-size:22px;color:var(--ember);line-height:1.2;
-}
+ol.proc li::before{content:counter(p,decimal-leading-zero);font-family:var(--display);font-size:22px;color:var(--ember);line-height:1.2}
 ol.proc h3{margin-bottom:5px}
-ol.proc p{font-size:14.5px;color:var(--bone-dim);margin:0}
-
-/* pricing */
+ol.proc p{font-size:14.5px;color:var(--ink-mid);margin:0}
 .tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:38px}
 @media (max-width:880px){.tiers{grid-template-columns:1fr}}
-.tier{border:1px solid var(--rule);padding:26px 24px;display:flex;flex-direction:column;background:var(--raise)}
-.tier.mid{border-color:var(--ember);background:var(--raise-2)}
+.tier{border:1px solid var(--rule);padding:26px 24px;display:flex;flex-direction:column;background:var(--raise);border-radius:2px}
+.tier.mid{border-color:var(--ember);background:var(--ember-soft)}
 .tier .tn{font-family:var(--display);font-size:23px;font-weight:600}
-.tier .tp{font-size:13px;color:var(--bone-faint);margin:4px 0 18px;letter-spacing:.04em}
-.tier ul{list-style:none;margin:0 0 22px;padding:0;font-size:14.5px;color:var(--bone-dim)}
+.tier .tp{font-size:13px;color:var(--ink-soft);margin:4px 0 18px;letter-spacing:.04em}
+.tier ul{list-style:none;margin:0 0 22px;padding:0;font-size:14.5px;color:var(--ink-mid)}
 .tier li{padding:6px 0 6px 18px;position:relative}
-.tier li::before{content:"—";position:absolute;left:0;color:var(--ember)}
+.tier li::before{content:"\2014";position:absolute;left:0;color:var(--ember)}
 .tier .btn{margin-top:auto;text-align:center;white-space:normal}
-.tier .badge{
-  display:inline-block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--ember);border:1px solid var(--ember);padding:2px 8px;margin-bottom:12px;
-}
-
-/* subscription band */
-.band{background:var(--raise);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.tier .badge{display:inline-block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ember);border:1px solid var(--ember);padding:2px 8px;margin-bottom:12px}
+.plans{border:1px solid #24282C;border-radius:2px}
+.planrow{display:flex;align-items:baseline;gap:14px;padding:15px 18px;border-bottom:1px solid #1E2225}
+.planrow:last-child{border-bottom:0}
+.planrow .pn{font-family:var(--display);font-size:18px;font-weight:600;min-width:92px;color:var(--bone)}
+.planrow .pd{font-size:13.5px;color:var(--bone-dim);flex:1}
+.planrow .pp{font-size:14px;color:var(--ember);white-space:nowrap;font-weight:600}
 .band .two{display:grid;grid-template-columns:1fr .8fr 1fr;gap:38px;align-items:start}
 @media (max-width:980px){.band .two{grid-template-columns:1fr;gap:30px}}
-.plans{border:1px solid var(--rule)}
-.plan{display:flex;align-items:baseline;gap:14px;padding:15px 18px;border-bottom:1px solid var(--rule-soft)}
-.plan:last-child{border-bottom:0}
-.plan .pn{font-family:var(--display);font-size:18px;font-weight:600;min-width:92px}
-.plan .pd{font-size:13.5px;color:var(--bone-dim);flex:1}
-.plan .pp{font-size:14px;color:var(--ember);white-space:nowrap;font-weight:600}
-
-/* about */
 .about{display:grid;grid-template-columns:1fr 1fr;gap:48px}
 @media (max-width:820px){.about{grid-template-columns:1fr;gap:28px}}
 .creed{border-left:2px solid var(--ember);padding-left:20px}
-.creed div{padding:9px 0;border-bottom:1px solid var(--rule-soft);font-size:14.5px;color:var(--bone-dim)}
+.creed div{padding:9px 0;border-bottom:1px solid var(--rule-soft);font-size:14.5px;color:var(--ink-mid)}
 .creed div:last-child{border-bottom:0}
-.creed b{color:var(--bone);font-weight:600}
-
-/* faq */
+.creed b{color:var(--ink);font-weight:600}
 details{border-bottom:1px solid var(--rule-soft);padding:16px 0}
-details summary{
-  cursor:pointer;font-family:var(--display);font-size:19px;font-weight:600;
-  list-style:none;display:flex;gap:14px;align-items:baseline;
-}
+details summary{cursor:pointer;font-family:var(--display);font-size:19px;font-weight:600;list-style:none;display:flex;gap:14px;align-items:baseline}
 details summary::-webkit-details-marker{display:none}
 details summary::after{content:"+";margin-left:auto;color:var(--ember);font-family:var(--body);font-size:20px;line-height:1}
-details[open] summary::after{content:"–"}
-details p{margin:12px 0 0;font-size:15px;color:var(--bone-dim)}
-
-/* contact */
+details[open] summary::after{content:"\2013"}
+details p{margin:12px 0 0;font-size:15px;color:var(--ink-mid)}
 .close{text-align:center;padding:96px 0}
 .close h2{max-width:20ch;margin:0 auto}
 .close p{margin:22px auto 0}
-.close .ctas{justify-content:center}
-.close .fine{margin-top:34px;font-size:13px;color:var(--bone-faint)}
-
 .lead-form{max-width:720px;margin:36px auto 0;text-align:left}
 .lf-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media (max-width:640px){.lf-grid{grid-template-columns:1fr}}
 .lead-form label{display:flex;flex-direction:column;gap:6px}
 .lead-form label.wide{grid-column:1/-1}
-.lead-form span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--bone-faint)}
-.lead-form input,.lead-form select,.lead-form textarea{
-  background:var(--raise);border:1px solid var(--rule);color:var(--bone);
-  padding:11px 13px;border-radius:1px;font:inherit;font-size:15px;width:100%;
-}
+.lead-form span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.lead-form input,.lead-form select,.lead-form textarea{background:#fff;border:1px solid var(--rule);color:var(--ink);padding:11px 13px;border-radius:2px;font:inherit;font-size:15px;width:100%}
 .lead-form textarea{resize:vertical}
 .lf-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
-.lf-fine{margin-top:20px;font-size:13px;color:var(--bone-faint)}
-.lf-sent{
-  margin-top:18px;padding:13px 16px;border-left:3px solid var(--ember);
-  background:var(--ember-soft);font-size:14px;
-}
-footer{border-top:1px solid var(--rule-soft);padding:34px 0;font-size:13px;color:var(--bone-faint)}
+.lf-fine{margin-top:20px;font-size:13px;color:var(--ink-soft)}
+.lf-sent{margin-top:18px;padding:13px 16px;border-left:3px solid var(--ember);background:var(--ember-soft);font-size:14px}
+footer{border-top:1px solid var(--rule-soft);padding:36px 0;font-size:13px;color:var(--ink-soft)}
 footer .fw{display:flex;gap:20px;flex-wrap:wrap;align-items:center}
-footer .fw .mark{font-size:15px}
+footer .fw .mark{font-size:15px;color:var(--ink)}
 footer .r{margin-left:auto}
+@media (max-width:560px){
+  nav .inner{gap:10px;padding:0 16px}
+  .btn.sm .lg{display:none}
+  .btn.sm .sm-only{display:inline}
+  .mark{font-size:13.5px;letter-spacing:0}
+  .logomark{height:34px}
+  .btn.sm{padding:8px 11px;font-size:10.5px;letter-spacing:.06em}
+}
 </style>
 
 <nav>
   <div class="inner">
-    <a class="logoslot" href="#" style="text-decoration:none">
-      <img class="logomark" src="images/apex-logo.png" alt="Apex AI Content Studio" width="160" height="34" decoding="async">
+    <a class="logoslot" href="#top">
+      <img class="logomark" src="images/apex-logo.png" alt="Apex Content Studio" width="61" height="44" decoding="async">
     </a>
     <div class="links">
       <a href="#work">Work</a>
+      <a href="#studio">The Studio</a>
       <a href="#services">Services</a>
       <a href="#process">Process</a>
       <a href="#pricing">Pricing</a>
-      <a href="#faq">FAQ</a>
     </div>
-    <a class="btn sm" href="#contact"><span class="lg">Book a consultation</span><span class="sm-only">Book a call</span></a>
+    <a class="btn sm" href="#contact"><span class="lg">Start a project</span><span class="sm-only">Start</span></a>
   </div>
 </nav>
 
-<!-- ============ HERO ============ -->
-<header class="hero">
-  <div class="wrap">
-    <div class="kicker">Commercial creative studio · Packaged food &amp; beverage</div>
-    <h1>Your ads stop working every few weeks.</h1>
-    <p class="sub">We build packaged food and beverage brands a month of fresh, testable ad creative in days — from the product photos you already have. Jars, bottles, bags, cans. No shoot to schedule, no creators to chase, and full commercial rights on everything we make.</p>
+<header class="hero dark" id="top">
+  <div class="herowrap">
+    <div class="kicker">Commercial content production</div>
+    <h1>Apex Content Studio</h1>
+    <p class="sub">Commercial content for brands that need to stay visible. Food, product, hospitality and brand work built for advertising, social media, e-commerce and campaigns.</p>
     <div class="ctas">
-      <a class="btn" href="#contact">Book a creative consultation</a>
-      <a class="btn ghost" href="#contact">Request a sample concept</a>
+      <a class="btn" href="#work">See our work</a>
+      <a class="btn ghost" href="#contact">Start a project</a>
     </div>
     <div class="under">
       <div><b>5 days</b>First concepts back</div>
-      <div><b>15–18</b>Finished ads per month</div>
+      <div><b>15&ndash;18</b>Finished assets per month</div>
       <div><b>Full rights</b>No usage fees, ever</div>
       <div><b>Chef-led</b>Every frame reviewed</div>
     </div>
-    <div class="shot p169 heroshot" data-slot="Food · Seared duck breast">
-          <img src="images/portfolio/food/seared-duck-breast-macro.jpg" alt="Sliced seared duck breast with crisp rendered skin, shot in bright daylight" loading="eager" decoding="async" width="2000" height="1125">
-    </div>
+  </div>
+  <div class="shot p219 herofull" data-slot="Hero &mdash; cinema camera filming a plated dish on a bright set">
+    <img src="images/production/hero-camera-filming-dish.jpg" alt="Cinema camera on a tripod filming a plated dish on a bright commercial food set" loading="eager" decoding="async" width="2100" height="900">
   </div>
 </header>
 
-<!-- ============ PROBLEM ============ -->
 <section class="strip">
   <div class="wrap">
     <div class="eyebrow">The problem</div>
-    <h2>It isn't your product. It's your throughput.</h2>
-    <p class="lead">Ad creative fatigues on a three-to-six week cycle. Most packaged brands your size can produce two or three new ads in a month — so you are permanently behind the decay curve. Then performance slips, and it looks like a media problem, or a product problem, when it is a production problem.</p>
+    <h2>It is not your product. It is your throughput.</h2>
+    <p class="lead">Ad creative fatigues on a three-to-six week cycle. Most brands your size can produce two or three new assets in a month, so you are permanently behind the decay curve. Then performance slips, and it looks like a media problem, or a product problem, when it is a production problem.</p>
     <div class="grid">
-      <div class="stat">
-        <div class="n">2–4</div>
-        <p>New creatives the typical brand ships per month, against published benchmarks showing the fastest-scaling brands shipping 30+.</p>
-      </div>
-      <div class="stat">
-        <div class="n">3–6 wks</div>
-        <p>How long a performing ad typically holds before frequency-driven fatigue sets in and CTR starts to slide.</p>
-      </div>
-      <div class="stat">
-        <div class="n">$5,500+</div>
-        <p>Typical all-in monthly cost of an eight-video creator programme once usage rights, revisions and shipping are counted.</p>
-      </div>
+      <div class="stat"><div class="n">2&ndash;4</div><p>New creatives the typical brand ships per month, against published benchmarks showing the fastest-scaling brands shipping 30 or more.</p></div>
+      <div class="stat"><div class="n">3&ndash;6 wks</div><p>How long a performing ad typically holds before frequency-driven fatigue sets in and click-through starts to slide.</p></div>
+      <div class="stat"><div class="n">$5,500+</div><p>Typical all-in monthly cost of an eight-video creator program once usage rights, revisions and shipping are counted.</p></div>
     </div>
-    <p style="margin-top:26px;font-size:13px;color:var(--bone-faint);max-width:70ch">Figures are published third-party benchmarks for the DTC and creator markets, not claims about your account. We can tell you what creative volume costs. We cannot tell you what your numbers will do.</p>
+    <p style="margin-top:26px;font-size:13px;color:var(--ink-soft);max-width:70ch">Figures are published third-party benchmarks for the direct-to-consumer and creator markets, not claims about your account. We can tell you what creative volume costs. We cannot tell you what your numbers will do.</p>
   </div>
 </section>
 
-<!-- ============ SERVICES ============ -->
+<section class="dark" id="studio">
+  <div class="wrap">
+    <div class="eyebrow">The studio</div>
+    <div class="studio2">
+      <div>
+        <h2>Good content starts with good direction.</h2>
+        <p class="lead">We combine real production knowledge with modern creative tools to build content designed for the way people actually consume media.</p>
+        <p>Camera, lens, light, set, food, product, monitor. The decisions that make a frame work are made before anything is captured, and they are the same decisions every time.</p>
+      </div>
+      <div class="studiogrid">
+        <div class="shot p11" data-slot="Studio &mdash; cinema camera body and lens"><img src="images/production/cinema-camera-lens-detail.jpg" alt="Close detail of a cinema camera body and prime lens" loading="lazy" decoding="async" width="900" height="900"></div>
+        <div class="shot p11" data-slot="Studio &mdash; lighting set"><img src="images/production/lighting-setup-food-set.jpg" alt="Studio lighting set built around a food table" loading="lazy" decoding="async" width="900" height="900"></div>
+        <div class="shot p11" data-slot="Studio &mdash; camera monitor"><img src="images/production/camera-monitor-composition.jpg" alt="Camera monitor showing a plated dish composition" loading="lazy" decoding="async" width="900" height="900"></div>
+        <div class="shot p11" data-slot="Studio &mdash; product set"><img src="images/production/product-photography-setup.jpg" alt="Product photography table set with a softbox and packaged goods" loading="lazy" decoding="async" width="900" height="900"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="craft">
+  <div class="wrap">
+    <div class="eyebrow">Craft</div>
+    <h2>Shot with intention.</h2>
+    <p class="lead">Every frame starts with a purpose: the angle, the light, the movement, the composition and the message.</p>
+    <div class="craft">
+      <div class="shot p45" data-slot="Craft &mdash; camera aimed at a dish"><img src="images/production/camera-aimed-at-dish.jpg" alt="Camera framed on a plated dish at table height" loading="lazy" decoding="async" width="900" height="1125"></div>
+      <div class="shot p45" data-slot="Craft &mdash; lens detail"><img src="images/production/lens-aperture-detail.jpg" alt="Prime lens aperture ring and focus markings in close detail" loading="lazy" decoding="async" width="900" height="1125"></div>
+      <div class="shot p45" data-slot="Craft &mdash; operator filming"><img src="images/production/operator-filming-food-scene.jpg" alt="Camera operator filming a food scene with hands on the rig" loading="lazy" decoding="async" width="900" height="1125"></div>
+      <div class="shot p45" data-slot="Craft &mdash; creative workstation"><img src="images/production/creative-workstation-grading.jpg" alt="Creative workstation with food frames open on screen" loading="lazy" decoding="async" width="900" height="1125"></div>
+    </div>
+  </div>
+</section>
+
 <section id="services">
   <div class="wrap">
     <div class="eyebrow">What we make</div>
-    <h2>Five strategically different ads. Not five edits of one.</h2>
+    <h2>Seven ways we put your product in front of people.</h2>
     <p class="lead">Every build starts with an objective and a hook before it gets a single shot. Volume without variety is just noise at scale.</p>
     <div class="svc">
-      <div>
-        <div class="no">01</div>
-        <h3>Product hero films</h3>
-        <p>Your SKU as the subject. Macro texture, pour, sizzle, label reveal — the shots that make a $14 jar read like a $14 jar.</p>
-      </div>
-      <div>
-        <div class="no">02</div>
-        <h3>Social ads that get tested</h3>
-        <p>Reels, TikTok and Meta placements built as strategically different angles, so a test tells you something instead of confirming what you already ran.</p>
-      </div>
-      <div>
-        <div class="no">03</div>
-        <h3>E-commerce and PDP imagery</h3>
-        <p>Product stills for your Shopify pages, email, and retailer sell sheets. The pictures that carry the sale after the ad earns the click.</p>
-      </div>
-      <div>
-        <div class="no">04</div>
-        <h3>Launch campaigns</h3>
-        <p>A new SKU usually gets one hero asset and nothing to follow it, so momentum dies in week two. We build the set that carries weeks two through six.</p>
-      </div>
-      <div>
-        <div class="no">05</div>
-        <h3>Seasonal and promotional</h3>
-        <p>Dated, urgent, built as swappable templates so one master runs the whole window instead of being rebuilt every week.</p>
-      </div>
-      <div>
-        <div class="no">06</div>
-        <h3>Brand and origin story</h3>
-        <p>How it is made and who makes it — the work that supports a premium shelf price instead of arguing for one.</p>
-      </div>
+      <div><div class="no">01</div><h3>Content strategy</h3><p>What to make, for which placement, against which objective. The plan that stops you producing assets nobody needed.</p></div>
+      <div><div class="no">02</div><h3>Commercial photography</h3><p>Hero stills, product detail page imagery and retailer sell sheets. The pictures that carry the sale after the ad earns the click.</p></div>
+      <div><div class="no">03</div><h3>Short-form video</h3><p>Reels, TikTok and Meta placements built as strategically different angles, so a test tells you something.</p></div>
+      <div><div class="no">04</div><h3>Product creative</h3><p>Your product as the subject. Macro texture, pour, sizzle and label reveal: the shots that make a $14 jar read like a $14 jar.</p></div>
+      <div><div class="no">05</div><h3>Ad creative</h3><p>Built to be tested, not admired. Five strategically different approaches, not five edits of one.</p></div>
+      <div><div class="no">06</div><h3>Campaign production</h3><p>One idea carried across every format and placement, with a visual system you keep.</p></div>
+      <div><div class="no">07</div><h3>Content repurposing</h3><p>One production, cut for every ratio and channel. Most brands leave half their footage unused.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ============ PORTFOLIO ============ -->
+<section id="method">
+  <div class="wrap">
+    <div class="eyebrow">The difference direction makes</div>
+    <h2>Same product. Different decisions.</h2>
+    <p class="lead">Most product photography fails for reasons that have nothing to do with the product. Here is what changes between a shot that sits there and a shot that sells.</p>
+    <div class="ba">
+      <div>
+        <div class="balabel">Before</div>
+        <div class="shot p45" data-slot="Before &mdash; flat product shot"><img src="images/production/before-flat-product.jpg" alt="Flatly lit product photograph with a cluttered background" loading="lazy" decoding="async" width="900" height="1125"></div>
+      </div>
+      <div class="arrow">&rarr;</div>
+      <div class="plan">
+        <div class="balabel">Apex creative plan</div>
+        <ul>
+          <li>Camera: lens, height, distance</li>
+          <li>Lighting: key direction and falloff</li>
+          <li>Composition: what leads the eye</li>
+          <li>Color: what the food actually is</li>
+          <li>Background: what earns its place</li>
+          <li>Story: the one thing it says</li>
+          <li>Call to action: what happens next</li>
+        </ul>
+      </div>
+      <div class="arrow">&rarr;</div>
+      <div>
+        <div class="balabel">After</div>
+        <div class="shot p45" data-slot="After &mdash; directed commercial image"><img src="images/production/after-directed-product.jpg" alt="Directed commercial product photograph with controlled light and a clean background" loading="lazy" decoding="async" width="900" height="1125"></div>
+      </div>
+    </div>
+    <div class="spec-note"><b>Both frames are concept and speculative work made to illustrate the method.</b> They are not a client before-and-after, and we will not present them as one.</div>
+  </div>
+</section>
+
 <section id="work">
   <div class="wrap">
-    <div class="eyebrow">Concept work</div>
-    <h2>Ten builds. Ten different jobs a packaged brand needs done.</h2>
-    <p class="lead">Product hero, commercial, social ad, launch, UGC-style, seasonal, comparison, lifestyle, beverage and brand story — each demonstrating a different capability, not ten versions of one look.</p>
+    <div class="eyebrow">Selected work</div>
+    <h2>Food. Packaged food. Beverage. Products. Hospitality.</h2>
+    <p class="lead">Ten builds, each demonstrating a different capability, not ten versions of one look.</p>
     <div class="reel">
-      <div class="card">
-        <div class="top"><span class="type">Product hero</span><span class="len">27s</span></div>
-        <div class="shot p45" data-slot="Consumer products · Olive oil tin">
-          <img src="images/portfolio/consumer-products/olive-oil-tin-editorial.jpg" alt="Unlabelled cream olive oil tin beside a dish of green-gold oil" loading="lazy" decoding="async" width="1200" height="1500">
-        </div>
-        <div class="body">
-          <div class="name">Marchand Grove</div>
-          <div class="cat">Single-estate olive oil, 500ml tin</div>
-          <div class="hookline">"The whole harvest happens in eleven hours."</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="top"><span class="type">Product commercial</span><span class="len">15s</span></div>
-        <div class="shot p45" data-slot="Packaged food · Squeeze bottle">
-          <img src="images/portfolio/packaged-food/squeeze-bottle-hero-daylight.jpg" alt="Unlabelled amber glass squeeze bottle of golden honey-chilli sauce" loading="lazy" decoding="async" width="1200" height="1500">
-        </div>
-        <div class="body">
-          <div class="name">Comb &amp; Ember</div>
-          <div class="cat">Hot honey, 12oz squeeze bottle</div>
-          <div class="hookline">"You've been putting the wrong thing on pizza your entire life."</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="top"><span class="type">Social ad</span><span class="len">26s</span></div>
-        <div class="shot p45" data-slot="Food · Roux pour">
-          <img src="images/portfolio/food/gumbo-roux-pour-motion.jpg" alt="Dark roux pouring from a ladle into a cast-iron pot" loading="lazy" decoding="async" width="1200" height="1500">
-        </div>
-        <div class="body">
-          <div class="name">Bayou Bloom</div>
-          <div class="cat">Dark roux gumbo base, 16oz jar</div>
-          <div class="hookline">"Forty-five minutes of stirring. One second of looking away."</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="top"><span class="type">Product launch</span><span class="len">20s</span></div>
-        <div class="shot p45" data-slot="Food · Brisket slice">
-          <img src="images/portfolio/food/brisket-slice-steam-closeup.jpg" alt="Sliced smoked brisket with a visible pink smoke ring and peppered bark" loading="lazy" decoding="async" width="1200" height="1500">
-        </div>
-        <div class="body">
-          <div class="name">Delta Line Rub</div>
-          <div class="cat">Coffee-chili brisket rub, 8oz tin</div>
-          <div class="hookline">"Same $9 chuck roast. Twelve hours apart."</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="top"><span class="type">UGC-style</span><span class="len">17s</span></div>
-        <div class="shot p45" data-slot="Packaged food · Jarred spread">
-          <img src="images/portfolio/packaged-food/jarred-spread-kitchen-context.jpg" alt="Open unlabelled jar of nut butter with a spoon lifting a thick ribbon" loading="lazy" decoding="async" width="1200" height="1500">
-        </div>
-        <div class="body">
-          <div class="name">Praline Provisions</div>
-          <div class="cat">Bourbon pecan cookie butter, 14oz jar</div>
-          <div class="hookline">"Three nights in a row with a spoon. I need to be stopped."</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="top"><span class="type">Seasonal campaign</span><span class="len">21s</span></div>
-        <div class="shot p45" data-slot="Food · King cake">
-          <img src="images/portfolio/food/king-cake-overhead-colourful.jpg" alt="Overhead king cake with white icing and purple, green and gold sugar" loading="lazy" decoding="async" width="1200" height="1500">
-        </div>
-        <div class="body">
-          <div class="name">Rampart Street Bakehouse</div>
-          <div class="cat">King cake, shipped nationwide</div>
-          <div class="hookline">"Mardi Gras is in nineteen days and you don't live there anymore."</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="top"><span class="type">Comparison</span><span class="len">22s</span></div>
-        <div class="shot p45" data-slot="Packaged food · Grain bag">
-          <img src="images/portfolio/packaged-food/grain-bag-flatlay-colourful.jpg" alt="Unmarked kraft bag spilling coarse stone-ground yellow grits" loading="lazy" decoding="async" width="1200" height="1500">
-        </div>
-        <div class="body">
-          <div class="name">Marigny Mills</div>
-          <div class="cat">Stone-ground grits, 2lb bag</div>
-          <div class="hookline">"One of these was ground yesterday. One was ground in 2019."</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="top"><span class="type">Lifestyle product</span><span class="len">19s</span></div>
-        <div class="shot p45" data-slot="Food · Gulf shrimp">
-          <img src="images/portfolio/food/gulf-shrimp-plated-bright.jpg" alt="Char-grilled Gulf shrimp plated with charred lemon on a pale blue plate" loading="lazy" decoding="async" width="1200" height="1500">
-        </div>
-        <div class="body">
-          <div class="name">Gulf &amp; Line</div>
-          <div class="cat">Wild Gulf shrimp, 2lb frozen</div>
-          <div class="hookline">"They don't shrink. Four customers said it unprompted."</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="top"><span class="type">Beverage</span><span class="len">18s</span></div>
-        <div class="shot p45" data-slot="Beverage · Cold brew pour">
-          <img src="images/portfolio/beverage/cold-brew-pour-ice-macro.jpg" alt="Cold brew coffee pouring over clear ice in a tall glass" loading="lazy" decoding="async" width="1200" height="1500">
-        </div>
-        <div class="body">
-          <div class="name">Levee Cold Brew</div>
-          <div class="cat">Chicory cold brew, 32oz bottle</div>
-          <div class="hookline">"Chicory was a shortage substitute. It stayed because it was better."</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="top"><span class="type">Brand story</span><span class="len">26s</span></div>
-        <div class="shot p45" data-slot="Consumer products · Chocolate snap">
-          <img src="images/portfolio/consumer-products/chocolate-bar-snap-macro.jpg" alt="Dark chocolate bar snapped in half showing a clean fracture and fine grain" loading="lazy" decoding="async" width="1200" height="1500">
-        </div>
-        <div class="body">
-          <div class="name">Saint Roch Cocoa</div>
-          <div class="cat">Single-origin bar, 70%, 2oz</div>
-          <div class="hookline">"Chocolate is a fruit. Almost nobody makes it taste like one."</div>
-        </div>
-      </div>
+      <div class="card"><div class="shot p45" data-slot="Food &mdash; seared duck breast"><img src="images/portfolio/food/seared-duck-breast-macro.jpg" alt="Sliced seared duck breast with crisp rendered skin in bright daylight" loading="lazy" decoding="async" width="1200" height="1500"></div><div class="meta"><span class="type">Food</span><div class="name">Marchand Grove</div><div class="cat">Single-estate olive oil, 500ml tin</div></div></div>
+      <div class="card"><div class="shot p45" data-slot="Packaged food &mdash; squeeze bottle"><img src="images/portfolio/packaged-food/squeeze-bottle-hero-daylight.jpg" alt="Unlabeled amber glass squeeze bottle of golden honey-chili sauce" loading="lazy" decoding="async" width="1200" height="1500"></div><div class="meta"><span class="type">Packaged food</span><div class="name">Comb &amp; Ember</div><div class="cat">Hot honey, 12oz squeeze bottle</div></div></div>
+      <div class="card"><div class="shot p45" data-slot="Food &mdash; roux pour"><img src="images/portfolio/food/gumbo-roux-pour-motion.jpg" alt="Dark roux pouring from a ladle into a cast-iron pot" loading="lazy" decoding="async" width="1200" height="1500"></div><div class="meta"><span class="type">Food</span><div class="name">Bayou Bloom</div><div class="cat">Dark roux gumbo base, 16oz jar</div></div></div>
+      <div class="card"><div class="shot p45" data-slot="Food &mdash; brisket slice"><img src="images/portfolio/food/brisket-slice-steam-closeup.jpg" alt="Sliced smoked brisket with a visible pink smoke ring and peppered bark" loading="lazy" decoding="async" width="1200" height="1500"></div><div class="meta"><span class="type">Food</span><div class="name">Delta Line Rub</div><div class="cat">Coffee-chili brisket rub, 8oz tin</div></div></div>
+      <div class="card"><div class="shot p45" data-slot="Packaged food &mdash; jarred spread"><img src="images/portfolio/packaged-food/jarred-spread-kitchen-context.jpg" alt="Open unlabeled jar of nut butter with a spoon lifting a thick ribbon" loading="lazy" decoding="async" width="1200" height="1500"></div><div class="meta"><span class="type">Packaged food</span><div class="name">Praline Provisions</div><div class="cat">Bourbon pecan cookie butter, 14oz jar</div></div></div>
+      <div class="card"><div class="shot p45" data-slot="Food &mdash; king cake"><img src="images/portfolio/food/king-cake-overhead-colorful.jpg" alt="Overhead king cake with white icing and purple, green and gold sugar" loading="lazy" decoding="async" width="1200" height="1500"></div><div class="meta"><span class="type">Food</span><div class="name">Rampart Street Bakehouse</div><div class="cat">King cake, shipped nationwide</div></div></div>
+      <div class="card"><div class="shot p45" data-slot="Packaged food &mdash; grain bag"><img src="images/portfolio/packaged-food/grain-bag-flatlay-colorful.jpg" alt="Unmarked kraft bag spilling coarse stone-ground yellow grits" loading="lazy" decoding="async" width="1200" height="1500"></div><div class="meta"><span class="type">Packaged food</span><div class="name">Marigny Mills</div><div class="cat">Stone-ground grits, 2lb bag</div></div></div>
+      <div class="card"><div class="shot p45" data-slot="Food &mdash; Gulf shrimp"><img src="images/portfolio/food/gulf-shrimp-plated-bright.jpg" alt="Char-grilled Gulf shrimp plated with charred lemon on a pale blue plate" loading="lazy" decoding="async" width="1200" height="1500"></div><div class="meta"><span class="type">Food</span><div class="name">Gulf &amp; Line</div><div class="cat">Wild Gulf shrimp, 2lb frozen</div></div></div>
+      <div class="card"><div class="shot p45" data-slot="Beverage &mdash; cold brew pour"><img src="images/portfolio/beverage/cold-brew-pour-ice-macro.jpg" alt="Cold brew coffee pouring over clear ice in a tall glass" loading="lazy" decoding="async" width="1200" height="1500"></div><div class="meta"><span class="type">Beverage</span><div class="name">Levee Cold Brew</div><div class="cat">Chicory cold brew, 32oz bottle</div></div></div>
+      <div class="card"><div class="shot p45" data-slot="Consumer products &mdash; chocolate snap"><img src="images/portfolio/consumer-products/chocolate-bar-snap-macro.jpg" alt="Dark chocolate bar snapped in half showing a clean fracture and fine grain" loading="lazy" decoding="async" width="1200" height="1500"></div><div class="meta"><span class="type">Consumer products</span><div class="name">Saint Roch Cocoa</div><div class="cat">Single-origin bar, 70 percent, 2oz</div></div></div>
     </div>
-    <div class="spec-note"><b>Every piece above is CONCEPT / SPECULATIVE work for brands we invented.</b> Apex is a new studio. There are no client logos here, no testimonials, and no campaign results, because we do not have any yet and will not borrow anyone else's. What is here is the strategy, the direction and the craft standard — judge that, then ask us to build one for your SKU before you commit to anything.</div>
+    <div class="spec-note"><b>Every piece above is concept and speculative work for brands we invented.</b> Apex is a new studio. There are no client logos here, no testimonials and no campaign results, because we do not have any yet and will not borrow anyone else&rsquo;s. What is here is the strategy, the direction and the craft standard. Judge that, then ask us to build one for your product before you commit to anything.</div>
   </div>
 </section>
 
-<!-- ============ PROCESS ============ -->
+<section class="dark">
+  <div class="wrap">
+    <div class="eyebrow">Hospitality</div>
+    <div class="studio2">
+      <div class="studiogrid">
+        <div class="shot p11" data-slot="Hospitality &mdash; the pass"><img src="images/portfolio/hospitality/chef-plating-pass-bright.jpg" alt="A chef plating a dish at a stainless steel pass" loading="lazy" decoding="async" width="900" height="900"></div>
+        <div class="shot p11" data-slot="Hospitality &mdash; dining room"><img src="images/portfolio/hospitality/dining-room-golden-hour.jpg" alt="Bright modern restaurant dining room in late afternoon light" loading="lazy" decoding="async" width="900" height="900"></div>
+      </div>
+      <div>
+        <h2>We came from kitchens.</h2>
+        <p class="lead">Food is the hardest thing to photograph well and the easiest thing to get subtly, fatally wrong.</p>
+        <p>A sear that reads as paint. Sauce that moves like plastic. Steam that behaves like smoke. Shrimp with the wrong number of tail segments. Most people producing food content cannot see those errors. Our founder has spent his career in professional kitchens and cannot stop seeing them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="process">
   <div class="wrap">
     <div class="eyebrow">How it works</div>
     <h2>Brief on Monday. Concepts by Friday.</h2>
     <ol class="proc">
-      <li>
-        <div><h3>Consultation</h3><p>Twenty minutes. We look at what you're running now and tell you which angles you haven't tested. You keep that whether or not you hire us.</p></div>
-      </li>
-      <li>
-        <div><h3>Intake</h3><p>One call covering product, audience, objective and the proof behind every claim you want made. If a claim has no proof, it does not go in an ad.</p></div>
-      </li>
-      <li>
-        <div><h3>Concept</h3><p>Five strategically distinct directions, each with a hook, an objective and a CTA. You approve before anything is produced.</p></div>
-      </li>
-      <li>
-        <div><h3>Production</h3><p>Built from your existing photography. Your packaging and logo are used, never recreated. Nothing is invented about your product.</p></div>
-      </li>
-      <li>
-        <div><h3>Quality control</h3><p>Twenty-two categories, scored by a chef. Product truth, food realism, physics, continuity, compliance. One failure blocks the whole delivery.</p></div>
-      </li>
-      <li>
-        <div><h3>Delivery</h3><p>Every ratio, every platform, full commercial rights. One revision round on the entry project, two on the Sprint, three on the Campaign Build.</p></div>
-      </li>
+      <li><div><h3>Consultation</h3><p>Twenty minutes. We look at what you are running now and tell you which angles you have not tested. You keep that whether or not you hire us.</p></div></li>
+      <li><div><h3>Intake</h3><p>One call covering product, audience, objective and the proof behind every claim you want made. If a claim has no proof, it does not go in an ad.</p></div></li>
+      <li><div><h3>Direction</h3><p>Five strategically distinct approaches, each with a hook, an objective and a call to action. You approve before anything is produced.</p></div></li>
+      <li><div><h3>Production</h3><p>Built from your existing photography and brand files. Your packaging and logo are used, never recreated. Nothing is invented about your product.</p></div></li>
+      <li><div><h3>Quality control</h3><p>Twenty-two categories, scored by a chef. Product truth, food realism, physics, continuity and compliance. One failure blocks the whole delivery.</p></div></li>
+      <li><div><h3>Delivery</h3><p>Every ratio, every platform, full commercial rights. One revision round on the entry project, two on the Sprint and three on the Campaign Build.</p></div></li>
     </ol>
   </div>
 </section>
 
-<!-- ============ PRICING ============ -->
 <section id="pricing">
   <div class="wrap">
     <div class="eyebrow">Project pricing</div>
-    <h2>Start small. We'd rather earn the retainer.</h2>
+    <h2>Start small. We would rather earn the retainer.</h2>
     <div class="tiers">
       <div class="tier">
         <div class="tn">The 5-Angle Test</div>
-        <div class="tp">$750 · 5 business days</div>
-        <ul>
-          <li>Five strategically different ads</li>
-          <li>Three ratios each — fifteen files</li>
-          <li>Hook line and rationale per concept</li>
-          <li>One revision round</li>
-          <li>Full commercial rights</li>
-        </ul>
+        <div class="tp">$750 &middot; 5 business days</div>
+        <ul><li>Five strategically different ads</li><li>Three ratios each, fifteen files</li><li>Hook line and rationale per concept</li><li>One revision round</li><li>Full commercial rights</li></ul>
         <a class="btn ghost" href="#contact">Request a sample concept</a>
       </div>
       <div class="tier mid">
         <span class="badge">Most start here</span>
         <div class="tn">The Creative Sprint</div>
-        <div class="tp">$2,250 · 10 business days</div>
-        <ul>
-          <li>15–18 finished ads</li>
-          <li>Five different angles</li>
-          <li>Hook variants on the strongest three</li>
-          <li>Four product stills</li>
-          <li>Creative testing sheet</li>
-          <li>Two revision rounds</li>
-        </ul>
-        <a class="btn" href="#contact">Book a creative consultation</a>
+        <div class="tp">$2,250 &middot; 10 business days</div>
+        <ul><li>15&ndash;18 finished assets</li><li>Five different angles</li><li>Hook variants on the strongest three</li><li>Four product stills</li><li>Creative testing sheet</li><li>Two revision rounds</li></ul>
+        <a class="btn" href="#contact">Start a project</a>
       </div>
       <div class="tier">
         <div class="tn">The Campaign Build</div>
-        <div class="tp">$5,500 · 3 weeks</div>
-        <ul>
-          <li>28–35 assets on one campaign spine</li>
-          <li>Campaign strategy document</li>
-          <li>Brand visual system you keep</li>
-          <li>Hero film for site and email</li>
-          <li>Two strategy calls</li>
-          <li>Three revision rounds</li>
-        </ul>
-        <a class="btn ghost" href="#contact">Book a creative consultation</a>
+        <div class="tp">$5,500 &middot; 3 weeks</div>
+        <ul><li>28&ndash;35 assets on one campaign spine</li><li>Campaign strategy document</li><li>Brand visual system you keep</li><li>Hero film for site and email</li><li>Two strategy calls</li><li>Three revision rounds</li></ul>
+        <a class="btn ghost" href="#contact">Start a project</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ SUBSCRIPTION ============ -->
-<section class="band">
+<section class="band dark">
   <div class="wrap">
     <div class="two">
       <div>
         <div class="eyebrow">Ongoing</div>
-        <h2>Creative that arrives before the last set dies.</h2>
-        <p class="lead">Month to month, thirty days notice, no annual lock. Most brands run one project first and move here once they've seen the work.</p>
-        <p style="font-size:14px;color:var(--bone-faint)">We sell creative production and testing capacity. We do not run your ad account, write your offer, or touch your landing page — and we don't promise numbers we don't control.</p>
+        <h2>Content that arrives before the last set dies.</h2>
+        <p class="lead">Month to month, thirty days notice, no annual lock. Most brands run one project first and move here once they have seen the work.</p>
+        <p style="font-size:14px;color:var(--bone-faint)">We sell creative production and testing capacity. We do not run your ad account, write your offer or touch your landing page, and we do not promise numbers we do not control.</p>
       </div>
-      <div>
-        <div class="shot p45 bandshot" data-slot="Hospitality · The pass">
-          <img src="images/portfolio/hospitality/chef-plating-pass-bright.jpg" alt="A chef's hands plating a dish at a stainless pass" loading="lazy" decoding="async" width="1200" height="1500">
-        </div>
-      </div>
+      <div><div class="shot p45" data-slot="Studio &mdash; operator filming"><img src="images/production/operator-filming-food-scene.jpg" alt="Camera operator filming a food scene" loading="lazy" decoding="async" width="900" height="1125"></div></div>
       <div class="plans">
-        <div class="plan"><span class="pn">Starter</span><span class="pd">8–10 ads a month, two different angles</span><span class="pp">$1,500</span></div>
-        <div class="plan"><span class="pn">Growth</span><span class="pd">15–18 ads, four angles, winner refresh, monthly strategy call</span><span class="pp">$2,500</span></div>
-        <div class="plan"><span class="pn">Scale</span><span class="pd">28–32 ads, six angles, a seasonal campaign every month</span><span class="pp">$4,000</span></div>
+        <div class="planrow"><span class="pn">Starter</span><span class="pd">8&ndash;10 assets a month, two different angles</span><span class="pp">$1,500</span></div>
+        <div class="planrow"><span class="pn">Growth</span><span class="pd">15&ndash;18 assets, four angles, winner refresh, monthly strategy call</span><span class="pp">$2,500</span></div>
+        <div class="planrow"><span class="pn">Scale</span><span class="pd">28&ndash;32 assets, six angles, a seasonal campaign every month</span><span class="pp">$4,000</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ ABOUT ============ -->
 <section id="about">
   <div class="wrap">
     <div class="eyebrow">Who we are</div>
     <h2>A chef runs the quality gate.</h2>
     <div class="about">
       <div>
-        <p>Apex AI Content Studio is a commercial creative studio built by a chef, for the people who make food and drink for a living.</p>
-        <p>Food is the hardest thing to photograph well and the easiest thing to get subtly, fatally wrong. A sear that reads as paint. Sauce that moves like plastic. Steam that behaves like smoke. Shrimp with the wrong number of tail segments. Most people producing food creative cannot see those errors. Our founder has spent his career in professional kitchens and cannot stop seeing them.</p>
-        <p>That is the whole business, honestly stated: modern production tools in the hands of someone who knows when the food is wrong, and refuses to send it.</p>
-        <p style="font-size:14px;color:var(--bone-faint)">We're a new studio. We'd rather tell you that than borrow someone else's credibility.</p>
+        <p>Apex Content Studio is a commercial creative studio built around strong direction, production discipline and an understanding of what makes food, products and brands look compelling.</p>
+        <p>Food and hospitality is our founder advantage. It is the category where the difference between competent and excellent is visible to everyone and achievable by almost nobody, and it is where we are genuinely better than the alternative.</p>
+        <p>That is the whole business, honestly stated: real production judgment applied to work that has to sell something.</p>
+        <p style="font-size:14px;color:var(--ink-soft)">We are a new studio. We would rather tell you that than borrow someone else&rsquo;s credibility.</p>
       </div>
       <div>
-        <div class="shot p169" data-slot="Hospitality · Dining room" style="margin-bottom:24px;border:1px solid var(--rule)">
-          <img src="images/portfolio/hospitality/dining-room-golden-hour.jpg" alt="Bright modern restaurant dining room in late afternoon light" loading="lazy" decoding="async" width="1600" height="900">
-        </div>
         <div class="creed">
-        <div><b>The product shown is the product sold.</b> We build from your photography. We do not invent your packaging.</div>
-        <div><b>Your logo, never a copy of it.</b> Your vector file is composited. A regenerated wordmark is a defect.</div>
-        <div><b>No fabricated customers.</b> We will not produce a synthetic person who appears to endorse, review or vouch for your product. That exposure would be yours, and we won't hand it to you.</div>
-        <div><b>Every claim needs a proof source.</b> If you can't substantiate it, it doesn't go in the ad — no matter who asks.</div>
-        <div><b>No promises about your numbers.</b> We control creative volume, variety and speed. We don't control your offer, your price or your media buying.</div>
-      </div>
+          <div><b>The product shown is the product sold.</b> We build from your photography. We do not invent your packaging.</div>
+          <div><b>Your logo, never a copy of it.</b> Your vector file is composited. A regenerated wordmark is a defect.</div>
+          <div><b>No fabricated customers.</b> We will not produce a synthetic person who appears to endorse, review or vouch for your product. That exposure would be yours, and we will not hand it to you.</div>
+          <div><b>Every claim needs a proof source.</b> If you cannot substantiate it, it does not go in the ad, no matter who asks.</div>
+          <div><b>No promises about your numbers.</b> We control creative volume, variety and speed. We do not control your offer, your price or your media buying.</div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ FAQ ============ -->
 <section id="faq">
   <div class="wrap">
     <div class="eyebrow">Questions</div>
     <h2>The things people actually ask.</h2>
     <div style="margin-top:30px">
-      <details open>
-        <summary>How do you make this so fast?</summary>
-        <p>Modern generative production tools, directed shot by shot — lens, lighting, camera move and framing specified for every frame, the same way a director would brief a crew. It removes the scheduling, the location, the shipping and the crew day. It does not remove the direction, and it does not remove the judgement about whether the food looks right.</p>
-      </details>
-      <details>
-        <summary>Is this AI-generated?</summary>
-        <p>Yes, in part — and we'd rather say so plainly than be coy about it. Your product, packaging and logo come from your real files. Claims come from your proofs. What generative tools produce is the environment, the motion and the light around your product. Anything that would misrepresent what you sell doesn't ship.</p>
-      </details>
-      <details>
-        <summary>Will it look like AI?</summary>
-        <p>That's the right question to ask, and the honest answer is that it depends entirely on the quality gate. Ours has twenty-two categories, and food realism is scored by a chef. If a shot doesn't pass, it gets rebuilt or it gets cut. Ask us for a sample concept on your own product before you take our word for any of this.</p>
-      </details>
-      <details>
-        <summary>What do you need from us?</summary>
-        <p>Product photography — several angles on a clean background is ideal — your logo as a vector file, and twenty minutes on a call. If your photography is thin, we'll tell you before we quote, not after.</p>
-      </details>
-      <details>
-        <summary>Do we own what you make?</summary>
-        <p>Yes. Full commercial usage rights on everything, all platforms, no expiry, no per-placement fees. That's included in the price rather than negotiated on top of it.</p>
-      </details>
-      <details>
-        <summary>Can you guarantee results?</summary>
-        <p>No, and be careful with anyone who does. We produce creative volume, variety and speed. Your results also depend on your offer, your pricing, your landing page and your media buying — none of which we touch. What we can tell you is that if creative production is your constraint, we remove that constraint.</p>
-      </details>
-      <details>
-        <summary>What if we don't like it?</summary>
-        <p>Revision rounds are included — one on the entry project, two on the Sprint, three on the Campaign Build. A revision changes an existing asset; a new concept is new work. We'll say that up front rather than discover it with you halfway through.</p>
-      </details>
-      <details>
-        <summary>Do you work outside food and drink?</summary>
-        <p>Occasionally, but food is where we're genuinely better than the alternative, so it's what we lead with. If you're outside the category, say what you need and we'll tell you honestly whether we're the right studio.</p>
-      </details>
+      <details open><summary>How do you work so fast?</summary><p>Modern production tools, directed shot by shot. Lens, lighting, camera move and framing are specified for every frame, the same way a director briefs a crew. It removes the scheduling, the location, the shipping and the crew day. It does not remove the direction, and it does not remove the judgment about whether the food looks right.</p></details>
+      <details><summary>How is the work produced?</summary><p>A mix of directed capture and modern digital production, chosen per shot for whatever serves the frame. Your product, packaging and logo always come from your real files. Claims come from your proofs. What gets built around them is the environment, the motion and the light. Anything that would misrepresent what you sell does not ship, and we will tell you exactly how any given asset was made if you ask.</p></details>
+      <details><summary>Will it look real?</summary><p>That is the right question, and the honest answer is that it depends entirely on the quality gate. Ours has twenty-two categories and food realism is scored by a chef. If a shot does not pass, it gets rebuilt or it gets cut. Ask us for a sample concept on your own product before you take our word for any of this.</p></details>
+      <details><summary>What do you need from us?</summary><p>Product photography, ideally several angles on a clean background, your logo as a vector file and twenty minutes on a call. If your photography is thin, we will tell you before we quote, not after.</p></details>
+      <details><summary>Do we own what you make?</summary><p>Yes. Full commercial usage rights on everything, all platforms, no expiration and no per-placement fees. That is included in the price rather than negotiated on top of it.</p></details>
+      <details><summary>Can you guarantee results?</summary><p>No, and be careful with anyone who does. We produce creative volume, variety and speed. Your results also depend on your offer, your pricing, your landing page and your media buying, none of which we touch. What we can tell you is that if creative production is your constraint, we remove that constraint.</p></details>
+      <details><summary>What if we do not like it?</summary><p>Revision rounds are included: one on the entry project, two on the Sprint and three on the Campaign Build. A revision changes an existing asset; a new concept is new work. We will say that up front rather than discover it with you halfway through.</p></details>
+      <details><summary>Do you work outside food and drink?</summary><p>Yes, product and brand work across categories. Food is where we are genuinely better than the alternative, so it is what we lead with. If you are outside the category, say what you need and we will tell you honestly whether we are the right studio.</p></details>
     </div>
   </div>
 </section>
 
-<!-- ============ CONTACT ============ -->
 <section id="contact" class="close">
   <div class="wrap">
     <div class="eyebrow" style="text-align:center">Start here</div>
     <h2>See it on your own product first.</h2>
-    <p class="lead" style="max-width:56ch">Tell us about the SKU. We come back with concepts built for it — so you are judging the work on your product, not somebody else's.</p>
-
+    <p class="lead" style="max-width:56ch">Tell us about the product. We come back with concepts built for it, so you are judging the work on your product, not somebody else&rsquo;s.</p>
     <form class="lead-form" id="leadForm" autocomplete="off">
       <div class="lf-grid">
         <label><span>Your name</span><input name="name" required></label>
         <label><span>Email</span><input name="email" type="email" required></label>
         <label><span>Brand</span><input name="brand" required></label>
         <label><span>Website or Instagram</span><input name="url"></label>
-        <label class="wide"><span>Which product are we selling?</span><input name="sku" placeholder="e.g. 16oz gumbo base, $11.99" required></label>
-        <label><span>Are you running paid ads now?</span>
-          <select name="ads" required>
-            <option value="">— select —</option>
-            <option>Yes, actively</option>
-            <option>On and off</option>
-            <option>Not yet</option>
-          </select></label>
-        <label><span>What do you need first?</span>
-          <select name="need" required>
-            <option value="">— select —</option>
-            <option>5-Angle Test — $750</option>
-            <option>Creative Sprint — $2,250</option>
-            <option>Campaign Build — $5,500</option>
-            <option>Monthly creative — not sure which tier</option>
-            <option>Just exploring</option>
-          </select></label>
+        <label class="wide"><span>Which product are we selling?</span><input name="sku" placeholder="For example: 16oz gumbo base, $11.99" required></label>
+        <label><span>Are you running paid ads now?</span><select name="ads" required><option value="">Select one</option><option>Yes, actively</option><option>On and off</option><option>Not yet</option></select></label>
+        <label><span>What do you need first?</span><select name="need" required><option value="">Select one</option><option>5-Angle Test, $750</option><option>Creative Sprint, $2,250</option><option>Campaign Build, $5,500</option><option>Monthly content, not sure which tier</option><option>Just exploring</option></select></label>
         <label class="wide"><span>Anything we should know? (optional)</span><textarea name="notes" rows="3"></textarea></label>
       </div>
       <div class="lf-actions">
-        <button class="btn" type="submit">Book a creative consultation</button>
+        <button class="btn" type="submit">Start a project</button>
         <button class="btn ghost" type="button" id="sampleBtn">Request a sample concept</button>
       </div>
-      <p class="lf-fine">Twenty minutes. We review the ads you are running now and show you the angles you have not tested — yours to keep either way.</p>
+      <p class="lf-fine">Twenty minutes. We review the content you are running now and show you the angles you have not tested, yours to keep either way.</p>
     </form>
   </div>
 </section>
 
 <script>
-/* ---------------------------------------------------------------
-   SET THIS to your real address once the domain is live.
-   Until then the form composes a message the visitor can send.
-   --------------------------------------------------------------- */
 var APEX_INBOX = "larryhillsjr@apexhospitalitygrouplvcom.com";
 
 (function(){
@@ -700,24 +492,21 @@ var APEX_INBOX = "larryhillsjr@apexhospitalitygrouplvcom.com";
     var existing = f.querySelector(".lf-sent");
     if(existing) existing.remove();
     var n = document.createElement("div");
-    n.className = "lf-sent";
-    n.textContent = msg;
-    f.appendChild(n);
+    n.className = "lf-sent"; n.textContent = msg; f.appendChild(n);
   }
   f.addEventListener("submit", function(e){
     e.preventDefault();
-    window.location.href = compose("Creative consultation — " + (f.elements.brand.value || ""));
+    window.location.href = compose("Project enquiry: " + (f.elements.brand.value || ""));
     confirmSent("Your email client should open. If it does not, email " + APEX_INBOX + " directly.");
   });
   document.getElementById("sampleBtn").addEventListener("click", function(){
     if(!f.checkValidity()){ f.reportValidity(); return; }
-    window.location.href = compose("Sample concept request — " + (f.elements.brand.value || ""));
+    window.location.href = compose("Sample concept request: " + (f.elements.brand.value || ""));
     confirmSent("Your email client should open. If it does not, email " + APEX_INBOX + " directly.");
   });
 })();
 
-/* Until the image files exist beside this page, hide the empty slots so the
-   layout reads as finished. Drop the files into /images and they appear. */
+/* Hide empty image slots until the files exist so the layout reads as finished. */
 (function(){
   function tidy(img){
     var slot = img.closest(".shot");
@@ -727,7 +516,7 @@ var APEX_INBOX = "larryhillsjr@apexhospitalitygrouplvcom.com";
       img.remove();
       var t = document.createElement("span");
       t.className = "mark";
-      t.innerHTML = 'APEX<i>·</i>AI CONTENT STUDIO';
+      t.innerHTML = "APEX<i>&middot;</i>CONTENT STUDIO";
       a.appendChild(t);
     }
   }
@@ -740,8 +529,8 @@ var APEX_INBOX = "larryhillsjr@apexhospitalitygrouplvcom.com";
 
 <footer>
   <div class="wrap fw">
-    <span class="mark">APEX<i>·</i>AI CONTENT STUDIO</span>
-    <span>Commercial creative for food &amp; beverage brands &nbsp;·&nbsp; Apex Hospitality Group LLC</span>
+    <span class="mark">APEX<i>&middot;</i>CONTENT STUDIO</span>
+    <span>Commercial content production &middot; Apex Hospitality Group LLC</span>
     <span class="r">All work shown is concept work for brands we invented.</span>
   </div>
 </footer>
