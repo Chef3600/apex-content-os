@@ -54,6 +54,16 @@ nav .links{display:flex;gap:22px;margin-left:auto;font-size:13.5px;color:var(--b
 nav .links a{text-decoration:none}
 nav .links a:hover{color:var(--bone)}
 @media (max-width:820px){nav .links{display:none}}
+/* Small screens: the wordmark + CTA must fit 360px. Matters most while
+   images/apex-logo.png is absent and the nav falls back to text. */
+@media (max-width:560px){
+  nav .inner{gap:10px;padding:0 16px}
+  .btn.sm .lg{display:none}
+  .btn.sm .sm-only{display:inline}
+  .mark{font-size:13.5px;letter-spacing:0}
+  .logomark{height:26px}
+  .btn.sm{padding:8px 11px;font-size:10.5px;letter-spacing:.06em}
+}
 .btn{
   display:inline-block;font-family:var(--body);font-size:13px;font-weight:600;
   letter-spacing:.11em;text-transform:uppercase;text-decoration:none;
@@ -64,6 +74,7 @@ nav .links a:hover{color:var(--bone)}
 .btn.ghost{background:none;color:var(--bone);border-color:var(--rule)}
 .btn.ghost:hover{border-color:var(--ember);color:var(--ember);background:none}
 .btn.sm{padding:9px 16px;font-size:11.5px}
+.btn.sm .sm-only{display:none}
 .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
 
 section{padding:82px 0;border-top:1px solid var(--rule-soft)}
@@ -107,6 +118,7 @@ section:first-of-type{border-top:0}
   align-items:center;justify-content:center;text-align:center;padding:18px;
   font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--bone-faint);line-height:1.8;
+  overflow-wrap:anywhere;word-break:break-word;
 }
 .shot img{position:relative;z-index:2;display:block;width:100%;height:100%;object-fit:cover}
 .shot.p45{aspect-ratio:4/5}
@@ -165,7 +177,7 @@ ol.proc p{font-size:14.5px;color:var(--bone-dim);margin:0}
 .tier ul{list-style:none;margin:0 0 22px;padding:0;font-size:14.5px;color:var(--bone-dim)}
 .tier li{padding:6px 0 6px 18px;position:relative}
 .tier li::before{content:"—";position:absolute;left:0;color:var(--ember)}
-.tier .btn{margin-top:auto;text-align:center}
+.tier .btn{margin-top:auto;text-align:center;white-space:normal}
 .tier .badge{
   display:inline-block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--ember);border:1px solid var(--ember);padding:2px 8px;margin-bottom:12px;
@@ -234,7 +246,7 @@ footer .r{margin-left:auto}
 <nav>
   <div class="inner">
     <a class="logoslot" href="#" style="text-decoration:none">
-      <img class="logomark" src="images/apex-logo.png" alt="Apex AI Content Studio">
+      <img class="logomark" src="images/apex-logo.png" alt="Apex AI Content Studio" width="160" height="34" decoding="async">
     </a>
     <div class="links">
       <a href="#work">Work</a>
@@ -243,7 +255,7 @@ footer .r{margin-left:auto}
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
     </div>
-    <a class="btn sm" href="#contact">Book a consultation</a>
+    <a class="btn sm" href="#contact"><span class="lg">Book a consultation</span><span class="sm-only">Book a call</span></a>
   </div>
 </nav>
 
@@ -263,8 +275,8 @@ footer .r{margin-left:auto}
       <div><b>Full rights</b>No usage fees, ever</div>
       <div><b>Chef-led</b>Every frame reviewed</div>
     </div>
-    <div class="shot p169 heroshot" data-slot="images/01-burger.jpg — the burger, 'crave watch share order'">
-      <img src="images/01-burger.jpg" alt="Close-up of a finished burger, styled for advertising">
+    <div class="shot p169 heroshot" data-slot="Food · Seared duck breast">
+          <img src="images/portfolio/food/seared-duck-breast-macro.jpg" alt="Sliced seared duck breast with crisp rendered skin, shot in bright daylight" loading="eager" decoding="async" width="2000" height="1125">
     </div>
   </div>
 </header>
@@ -338,13 +350,13 @@ footer .r{margin-left:auto}
 <section id="work">
   <div class="wrap">
     <div class="eyebrow">Concept work</div>
-    <h2>Nine builds. Nine different jobs a packaged brand needs done.</h2>
-    <p class="lead">Product hero, commercial, social ad, launch, UGC-style, seasonal, comparison, lifestyle and brand story — each demonstrating a different capability, not nine versions of one look.</p>
+    <h2>Ten builds. Ten different jobs a packaged brand needs done.</h2>
+    <p class="lead">Product hero, commercial, social ad, launch, UGC-style, seasonal, comparison, lifestyle, beverage and brand story — each demonstrating a different capability, not ten versions of one look.</p>
     <div class="reel">
       <div class="card">
         <div class="top"><span class="type">Product hero</span><span class="len">27s</span></div>
-        <div class="shot p45" data-slot="images/03-phone-post.jpg — Product hero still">
-          <img src="images/03-phone-post.jpg" alt="Product hero still">
+        <div class="shot p45" data-slot="Consumer products · Olive oil tin">
+          <img src="images/portfolio/consumer-products/olive-oil-tin-editorial.jpg" alt="Unlabelled cream olive oil tin beside a dish of green-gold oil" loading="lazy" decoding="async" width="1200" height="1500">
         </div>
         <div class="body">
           <div class="name">Marchand Grove</div>
@@ -354,8 +366,8 @@ footer .r{margin-left:auto}
       </div>
       <div class="card">
         <div class="top"><span class="type">Product commercial</span><span class="len">15s</span></div>
-        <div class="shot p45" data-slot="images/04-garnish.jpg — Product in use">
-          <img src="images/04-garnish.jpg" alt="Product in use">
+        <div class="shot p45" data-slot="Packaged food · Squeeze bottle">
+          <img src="images/portfolio/packaged-food/squeeze-bottle-hero-daylight.jpg" alt="Unlabelled amber glass squeeze bottle of golden honey-chilli sauce" loading="lazy" decoding="async" width="1200" height="1500">
         </div>
         <div class="body">
           <div class="name">Comb &amp; Ember</div>
@@ -365,8 +377,8 @@ footer .r{margin-left:auto}
       </div>
       <div class="card">
         <div class="top"><span class="type">Social ad</span><span class="len">26s</span></div>
-        <div class="shot p45" data-slot="images/06-camera-sushi.jpg — Social-native frame">
-          <img src="images/06-camera-sushi.jpg" alt="Social-native frame">
+        <div class="shot p45" data-slot="Food · Roux pour">
+          <img src="images/portfolio/food/gumbo-roux-pour-motion.jpg" alt="Dark roux pouring from a ladle into a cast-iron pot" loading="lazy" decoding="async" width="1200" height="1500">
         </div>
         <div class="body">
           <div class="name">Bayou Bloom</div>
@@ -376,8 +388,8 @@ footer .r{margin-left:auto}
       </div>
       <div class="card">
         <div class="top"><span class="type">Product launch</span><span class="len">20s</span></div>
-        <div class="shot p45" data-slot="images/09-spread.jpg — Launch set">
-          <img src="images/09-spread.jpg" alt="Launch set">
+        <div class="shot p45" data-slot="Food · Brisket slice">
+          <img src="images/portfolio/food/brisket-slice-steam-closeup.jpg" alt="Sliced smoked brisket with a visible pink smoke ring and peppered bark" loading="lazy" decoding="async" width="1200" height="1500">
         </div>
         <div class="body">
           <div class="name">Delta Line Rub</div>
@@ -387,8 +399,8 @@ footer .r{margin-left:auto}
       </div>
       <div class="card">
         <div class="top"><span class="type">UGC-style</span><span class="len">17s</span></div>
-        <div class="shot p45" data-slot="images/07-drink.jpg — Creator-style frame">
-          <img src="images/07-drink.jpg" alt="Creator-style frame">
+        <div class="shot p45" data-slot="Packaged food · Jarred spread">
+          <img src="images/portfolio/packaged-food/jarred-spread-kitchen-context.jpg" alt="Open unlabelled jar of nut butter with a spoon lifting a thick ribbon" loading="lazy" decoding="async" width="1200" height="1500">
         </div>
         <div class="body">
           <div class="name">Praline Provisions</div>
@@ -398,8 +410,8 @@ footer .r{margin-left:auto}
       </div>
       <div class="card">
         <div class="top"><span class="type">Seasonal campaign</span><span class="len">21s</span></div>
-        <div class="shot p45" data-slot="images/05-studio.jpg — Seasonal set">
-          <img src="images/05-studio.jpg" alt="Seasonal set">
+        <div class="shot p45" data-slot="Food · King cake">
+          <img src="images/portfolio/food/king-cake-overhead-colourful.jpg" alt="Overhead king cake with white icing and purple, green and gold sugar" loading="lazy" decoding="async" width="1200" height="1500">
         </div>
         <div class="body">
           <div class="name">Rampart Street Bakehouse</div>
@@ -409,8 +421,8 @@ footer .r{margin-left:auto}
       </div>
       <div class="card">
         <div class="top"><span class="type">Comparison</span><span class="len">22s</span></div>
-        <div class="shot p45" data-slot="images/02-filming.jpg — Comparison frame">
-          <img src="images/02-filming.jpg" alt="Comparison frame">
+        <div class="shot p45" data-slot="Packaged food · Grain bag">
+          <img src="images/portfolio/packaged-food/grain-bag-flatlay-colourful.jpg" alt="Unmarked kraft bag spilling coarse stone-ground yellow grits" loading="lazy" decoding="async" width="1200" height="1500">
         </div>
         <div class="body">
           <div class="name">Marigny Mills</div>
@@ -420,8 +432,8 @@ footer .r{margin-left:auto}
       </div>
       <div class="card">
         <div class="top"><span class="type">Lifestyle product</span><span class="len">19s</span></div>
-        <div class="shot p45" data-slot="images/01-burger.jpg — Lifestyle frame">
-          <img src="images/01-burger.jpg" alt="Lifestyle frame">
+        <div class="shot p45" data-slot="Food · Gulf shrimp">
+          <img src="images/portfolio/food/gulf-shrimp-plated-bright.jpg" alt="Char-grilled Gulf shrimp plated with charred lemon on a pale blue plate" loading="lazy" decoding="async" width="1200" height="1500">
         </div>
         <div class="body">
           <div class="name">Gulf &amp; Line</div>
@@ -430,9 +442,20 @@ footer .r{margin-left:auto}
         </div>
       </div>
       <div class="card">
+        <div class="top"><span class="type">Beverage</span><span class="len">18s</span></div>
+        <div class="shot p45" data-slot="Beverage · Cold brew pour">
+          <img src="images/portfolio/beverage/cold-brew-pour-ice-macro.jpg" alt="Cold brew coffee pouring over clear ice in a tall glass" loading="lazy" decoding="async" width="1200" height="1500">
+        </div>
+        <div class="body">
+          <div class="name">Levee Cold Brew</div>
+          <div class="cat">Chicory cold brew, 32oz bottle</div>
+          <div class="hookline">"Chicory was a shortage substitute. It stayed because it was better."</div>
+        </div>
+      </div>
+      <div class="card">
         <div class="top"><span class="type">Brand story</span><span class="len">26s</span></div>
-        <div class="shot p45" data-slot="images/08-bottles.jpg — Brand story frame">
-          <img src="images/08-bottles.jpg" alt="Brand story frame">
+        <div class="shot p45" data-slot="Consumer products · Chocolate snap">
+          <img src="images/portfolio/consumer-products/chocolate-bar-snap-macro.jpg" alt="Dark chocolate bar snapped in half showing a clean fracture and fine grain" loading="lazy" decoding="async" width="1200" height="1500">
         </div>
         <div class="body">
           <div class="name">Saint Roch Cocoa</div>
@@ -533,8 +556,8 @@ footer .r{margin-left:auto}
         <p style="font-size:14px;color:var(--bone-faint)">We sell creative production and testing capacity. We do not run your ad account, write your offer, or touch your landing page — and we don't promise numbers we don't control.</p>
       </div>
       <div>
-        <div class="shot p45 bandshot" data-slot="images/10-editing.jpg — the edit timeline">
-          <img src="images/10-editing.jpg" alt="Editing timeline with food footage on screen">
+        <div class="shot p45 bandshot" data-slot="Hospitality · The pass">
+          <img src="images/portfolio/hospitality/chef-plating-pass-bright.jpg" alt="A chef's hands plating a dish at a stainless pass" loading="lazy" decoding="async" width="1200" height="1500">
         </div>
       </div>
       <div class="plans">
@@ -559,8 +582,8 @@ footer .r{margin-left:auto}
         <p style="font-size:14px;color:var(--bone-faint)">We're a new studio. We'd rather tell you that than borrow someone else's credibility.</p>
       </div>
       <div>
-        <div class="shot p169" data-slot="images/02-filming.jpg — camera filming the plating" style="margin-bottom:24px;border:1px solid var(--rule)">
-          <img src="images/02-filming.jpg" alt="Camera filming a chef plating a dish">
+        <div class="shot p169" data-slot="Hospitality · Dining room" style="margin-bottom:24px;border:1px solid var(--rule)">
+          <img src="images/portfolio/hospitality/dining-room-golden-hour.jpg" alt="Bright modern restaurant dining room in late afternoon light" loading="lazy" decoding="async" width="1600" height="900">
         </div>
         <div class="creed">
         <div><b>The product shown is the product sold.</b> We build from your photography. We do not invent your packaging.</div>
