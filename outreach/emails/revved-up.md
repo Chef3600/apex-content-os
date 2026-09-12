@@ -23,4 +23,4 @@ to build three angles for the Serrano you haven't run. Free, and yours regardles
 If creative isn't the bottleneck right now, no reply needed.
 
 Larry Hills Jr.
-Apex AI Content Studio
+Apex Content Studio

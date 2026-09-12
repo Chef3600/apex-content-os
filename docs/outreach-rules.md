@@ -1,16 +1,19 @@
 # Outreach rules
 
-## Qualification — all four must pass
+## Qualification
 
-1. **Live ads visible in the Meta Ad Library.** No live ads means no budget
-   and no urgency. Skip, regardless of how much you like the product.
-2. **Creative is stale or thin.** Same asset 4+ weeks, fewer than 4 active
-   creatives, or static-only. If their creative is already strong and varied,
-   they are not a prospect.
-3. **Reachable decision maker.** Founder or a single marketing person,
-   findable by name. Through an agency of record, the sale is 3x longer.
-4. **Product is visually producible.** A physical product with existing
-   photography.
+**Moved to `qualification.md`.** The old rule here required live ads in the
+Meta Ad Library before a company counted as a prospect. It produced 8
+researched companies, 0 qualified and 0 sends - partly because the check
+could not be run, and more importantly because it selected for brands who
+already have a creative supplier.
+
+The gate now keys on the content they have already published, which is both
+what Apex sells against and confirmable by a human in three minutes.
+
+**Before any cold outreach, build the warm list - see `warm-list.md`.** It is
+twenty minutes of recall, it needs no verification, and it converts at an
+order of magnitude the cold pipeline does not reach.
 
 ## The verification rule
 
@@ -18,9 +21,13 @@ The observation in line one must be something **you personally looked at in
 the last 48 hours.** Never write "your ads have been running since March"
 unless you saw the date.
 
-**DO NOT fabricate advertising observations. If current ad activity cannot be
-verified, mark it UNVERIFIED.** An observation that turns out to be wrong
-ends the conversation and earns a screenshot in someone's group chat.
+**DO NOT fabricate observations of any kind - ad activity, photography,
+posting cadence, anything.** If it has not been seen, mark it UNVERIFIED. An
+observation that turns out to be wrong ends the conversation and earns a
+screenshot in someone's group chat.
+
+Site fetching is blocked by the network egress proxy in this environment, so
+verification is a human step. Search results are sourcing, never observation.
 
 ## Never / Always
 

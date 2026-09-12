@@ -1,3 +1,4 @@
+<meta charset="UTF-8">
 <title>Apex Content OS</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
@@ -507,7 +508,7 @@ ul.beats .os{font-size:13px;font-family:var(--mono);font-size:11.5px;color:var(-
       </div>
 
       <h3>Response data</h3>
-      <p class="deck">This is the asset. Not the pipeline &mdash; the answers. Which observation angle makes a packaged food brand reply is not published anywhere, and after a few hundred sends you will be the only person who knows it. Every rate below is computed only from rows with a send date, and any bucket thin enough to be noise is labelled as noise rather than given a number.</p>
+      <p class="deck">This is the asset. Not the pipeline &mdash; the answers. Which observation angle makes a packaged food brand reply is not published anywhere, and after a few hundred sends you will be the only person who knows it. Every rate below is computed only from rows with a send date, and any bucket thin enough to be noise is labeled as noise rather than given a number.</p>
       <div id="dataOut"></div>
     </section>
 
@@ -627,7 +628,7 @@ ul.beats .os{font-size:13px;font-family:var(--mono);font-size:11.5px;color:var(-
 
       <h3>1 · Declare immutable vs flexible — before generating</h3>
       <div class="grid g2" style="margin-bottom:6px">
-        <label class="f"><span>Immutable — never change without approval</span><textarea id="qcImm" rows="3" placeholder="Bottle geometry · label placement · cap colour · logo · brand red #A3231E · founder's hands"></textarea></label>
+        <label class="f"><span>Immutable — never change without approval</span><textarea id="qcImm" rows="3" placeholder="Bottle geometry · label placement · cap color · logo · brand red #A3231E · founder's hands"></textarea></label>
         <label class="f"><span>Flexible — free to direct</span><textarea id="qcFlex" rows="3" placeholder="Background atmosphere · camera angle · lighting style · depth of field · secondary props"></textarea></label>
       </div>
 
@@ -882,7 +883,7 @@ ul.beats .os{font-size:13px;font-family:var(--mono);font-size:11.5px;color:var(-
         <p>I run a small studio that makes ad creative for food and beverage brands. 15–18 new ads a month, five different strategic angles, built from product photos you already have. Days instead of weeks, and full commercial rights included.</p>
         <p>I'm a chef, which is honestly why I started this — most food creative gets the food wrong.</p>
         <p>I put together a short note on which angles [Brand] hasn't tested yet. Want me to send it? No pitch attached, and no reply needed if it's not useful.</p>
-        <p>— Larry<br>APEX AI CONTENT STUDIO</p>
+        <p>— Larry<br>APEX CONTENT STUDIO</p>
         <div class="rules">The first line must prove you looked at their real ads or don't send it. One ask. No attachments. No follow-up more than twice.</div>
       </div>
 
@@ -959,9 +960,9 @@ Hands and forearms only, no face. No text, no logos."</div>
       <h3>Product reference workflow — the rule that protects the client</h3>
       <ol class="steps">
         <li><b>Upload client photography first</b><span>media_upload, then media_confirm. Register as a reference element. Never begin with text-to-image for a product that exists.</span></li>
-        <li><b>Generate from reference, never from description</b><span>The packaging shape, colour and proportions come from their file. A described jar is a different jar.</span></li>
+        <li><b>Generate from reference, never from description</b><span>The packaging shape, color and proportions come from their file. A described jar is a different jar.</span></li>
         <li><b>Blank the label in generation</b><span>Generate with a blank label field. Composite the client's vector in post. This is non-negotiable.</span></li>
-        <li><b>Static camera on any labelled product</b><span>No orbit, no dolly, no rotation on a labelled hero. A move makes the composite a tracking job and the text a lottery.</span></li>
+        <li><b>Static camera on any labeled product</b><span>No orbit, no dolly, no rotation on a labeled hero. A move makes the composite a tracking job and the text a lottery.</span></li>
       </ol>
 
       <h3>Consistency rules</h3>
@@ -1039,7 +1040,7 @@ Every delivery includes a poster frame JPG per asset.</div>
     <!-- ============ MONEY ============ -->
     <section class="panel" id="p-money" hidden>
       <h2 class="sec">Financial Model</h2>
-      <p class="deck">Every line is labelled. Nothing here is a projection dressed as a fact — and the single largest cost in the business is still unknown.</p>
+      <p class="deck">Every line is labeled. Nothing here is a projection dressed as a fact — and the single largest cost in the business is still unknown.</p>
 
       <h3>Costs — what is actually known</h3>
       <div class="tablewrap">
@@ -1058,7 +1059,7 @@ Every delivery includes a poster frame JPG per asset.</div>
         </table>
       </div>
 
-      <h3>Labour assumptions</h3>
+      <h3>Labor assumptions</h3>
       <div class="note"><b>ESTIMATE — never measured.</b> Entry project 11–13 hrs · Sprint 20–25 hrs · Campaign 38–45 hrs · Growth retainer 20–24 hrs/month. <b>HYPOTHESIS:</b> mature accounts drop ~40% in hours by month four as the prompt and reference libraries fill. Every number in the scenarios below inherits this uncertainty — one timed project replaces all of it.</div>
 
       <h3>Scenarios</h3>
@@ -1317,12 +1318,12 @@ var HARDFAIL = [
 ];
 var DIMS = [
   {k:"vq",  n:"Visual quality",        max:15, still:20, look:"Would this sit on a premium brand's site?"},
-  {k:"rf",  n:"Reference fidelity",    max:20, still:25, look:"Does the subject still have the identity of the reference? Shape, proportion, colour, packaging, closure, marks."},
-  {k:"re",  n:"Realism",               max:15, look:"Materials, texture, food behaviour. Does anything read as plastic or painted?"},
+  {k:"rf",  n:"Reference fidelity",    max:20, still:25, look:"Does the subject still have the identity of the reference? Shape, proportion, color, packaging, closure, marks."},
+  {k:"re",  n:"Realism",               max:15, look:"Materials, texture, food behavior. Does anything read as plastic or painted?"},
   {k:"co",  n:"Composition",           max:10, look:"Framing, placement, negative space — deliberate or accidental?"},
   {k:"li",  n:"Lighting",              max:10, look:"Did it follow the key direction, contrast and falloff you specified?"},
   {k:"ca",  n:"Camera",                max:10, look:"Lens character, perspective, focus plane, movement as directed."},
-  {k:"mo",  n:"Motion",                max:10, look:"Physics, weight, pour and steam behaviour. N/A for stills."},
+  {k:"mo",  n:"Motion",                max:10, look:"Physics, weight, pour and steam behavior. N/A for stills."},
   {k:"cu",  n:"Commercial usefulness", max:10, look:"Would a paying client place this directly into a campaign?"}
 ];
 var CAMPAUDIT = [
@@ -1800,7 +1801,7 @@ function buildBrief(){
   L.push("");
   L.push("REFERENCE FIDELITY RULE — non-negotiable on this job:");
   L.push("  The supplied assets are the source of truth for identity.");
-  L.push("  Product shape, packaging, closure, label, logo and colour must survive every shot.");
+  L.push("  Product shape, packaging, closure, label, logo and color must survive every shot.");
   L.push("  A beautiful frame that changes the product is a failed frame, not a style choice.");
   if(v.images === "None" || v.images === "Phone photos only"){
     L.push("");
@@ -1828,7 +1829,7 @@ function buildBrief(){
     miss.forEach(function(k, i){ L.push("  " + (i + 1) + ". " + BLOCKING[k]); });
   }
   L.push("");
-  L.push("Generated " + new Date().toISOString().slice(0, 10) + " · APEX AI CONTENT STUDIO · internal production document");
+  L.push("Generated " + new Date().toISOString().slice(0, 10) + " · APEX CONTENT STUDIO · internal production document");
   return L.join("\n").replace(/^\n/, "");
 }
 (function(){
@@ -1887,7 +1888,7 @@ function buildFactory(){
   L.push("  5. Exactly one build carries the offer.               PASS");
   L.push("");
   L.push("TESTING PLAN");
-  L.push("  Run all five to cold traffic at equal spend. Do not optimise for 72 hours.");
+  L.push("  Run all five to cold traffic at equal spend. Do not optimize for 72 hours.");
   L.push("  Kill on hook rate at 3 seconds, not on purchases — purchases are too slow a signal.");
   L.push("  The winner is a direction, not an ad. Rebuild three variants inside the winning direction.");
   L.push("");
@@ -1937,7 +1938,7 @@ function buildMessages(){
     "I make food and drink ads. I'd like to build you three angles you haven't tested — " +
     "using your own product photos, so it's your product and not a lookalike. Free, no call needed.\n\n" +
     "If it's useful we can talk. If not, no reply needed.\n\n" +
-    "Larry\nApex AI Content Studio";
+    "Larry\nApex Content Studio";
 
   var dm =
     n + " — " + obs + ". I make food and drink ads and I'd like to build you three angles " +
@@ -2013,7 +2014,7 @@ var FOLIO = [
   { cap:"Process", brand:"Mesa Verde Chile Co.", prod:"Hatch green chile · roasted, frozen", hook:"Roasted in the field. Frozen in four hours.", fmt:"4:5 · 15s · Feed", note:"Duration claims carry an on-screen proof source; nothing stated without one." },
   { cap:"Founder", brand:"Third Coast Roasters", prod:"Single-origin drip · 12oz bag", hook:"We got the first batch wrong.", fmt:"9:16 · 18s · TikTok", note:"Admission-led. Sells honesty in a category that oversells." },
   { cap:"Offer", brand:"Marrow & Co.", prod:"Beef bone broth · 32oz", hook:"Two cases, free shipping, ends Sunday.", fmt:"1:1 · 6s · Retargeting", note:"Offer legible in frame one. Terms in plain words, no asterisk." },
-  { cap:"Launch", brand:"Petite Sœur", prod:"Cultured butter · 8oz block", hook:"A second flavour, finally.", fmt:"9:16 · 10s · Reels", note:"Built for a launch window; date-stamped and disposable by design." },
+  { cap:"Launch", brand:"Petite Sœur", prod:"Cultured butter · 8oz block", hook:"A second flavor, finally.", fmt:"9:16 · 10s · Reels", note:"Built for a launch window; date-stamped and disposable by design." },
   { cap:"Retail", brand:"Higgins Pickle Works", prod:"Half-sour spears · 24oz", hook:"Aisle nine now.", fmt:"4:5 · 8s · Geo-targeted feed", note:"Retail-support creative — drives to shelf, not to a cart." },
   { cap:"Season", brand:"Ember Hill Cider", prod:"Dry cider · 4-pack cans", hook:"Five weeks to the first cold night.", fmt:"9:16 · 12s · Meta", note:"Seasonal build shipped ahead of the season, not during it." },
   { cap:"Premium", brand:"Saltcellar", prod:"Flake finishing salt · 4oz tin", hook:"The last thing you add.", fmt:"1:1 · 7s · Brand", note:"No offer, no urgency. Positioning only — the hardest brief to do well." },

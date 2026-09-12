@@ -14,7 +14,7 @@
 **Observation (verified by search, NOT by Ad Library):** runs two regional lines
 — Vegas Heat Junkie and Boulder Heat Junkie — each with its own published
 where-to-buy page. Real shelf distribution in two cities. Positioning is
-flavour-first, heat-second.
+flavor-first, heat-second.
 
 ---
 
@@ -31,4 +31,4 @@ line, one that works for both — free, no call needed.
 If it's useful we can talk. If not, no reply needed.
 
 Larry Hills Jr.
-Apex AI Content Studio
+Apex Content Studio
