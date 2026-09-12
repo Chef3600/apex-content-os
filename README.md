@@ -32,7 +32,9 @@ is what this business sells.
 | `site/index.html` | Public site. Single file, no build step. |
 | `ops/apex-content-os.html` | Internal operating pass — pipeline, intake, QC gate, offers. Source for the published artifact. |
 | `data/prospects.json` | Prospect + response dataset. See `data/README.md`. |
-| `tools/pipeline.mjs` | Prospect pipeline CLI - sourcing, verification, ladder, funnel. |
+| `tools/pipeline.mjs` | The revenue pipeline. Open, verify, qualify, message, contact, log, follow up. |
+| `tools/seed-prospects.mjs` | Rebuilds the sourced prospect list with attribution. |
+| `outreach/templates.json` | Canonical outreach copy the pipeline fills. |
 | `tools/verify-site.mjs` | Site verifier. Must pass before any deploy. |
 | `outreach/templates.md` | Reusable outreach templates, warm and cold. |
 | `outreach/emails/` | Live outreach drafts, one file per prospect. |
@@ -62,10 +64,10 @@ node tools/pipeline.mjs          # what to do today
 - Portfolio: **speculative.** Every piece is concept work with no client relationship. Labeled that way on the site and it stays that way.
 - Clients: **none.**
 - Revenue: **none.**
-- Prospects: 13 sourced, **0 verified, 0 contacted.** Site fetching is blocked
+- Prospects: **52 sourced, 0 verified, 0 contacted.** Site fetching is blocked
   by the network egress proxy, so verification is a manual step - three
   minutes per company via `node tools/pipeline.mjs verify`. No row is
-  sendable until a human has looked.
+  sendable until a human has looked, and the tool enforces it.
 - Production method: reference-locked generation, validated on 4 test shots (2 scored 10/10 by the founder). Roughly 2 credits and ~2 minutes per still.
 
 Nothing here is a client case study. Do not present it as one.

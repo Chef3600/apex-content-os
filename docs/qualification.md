@@ -75,6 +75,26 @@ every domain, not just some. Search works; fetching does not. So candidate
 That is the only manual step in the pipeline, it takes about three minutes per
 company, and `tools/pipeline.mjs verify` walks through it one row at a time.
 
+## States
+
+Every prospect is in exactly one of these at all times.
+
+| State | Meaning | Set by |
+|---|---|---|
+| `NEW` | Sourced. Nothing seen. Not sendable. | seed / `add` |
+| `VERIFY` | Opened for checking, decision pending. | `verify` |
+| `QUALIFIED` | Passed the gates. Observation recorded. | `qualify` |
+| `DISQUALIFIED` | Failed a gate. Dead, with a reason. | `disqualify` |
+| `CONTACTED` | Opener sent. Ladder running. | `contact` |
+| `REPLIED` | They answered. | `log <id> reply` |
+| `MEETING` | Call booked. | `meeting` |
+| `PROPOSAL` | Offer out. | `proposal` |
+| `WON` | Paid. | `won` |
+| `LOST` | Declined, or 3 touches with no reply. | `lost` / `log no` |
+
+The tool enforces the order. A `NEW` row cannot be contacted, and a row with
+no verified observation cannot generate a message at all.
+
 ## Scoring
 
 Score each verified prospect 0-10. Work the list in descending order.

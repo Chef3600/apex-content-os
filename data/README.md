@@ -38,22 +38,30 @@ this rather than trusting anyone to remember it.
 
 ## Current state
 
-**13 sourced. 0 verified. 0 sent.**
+**52 sourced. 0 verified. 0 contacted.**
 
-- 8 migrated from the pre-schema list. Researched by search in a prior
-  session, never verified, never contacted.
-- 5 added this session from search. Real companies; **nothing about their
-  content has been observed.** Their `contentWeakness` is explicitly marked
-  `HYPOTHESIS, NOT OBSERVED`.
+| Tier | Rows | P1 |
+|---|---|---|
+| Beverage (roasters, breweries, distillery) | 18 | 9 |
+| Packaged food | 9 | 5 |
+| Beauty / med spa | 8 | 3 |
+| Bakery | 7 | 3 |
+| Restaurant (chef-owned) | 5 | 1 |
+| Fitness / wellness | 5 | 0 |
 
-Zero verified is not a backlog problem. Site fetching is blocked by the
-network egress proxy, so verification cannot be automated from here. It is
-three minutes per company, by hand:
+Every row is `NEW` with an **empty `contentWeakness`**. Nothing is claimed
+about any of their content, because site fetching is blocked by the network
+egress proxy and nothing has been seen.
+
+Each row carries `useCase` - why content plausibly matters to that *business
+model*. That is a statement about the category, not about them.
+
+Verification is the one manual step. Three minutes per company:
 
 ```
 node tools/pipeline.mjs verify
 ```
 
-**Nothing in this file is ready to send.** A row becomes sendable only after
-a human has opened the site and the grid and replaced the hypothesis with
-something they actually saw.
+**Nothing here is sendable.** The tool refuses to generate a message for a row
+with no verified observation, and refuses to contact anything that is not
+QUALIFIED.

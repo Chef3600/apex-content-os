@@ -10,7 +10,7 @@ gets there, not by how it looks.
   client has paid for any of it.
 - Clients to date: **zero**. Say so when asked; it survives due diligence and
   pretending does not.
-- Pipeline: 13 sourced companies, **0 verified, 0 contacted**.
+- Pipeline: **52 sourced companies, 0 verified, 0 contacted.**
 - The strongest asset is not on the website: **Larry is a working chef with a
   career's worth of professional relationships.**
 
@@ -32,28 +32,38 @@ could introduce. Twenty sends beats two hundred cold ones.
 conversations, and a genuine chance one of them closes. No cold campaign
 gets near that in week one.
 
-### Day 2 - verify the cold list (45 minutes)
+### Day 2 - verify the priority-1 rows (60 minutes)
 
 ```
-node tools/pipeline.mjs verify
+node tools/pipeline.mjs list p1        # the 20 best-fit rows
+node tools/pipeline.mjs verify         # walks them one at a time
 ```
 
-Thirteen companies, three minutes each. Open the site, open the grid, apply
-the four gates, then `pass` with the weakness actually seen, or `kill`.
-
-Expect to kill a third of them. That is the system working - a fast kill
-costs three minutes instead of a wasted send and a damaged domain.
-
-### Day 3 - send the 7+ rows
+Three minutes each. Open the site, open the grid, look at the four things
+the screen names, then:
 
 ```
-node tools/pipeline.mjs list Queued
+node tools/pipeline.mjs qualify <id> <0-10> "what you actually saw"
+node tools/pipeline.mjs disqualify <id> "reason"
 ```
 
-Template **B1**. Under 120 words, one observation, one free thing, one
-question. Then `sent`, which schedules the day-4 follow-up automatically.
+Expect to disqualify a third. That is the system working - three minutes
+instead of a wasted send and a damaged sending domain.
 
-Stay under ~20 sends/day from a new domain.
+### Day 3 - message the 7+ rows
+
+```
+node tools/pipeline.mjs msg <id>       # copy-ready, filled from the record
+```
+
+Send it yourself. Nothing is transmitted by the tool. Then:
+
+```
+node tools/pipeline.mjs contact <id> email "subject you used"
+```
+
+which schedules the day-4 follow-up. Stay under ~20 sends/day from a new
+domain.
 
 ### Day 4 onward - run the ladder
 
@@ -80,6 +90,8 @@ whether or not they replied. Day 11 closes out, then genuinely stop.
 7. Then ask for the retainer, inside 30 days, while the work is fresh.
 
 ```
+node tools/pipeline.mjs meeting <id>
+node tools/pipeline.mjs proposal <id> 1500
 node tools/pipeline.mjs won <id> 1500
 ```
 
