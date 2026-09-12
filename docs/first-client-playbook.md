@@ -91,9 +91,21 @@ whether or not they replied. Day 11 closes out, then genuinely stop.
 
 ```
 node tools/pipeline.mjs meeting <id>
-node tools/pipeline.mjs proposal <id> 1500
+node tools/pipeline.mjs set <id> product "the product you scoped"
+node tools/pipeline.mjs set <id> opportunity "the work you are proposing"
+node tools/pipeline.mjs proposal <id> 1500     # writes outreach/proposals/<id>-<date>.md
 node tools/pipeline.mjs won <id> 1500
+node tools/job.mjs open <id> 1500
 ```
+
+The proposal command refuses to write a document with an empty section or an
+unfilled slot in it, so a half-finished proposal cannot reach a client by
+accident.
+
+From there, `docs/delivery-runbook.md` runs day 0 to day 7, and
+`docs/scope-and-terms.md` is what gets agreed before the deposit. Log hours
+and costs on the job the day they happen - that is what sets the price of the
+second job.
 
 ## What not to do
 

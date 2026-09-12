@@ -32,9 +32,13 @@ is what this business sells.
 | `site/index.html` | Public site. Single file, no build step. |
 | `ops/apex-content-os.html` | Internal operating pass — pipeline, intake, QC gate, offers. Source for the published artifact. |
 | `data/prospects.json` | Prospect + response dataset. See `data/README.md`. |
-| `tools/pipeline.mjs` | The revenue pipeline. Open, verify, qualify, message, contact, log, follow up. |
+| `data/jobs.json` | Every paid job: revenue, cost, hours, margin, rights. |
+| `tools/pipeline.mjs` | Getting the client. Open, verify, qualify, message, contact, log, follow up, propose. |
+| `tools/job.mjs` | Whether the client was worth getting. Cost, hours, effective rate, margin. |
 | `tools/seed-prospects.mjs` | Rebuilds the sourced prospect list with attribution. |
 | `outreach/templates.json` | Canonical outreach copy the pipeline fills. |
+| `outreach/proposal-template.md` | The Pilot proposal the pipeline fills and writes out. |
+| `outreach/proposals/` | Generated proposals, one per prospect. Read before sending. |
 | `tools/verify-site.mjs` | Site verifier. Must pass before any deploy. |
 | `outreach/templates.md` | Reusable outreach templates, warm and cold. |
 | `outreach/emails/` | Live outreach drafts, one file per prospect. |
@@ -52,10 +56,22 @@ Revenue is the project. The site is done.
 | `docs/qualification.md` | The four gates and the scoring rubric. |
 | `docs/first-client-offer.md` | The Pilot, the ladder, and the market data behind the prices. |
 | `outreach/templates.md` | What to actually send. |
+| `docs/scope-and-terms.md` | What is included, what a revision is, payment and rights. |
+| `docs/delivery-runbook.md` | Day 0 to day 7 once someone says yes. |
 
 ```
 node tools/pipeline.mjs          # what to do today
+node tools/job.mjs               # what is owed, and on which job
 ```
+
+Two tools, one chain. `pipeline.mjs` runs **PROSPECT → VERIFY → QUALIFY →
+OUTREACH → PROPOSAL → WON**. `job.mjs` picks it up there and runs **COST →
+HOURS → DELIVER → RIGHTS → MARGIN**, so the price of the next job is set by
+what the last one actually earned per hour rather than by what it felt like.
+
+Both have `selftest`, both run entirely offline, and neither one sends
+anything. Every message and every proposal is written to disk for a human to
+read and send.
 
 ## Status — read this before claiming anything works
 
@@ -63,7 +79,8 @@ node tools/pipeline.mjs          # what to do today
   verifier passing with 0 failures. See `DEPLOY.md`.
 - Portfolio: **speculative.** Every piece is concept work with no client relationship. Labeled that way on the site and it stays that way.
 - Clients: **none.**
-- Revenue: **none.**
+- Revenue: **none.** `node tools/job.mjs report` says $0 and will keep saying
+  it until a job is opened.
 - Prospects: **52 sourced, 0 verified, 0 contacted.** Site fetching is blocked
   by the network egress proxy, so verification is a manual step - three
   minutes per company via `node tools/pipeline.mjs verify`. No row is

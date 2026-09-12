@@ -1,4 +1,4 @@
-# Prospect + response dataset
+# Prospect + job datasets
 
 This is the compounding asset. Not the pipeline - the answers.
 
@@ -65,3 +65,23 @@ node tools/pipeline.mjs verify
 **Nothing here is sendable.** The tool refuses to generate a message for a row
 with no verified observation, and refuses to contact anything that is not
 QUALIFIED.
+
+## jobs.json
+
+Opens when a prospect reaches WON. Driven by `tools/job.mjs`.
+
+| Field | Notes |
+|---|---|
+| `prospect`, `client`, `offer` | Which row it came from, and what was sold |
+| `revenue` | Booked, not collected |
+| `payments` | What actually cleared, and when. Booked is not banked. |
+| `costs` | `production` / `software` / `other`, each labeled. An unlabeled cost is refused. |
+| `hours` | `production` / `revision` / `admin` / `sales`. **All four count** against the effective rate. |
+| `rightsGranted`, `rightsNote` | Written permission to show the work, and how it was given. A verbal yes is not recorded as one. |
+| `state` | OPEN, DELIVERED, CLOSED |
+
+Averages are suppressed under three closed jobs, for the same reason reply
+rates are suppressed under ten sends: at that size they describe one job, not
+the business.
+
+**Currently 0 jobs and $0.**

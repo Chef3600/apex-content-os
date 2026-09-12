@@ -14,7 +14,9 @@
  *   node tools/pipeline.mjs contact <id> <channel> ["subject"]
  *   node tools/pipeline.mjs log <id> <outcome> ["their exact words"]
  *   node tools/pipeline.mjs followup <id>
- *   node tools/pipeline.mjs meeting|proposal|won|lost <id> [detail]
+ *   node tools/pipeline.mjs meeting <id> [date]
+ *   node tools/pipeline.mjs proposal <id> <amount>   writes a sendable proposal
+ *   node tools/pipeline.mjs won|lost <id> [detail]
  *   node tools/pipeline.mjs add "Company" [tier] ["contact"]
  *   node tools/pipeline.mjs list [STATE|tier|p1]
  *   node tools/pipeline.mjs report
@@ -297,10 +299,60 @@ case 'meeting': {
 case 'proposal': {
   const r = find(rest[0]);
   const amt = Number(rest[1] || 1500);
+  if (!Number.isFinite(amt) || amt <= 0) die('proposal <id> <amount>');
+  const tpl = join(root, 'outreach', 'proposal-template.md');
+  if (!existsSync(tpl)) die(`missing ${tpl}`);
+  const deposit = Math.round(amt / 2), balance = amt - deposit;
+  // The observation is written as a field note ("hero is a phone photo"). It
+  // reads as one in a document with a price on it, so it gets sentence shape.
+  // Capitalisation and a full stop only - the words themselves are untouched.
+  const sentence = s => {
+    const t = String(s || '').trim();
+    return t ? t[0].toUpperCase() + t.slice(1) + (/[.!?]$/.test(t) ? '' : '.') : '';
+  };
+  const vals = {
+    '{{company}}': r.company,
+    '{{name}}': (r.contact || '').split(',')[0].split(' ')[0] || r.company,
+    '{{date}}': today(),
+    '{{amount}}': String(amt),
+    '{{deposit}}': String(deposit),
+    '{{balance}}': String(balance),
+    '{{product}}': r.product || '',
+    '{{observation}}': sentence(r.observation),
+    '{{opportunity}}': sentence(r.opportunity),
+    '{{email}}': 'hello@apexcontentstudio.online',
+  };
+  let doc = Object.entries(vals).reduce((a, [k, v]) => a.split(k).join(v), readFileSync(tpl, 'utf8'));
+  // A proposal is the first thing a client reads with a price on it. An empty
+  // section or a live {{slot}} in it costs the sale, so both are refused.
+  const empty = Object.entries(vals).filter(([, v]) => !String(v).trim()).map(([k]) => k);
+  const left = [...new Set(doc.match(/\{\{\w+\}\}/g) || [])];
+  if (empty.length || left.length) {
+    const fixField = { name: 'contact', observation: null, company: null, date: null,
+                       amount: null, deposit: null, balance: null, email: null };
+    console.error(`\n  Not written. ${r.company} is missing:\n`);
+    for (const k of [...new Set([...empty, ...left])]) {
+      const slot = k.replace(/[{}]/g, '');
+      if (slot === 'observation')
+        console.error(`    observation - re-qualify: node tools/pipeline.mjs qualify ${r.id} <0-10> "what you saw"`);
+      else if (fixField[slot] === null)
+        console.error(`    ${slot} - unexpected; check outreach/proposal-template.md`);
+      else
+        console.error(`    node tools/pipeline.mjs set ${r.id} ${fixField[slot] || slot} "..."`);
+    }
+    console.error('');
+    process.exit(1);
+  }
+  const out = join(root, 'outreach', 'proposals', `${r.id}-${today()}.md`);
+  writeFileSync(out, doc);
   r.state = 'PROPOSAL'; r.offer = `$${amt}`; r.followupAt = plus(3);
+  r.proposalAt = today(); r.proposalFile = out.slice(root.length + 1);
   r.nextAction = `Chase ${r.followupAt}. Creative plan goes out BEFORE the balance is due.`;
   save(db);
-  console.log(`${r.company}: PROPOSAL $${amt}. Do not discount - reduce risk instead.`);
+  console.log(`\n  ${r.company}: PROPOSAL $${amt}  (${deposit} to book, ${balance} on delivery)`);
+  console.log(`  Written: ${r.proposalFile}`);
+  console.log('  Read it before sending. Do not discount it - reduce risk instead.');
+  console.log(`  On yes:  node tools/pipeline.mjs won ${r.id} ${amt}\n`);
   break;
 }
 case 'won': {
@@ -315,6 +367,8 @@ case 'won': {
   console.log('  That yes is what moves the portfolio off CONCEPT / SPEC WORK,');
   console.log('  and it makes the second sale materially easier.');
   console.log('  Then ask for the retainer inside 30 days, while the work is fresh.\n');
+  console.log(`  Open the job and start tracking what it actually costs:`);
+  console.log(`    node tools/job.mjs open ${r.id} ${amt}\n`);
   break;
 }
 case 'lost': {
@@ -403,6 +457,7 @@ case 'selftest': {
   }];
   writeFileSync(tmp, JSON.stringify(fixture, null, 2));
   const { execFileSync } = await import('node:child_process');
+  const { unlinkSync: unlink0 } = await import('node:fs');
   const run = (...a) => execFileSync(process.execPath, [join(root, 'tools', 'pipeline.mjs'), ...a],
     { env: { ...process.env, APEX_DB: tmp }, encoding: 'utf8' });
   const state = () => JSON.parse(readFileSync(tmp, 'utf8'))[0];
@@ -428,7 +483,25 @@ case 'selftest': {
   ck('log reply -> REPLIED', state().state, 'REPLIED');
   ck('reply verbatim', state().replyText, 'what would this cost');
   run('meeting', 'T1');                      ck('meeting -> MEETING', state().state, 'MEETING');
+
+  // A proposal with an empty section is worse than no proposal.
+  let propBlocked = false;
+  try { run('proposal', 'T1', '1500'); } catch { propBlocked = true; }
+  checks.push(['proposal refused while opportunity is empty', propBlocked, String(propBlocked)]);
+  checks.push(['state unchanged by refused proposal', state().state === 'MEETING', state().state]);
+
+  run('set', 'T1', 'opportunity', 'Shoot the sourdough three ways so the menu and the feed match.');
   run('proposal', 'T1', '1500');             ck('proposal -> PROPOSAL', state().state, 'PROPOSAL');
+  const pf = join(root, state().proposalFile);
+  const doc = existsSync(pf) ? readFileSync(pf, 'utf8') : '';
+  checks.push(['proposal document written', !!doc, state().proposalFile]);
+  checks.push(['proposal has no unfilled slots', !!doc && !/\{\{\w+\}\}/.test(doc), 'clean']);
+  checks.push(['proposal carries the observation', doc.includes('phone photo'), 'obs']);
+  checks.push(['proposal splits the fee 750/750', doc.includes('$750 to book'), '750']);
+  checks.push(['proposal does not mention AI', !/\bAI\b/.test(doc), 'no AI']);
+  checks.push(['proposal promises no performance', !/\b(guarantee|conversion lift|more sales)\b/i.test(doc), 'no claims']);
+  if (doc) unlink0(pf);
+
   run('won', 'T1', '1500');                  ck('won -> WON', state().state, 'WON');
 
   // Guard rails
