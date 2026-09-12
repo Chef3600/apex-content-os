@@ -49,8 +49,14 @@ section{padding:clamp(64px,9vw,128px) 0}
 nav{position:sticky;top:0;z-index:50;background:rgba(253,251,246,.94);
     backdrop-filter:blur(12px);border-bottom:1px solid var(--rule-soft)}
 nav .inner{display:flex;align-items:center;gap:24px;height:74px;max-width:var(--maxw);margin:0 auto;padding:0 24px}
-.logoslot{display:flex;align-items:center;text-decoration:none;flex-shrink:0}
-.logomark{height:52px;width:auto}
+.logoslot{display:flex;align-items:center;gap:11px;text-decoration:none;flex-shrink:0}
+.logomark{position:relative;display:block;width:79px;height:44px;overflow:hidden;flex:0 0 auto;
+  -webkit-mask-image:linear-gradient(180deg,#000 0 68%,rgba(0,0,0,.35) 86%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 0 68%,rgba(0,0,0,.35) 86%,transparent 100%)}
+.logomark img{position:absolute;left:-14px;top:0;width:111px;height:auto}
+.wordmark{font-family:var(--display);font-size:19px;font-weight:600;letter-spacing:.005em;
+  white-space:nowrap;color:var(--ink)}
+.wordmark i{font-style:normal;color:var(--gold);padding:0 .18em}
 nav .links{display:flex;gap:24px;margin-left:auto;font-size:13.5px;color:var(--ink-mid)}
 nav .links a{text-decoration:none}
 nav .links a:hover{color:var(--gold)}
@@ -74,7 +80,8 @@ nav .links a:hover{color:var(--gold)}
 .hero .cta{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
 .heroshot{margin-top:clamp(40px,6vw,66px);border-radius:3px;overflow:hidden;
   box-shadow:0 30px 70px -30px rgba(20,22,26,.42)}
-.heroshot img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.heroshot img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;object-position:50% 60%}
+@media (max-width:720px){.heroshot img{aspect-ratio:4/3;object-position:34% 78%}}
 
 /* Color rail: carries the palette across the fold while photography lands. */
 .rail{display:grid;grid-template-columns:repeat(6,1fr);height:8px;margin-top:clamp(40px,6vw,66px)}
@@ -96,7 +103,7 @@ nav .links a:hover{color:var(--gold)}
 .craftgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:clamp(34px,5vw,54px)}
 @media (max-width:860px){.craftgrid{display:grid;grid-template-columns:repeat(2,1fr)}}
 @media (max-width:520px){.craftgrid{display:grid;grid-template-columns:1fr}}
-.craftgrid img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:2px}
+.craftgrid img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:2px}
 .craftgrid figure{margin:0}
 .craftgrid figcaption{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--bone-dim);margin-top:10px}
@@ -113,7 +120,7 @@ nav .links a:hover{color:var(--gold)}
 .ba-cell{display:flex;flex-direction:column}
 .ba-cell .lbl{font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;
   color:var(--ink-soft);margin-bottom:10px}
-.ba-cell img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:2px}
+.ba-cell img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;border-radius:2px}
 .ba-cell.after .lbl{color:var(--gold)}
 .arrow{display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--gold);padding:0 4px}
 @media (max-width:1040px){.arrow{transform:rotate(90deg);padding:4px 0}}
@@ -130,17 +137,15 @@ nav .links a:hover{color:var(--gold)}
 
 /* ---------- one product, many assets ---------- */
 .many{background:var(--cream);border-top:1px solid var(--rule)}
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:32px}
-.tab{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
-  padding:11px 17px;border:1.5px solid var(--rule);background:var(--ivory);color:var(--ink-mid);
-  border-radius:2px;cursor:pointer;font-family:var(--body)}
-.tab[aria-selected="true"]{background:var(--char);color:var(--bone);border-color:var(--char)}
-.panel{margin-top:26px;background:var(--ivory);border:1px solid var(--rule);border-radius:2px;
-  padding:clamp(24px,3.4vw,40px);display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:start}
-@media (max-width:760px){.panel{grid-template-columns:1fr;gap:16px}}
-.panel .ratio{font-family:var(--display);font-size:clamp(30px,4vw,46px);font-weight:600;color:var(--gold);line-height:1}
-.panel h3{margin-bottom:10px}
-.panel p{color:var(--ink-mid);max-width:56ch}
+.assets{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.6vw,30px);margin-top:clamp(34px,5vw,52px)}
+@media (max-width:860px){.assets{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.assets{grid-template-columns:1fr}}
+.assets article{display:flex;flex-direction:column;align-items:flex-start}
+.ashape{height:clamp(112px,13vw,158px);max-width:100%;display:grid;place-items:center;
+  background:var(--cream);border:1px solid var(--gold);border-radius:2px}
+.ashape span{font-family:var(--display);font-size:clamp(18px,2.2vw,28px);font-weight:600;color:var(--gold);line-height:1}
+.assets h3{font-family:var(--body);font-size:13px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin-top:18px}
+.assets p{font-size:14.5px;color:var(--ink-mid);margin-top:7px}
 
 /* ---------- services ---------- */
 .svc{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);
@@ -155,7 +160,7 @@ nav .links a:hover{color:var(--gold)}
 /* ---------- portfolio ---------- */
 .pf-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(16px,2.6vw,32px);margin-top:clamp(34px,5vw,54px)}
 @media (max-width:760px){.pf-grid{display:grid;grid-template-columns:1fr}}
-.pf-card img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:2px}
+.pf-card img{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:2px}
 .pf-card .meta{display:flex;align-items:baseline;gap:12px;margin-top:14px;flex-wrap:wrap}
 .pf-card h3{font-family:var(--body);font-size:14px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
 .pf-card p{font-size:14.5px;color:var(--ink-mid);margin-top:7px;max-width:52ch}
@@ -166,7 +171,7 @@ nav .links a:hover{color:var(--gold)}
 .about .g{display:grid;grid-template-columns:1fr 1fr;gap:clamp(26px,4vw,58px);align-items:center}
 @media (max-width:840px){.about .g{grid-template-columns:1fr}}
 .about p{color:var(--bone-dim);margin-top:18px;max-width:50ch}
-.about img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:2px}
+.about img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:2px}
 
 /* ---------- contact ---------- */
 .contact{background:var(--gold-lt)}
@@ -176,13 +181,15 @@ nav .links a:hover{color:var(--gold)}
 /* ---------- footer ---------- */
 footer{background:var(--char);color:var(--bone-dim);padding:50px 0;font-size:13.5px}
 footer .g{display:flex;gap:20px;flex-wrap:wrap;align-items:center}
-footer .logomark{height:62px}
+.footmark{height:90px;width:auto}
 footer .r{margin-left:auto}
 @media (max-width:640px){footer .r{margin-left:0}}
 
 @media (max-width:560px){
   nav .inner{gap:10px;padding:0 16px;height:64px}
-  .logomark{height:42px}
+  .logomark{width:61px;height:34px}
+  .logomark img{left:-11px;width:86px}
+  .wordmark{font-size:15px}
   .btn{padding:11px 15px;font-size:11px;letter-spacing:.08em}
 }
 </style>
@@ -190,7 +197,8 @@ footer .r{margin-left:auto}
 <nav>
   <div class="inner">
     <a class="logoslot" href="#top" aria-label="Apex Content Studio home">
-      <img class="logomark" src="images/apex-logo.png" alt="Apex Content Studio" width="72" height="52" decoding="async">
+      <span class="logomark"><img src="images/apex-logo.png" alt="" width="240" height="174" decoding="async" aria-hidden="true"></span>
+      <span class="wordmark">Apex<i>&middot;</i>Content Studio</span>
     </a>
     <div class="links">
       <a href="#work">Work</a>
@@ -219,7 +227,7 @@ footer .r{margin-left:auto}
       <div class="heroshot" data-block>
         <img data-asset src="images/production/hero-camera-food-set.webp"
              alt="Professional cinema camera on a lit commercial food set, shallow depth of field across a plated dish"
-             width="1600" height="900" fetchpriority="high">
+             width="1100" height="614" fetchpriority="high">
       </div>
 
       <div class="rail" aria-hidden="true">
@@ -247,12 +255,9 @@ footer .r{margin-left:auto}
       <p class="lede" style="margin-top:20px">Every frame starts with direction.</p>
 
       <div class="craftgrid" data-sec>
-        <figure data-block><img data-asset src="images/production/cinema-camera.webp" alt="Cinema camera body on a production set" width="1200" height="900"><figcaption>Cinema camera</figcaption></figure>
-        <figure data-block><img data-asset src="images/production/lens-detail.webp" alt="Macro detail of a cinema lens aperture ring and front element" width="1200" height="900"><figcaption>Lens</figcaption></figure>
-        <figure data-block><img data-asset src="images/production/lighting-setup.webp" alt="Lighting setup shaping a food set" width="1200" height="900"><figcaption>Lighting</figcaption></figure>
-        <figure data-block><img data-asset src="images/production/camera-monitor.webp" alt="Camera monitor showing a framed composition" width="1200" height="900"><figcaption>Composition</figcaption></figure>
-        <figure data-block><img data-asset src="images/production/product-setup.webp" alt="Product photography setup with controlled reflection" width="1200" height="900"><figcaption>Product setup</figcaption></figure>
-        <figure data-block><img data-asset src="images/production/workstation.webp" alt="Creative workstation during a color grading session" width="1200" height="900"><figcaption>Grade</figcaption></figure>
+        <figure data-block><img data-asset src="images/production/cinema-camera.webp" alt="Cinema camera body on a production set" width="460" height="343"><figcaption>Cinema camera</figcaption></figure>
+        <figure data-block><img data-asset src="images/production/lens-detail.webp" alt="Macro detail of a cinema lens aperture ring and front element" width="480" height="358"><figcaption>Lens</figcaption></figure>
+        <figure data-block><img data-asset src="images/production/lighting-setup.webp" alt="Lighting setup shaping a food set" width="380" height="284"><figcaption>Lighting</figcaption></figure>
       </div>
     </div>
   </section>
@@ -268,14 +273,14 @@ footer .r{margin-left:auto}
         <div class="ba-head"><h3>Food</h3><span class="tag spec">Concept / Spec Work</span></div>
         <div class="ba-grid">
           <div class="ba-cell" data-block><span class="lbl">Before</span>
-            <img data-asset src="images/portfolio/before-after/food-before.webp" alt="Concept: a plated dish shot flat under overhead kitchen light, before art direction" width="800" height="1000"></div>
+            <img data-asset src="images/portfolio/before-after/food-before.webp" alt="Concept: a plated dish shot flat under overhead kitchen light, before art direction" width="420" height="521"></div>
           <div class="arrow" data-block aria-hidden="true">&rarr;</div>
           <div class="plan">
             <div class="t">Apex Creative Plan</div>
             <ul><li>Camera</li><li>Lighting</li><li>Composition</li><li>Color</li><li>Background</li><li>Hook</li><li>CTA</li></ul>
           </div>
           <div class="ba-cell after" data-block><span class="lbl">After</span>
-            <img data-asset src="images/portfolio/before-after/food-after.webp" alt="Concept: the same dish directed, lit and composed as campaign-ready commercial food photography" width="800" height="1000"></div>
+            <img data-asset src="images/portfolio/before-after/food-after.webp" alt="Concept: the same dish directed, lit and composed as campaign-ready commercial food photography" width="420" height="521"></div>
         </div>
       </div>
 
@@ -283,14 +288,14 @@ footer .r{margin-left:auto}
         <div class="ba-head"><h3>Packaged Food</h3><span class="tag spec">Concept / Spec Work</span></div>
         <div class="ba-grid">
           <div class="ba-cell" data-block><span class="lbl">Before</span>
-            <img data-asset src="images/portfolio/before-after/packaged-food-before.webp" alt="Concept: an unbranded jar shot flat on a countertop, before art direction" width="800" height="1000"></div>
+            <img data-asset src="images/portfolio/before-after/packaged-food-before.webp" alt="Concept: an unbranded jar shot flat on a countertop, before art direction" width="400" height="497"></div>
           <div class="arrow" data-block aria-hidden="true">&rarr;</div>
           <div class="plan">
             <div class="t">Apex Creative Plan</div>
             <ul><li>Camera</li><li>Lighting</li><li>Composition</li><li>Color</li><li>Background</li><li>Hook</li><li>CTA</li></ul>
           </div>
           <div class="ba-cell after" data-block><span class="lbl">After</span>
-            <img data-asset src="images/portfolio/before-after/packaged-food-after.webp" alt="Concept: the same jar directed as a campaign-ready packaged-food hero" width="800" height="1000"></div>
+            <img data-asset src="images/portfolio/before-after/packaged-food-after.webp" alt="Concept: the same jar directed as a campaign-ready packaged-food hero" width="420" height="521"></div>
         </div>
       </div>
 
@@ -298,14 +303,14 @@ footer .r{margin-left:auto}
         <div class="ba-head"><h3>Beverage</h3><span class="tag spec">Concept / Spec Work</span></div>
         <div class="ba-grid">
           <div class="ba-cell" data-block><span class="lbl">Before</span>
-            <img data-asset src="images/portfolio/before-after/beverage-before.webp" alt="Concept: a cold drink shot flat on a bar top, before art direction" width="800" height="1000"></div>
+            <img data-asset src="images/portfolio/before-after/beverage-before.webp" alt="Concept: a cold drink shot flat on a bar top, before art direction" width="360" height="447"></div>
           <div class="arrow" data-block aria-hidden="true">&rarr;</div>
           <div class="plan">
             <div class="t">Apex Creative Plan</div>
             <ul><li>Camera</li><li>Lighting</li><li>Composition</li><li>Color</li><li>Background</li><li>Hook</li><li>CTA</li></ul>
           </div>
           <div class="ba-cell after" data-block><span class="lbl">After</span>
-            <img data-asset src="images/portfolio/before-after/beverage-after.webp" alt="Concept: the same drink directed as a campaign-ready beverage hero with backlight and motion" width="800" height="1000"></div>
+            <img data-asset src="images/portfolio/before-after/beverage-after.webp" alt="Concept: the same drink directed as a campaign-ready beverage hero with backlight and motion" width="360" height="447"></div>
         </div>
       </div>
 
@@ -324,18 +329,13 @@ footer .r{margin-left:auto}
       <p class="lede" style="margin-top:20px">A directed shoot is not one photograph. It is a library
         that feeds every channel you sell through.</p>
 
-      <div class="tabs" role="tablist" aria-label="Asset types">
-        <button class="tab" role="tab" aria-selected="true"  data-i="0">Product Hero</button>
-        <button class="tab" role="tab" aria-selected="false" data-i="1">Social Video</button>
-        <button class="tab" role="tab" aria-selected="false" data-i="2">Ad Creative</button>
-        <button class="tab" role="tab" aria-selected="false" data-i="3">Lifestyle Image</button>
-        <button class="tab" role="tab" aria-selected="false" data-i="4">Website Image</button>
-        <button class="tab" role="tab" aria-selected="false" data-i="5">Email Creative</button>
-      </div>
-
-      <div class="panel" role="tabpanel">
-        <div class="ratio" id="p-ratio">1:1</div>
-        <div><h3 id="p-title">Product Hero</h3><p id="p-copy"></p></div>
+      <div class="assets">
+        <article><div class="ashape" style="aspect-ratio:1/1"><span>1:1</span></div><h3>Product Hero</h3><p>The frame that has to carry the sale. Shot static, lit for the material, with the label legible at thumbnail size.</p></article>
+        <article><div class="ashape" style="aspect-ratio:9/16"><span>9:16</span></div><h3>Social Video</h3><p>Vertical, legible with sound off, hook in the first second. Cut from the same setup as the hero so the product reads identically.</p></article>
+        <article><div class="ashape" style="aspect-ratio:4/5"><span>4:5</span></div><h3>Ad Creative</h3><p>Paid variants built as a set, with negative space reserved so the copy never lands on the product.</p></article>
+        <article><div class="ashape" style="aspect-ratio:3/2"><span>3:2</span></div><h3>Lifestyle Image</h3><p>The product in a real context: hands, table, service. Shot to make the thing feel used, not displayed.</p></article>
+        <article><div class="ashape" style="aspect-ratio:16/9"><span>16:9</span></div><h3>Website Image</h3><p>Wide banners and section headers cropped from the same production, so the site and the ads agree.</p></article>
+        <article><div class="ashape" style="aspect-ratio:2/1"><span>2:1</span></div><h3>Email Creative</h3><p>Small, bright and high-contrast, because it will be seen in a preview pane on a phone.</p></article>
       </div>
     </div>
   </section>
@@ -361,33 +361,39 @@ footer .r{margin-left:auto}
     <div class="wrap">
       <p class="eyebrow">Work</p>
       <h2>Selected work.</h2>
-      <p class="lede" style="margin-top:20px">Food, packaged food, beverage, consumer products and hospitality.</p>
+      <p class="lede" style="margin-top:20px">Food, packaged food, beverage, consumer products, hospitality
+        and production.</p>
 
       <div class="pf-grid" data-sec>
         <article class="pf-card" data-block>
-          <img data-asset src="images/portfolio/food/food-hero.webp" alt="Commercial food photograph of a plated dish in directional daylight" width="1200" height="800">
+          <img data-asset src="images/portfolio/food/food-hero.webp" alt="Commercial food photograph of a plated dish in directional daylight" width="470" height="315">
           <div class="meta"><h3>Food</h3><span class="tag spec">Concept</span></div>
           <p>Plated food shot for menus, delivery platforms and paid social.</p>
         </article>
         <article class="pf-card" data-block>
-          <img data-asset src="images/portfolio/packaged-food/packaged-hero.webp" alt="Commercial photograph of an unbranded jar on a warm stone surface" width="1200" height="800">
+          <img data-asset src="images/portfolio/packaged-food/packaged-hero.webp" alt="Commercial photograph of an unbranded jar on a warm stone surface" width="760" height="510">
           <div class="meta"><h3>Packaged Food</h3><span class="tag spec">Concept</span></div>
           <p>Shelf and e-commerce heroes with the label held still and legible.</p>
         </article>
         <article class="pf-card" data-block>
-          <img data-asset src="images/portfolio/beverage/beverage-hero.webp" alt="Commercial beverage photograph with backlight through ice" width="1200" height="800">
+          <img data-asset src="images/portfolio/beverage/beverage-hero.webp" alt="Commercial beverage photograph with backlight through ice" width="470" height="315">
           <div class="meta"><h3>Beverage</h3><span class="tag spec">Concept</span></div>
           <p>Pour, splash and condensation shot at shutter speeds that hold the physics.</p>
         </article>
         <article class="pf-card" data-block>
-          <img data-asset src="images/portfolio/consumer-products/product-hero.webp" alt="Commercial photograph of an unbranded consumer product on a gradient ground" width="1200" height="800">
+          <img data-asset src="images/portfolio/consumer-products/product-hero.webp" alt="Commercial photograph of an unbranded consumer product on a gradient ground" width="760" height="510">
           <div class="meta"><h3>Consumer Products</h3><span class="tag spec">Concept</span></div>
           <p>Clean product heroes with negative space reserved for campaign copy.</p>
         </article>
         <article class="pf-card" data-block>
-          <img data-asset src="images/portfolio/hospitality/hospitality-hero.webp" alt="Hospitality photograph of a dining room in warm evening light" width="1200" height="800">
+          <img data-asset src="images/portfolio/hospitality/hospitality-hero.webp" alt="Hospitality photograph of a dining room in warm evening light" width="420" height="282">
           <div class="meta"><h3>Hospitality</h3><span class="tag spec">Concept</span></div>
           <p>Rooms, service and the pass, shot the way guests actually experience them.</p>
+        </article>
+        <article class="pf-card" data-block>
+          <img data-asset src="images/portfolio/production/production-hero.webp" alt="Cinema camera and lit product set during a commercial production" width="380" height="255">
+          <div class="meta"><h3>Production</h3><span class="tag spec">Concept</span></div>
+          <p>Camera, lighting and art direction handled in one pass, on one call sheet.</p>
         </article>
       </div>
     </div>
@@ -405,7 +411,7 @@ footer .r{margin-left:auto}
         <p>Most content studios can light a plate. Fewer can tell you the plate is wrong.</p>
       </div>
       <div data-block>
-        <img data-asset src="images/production/chef-pass.webp" alt="A chef finishing a plate on the pass under warm service light" width="800" height="1000">
+        <img data-asset src="images/production/chef-pass.webp" alt="A chef finishing a plate on the pass under warm service light" width="420" height="282">
       </div>
     </div>
   </section>
@@ -419,14 +425,14 @@ footer .r{margin-left:auto}
         <p class="lede" style="margin-top:18px">Send the product, the channel and the deadline. You
           will get a creative plan back before anyone talks about a quote.</p>
       </div>
-      <a class="btn" href="mailto:hello@apexcontentstudio.online">Email the Studio</a>
+      <a class="btn" href="mailto:hello@apexcontentstudio.online?subject=Project%20inquiry&amp;body=Product%3A%0AChannel%3A%0ADeadline%3A%0A">Email the Studio</a>
     </div>
   </section>
 </main>
 
 <footer>
   <div class="wrap g">
-    <img class="logomark" src="images/apex-logo.png" alt="Apex Content Studio" width="86" height="62" decoding="async">
+    <img class="footmark" src="images/apex-logo.png" alt="Apex Content Studio" width="124" height="90" decoding="async">
     <span>Commercial content production &middot; Apex Hospitality Group LLC</span>
     <span class="r">&copy; 2026 Apex Hospitality Group LLC</span>
   </div>
@@ -480,33 +486,5 @@ footer .r{margin-left:auto}
   settle();
   window.addEventListener("load", settle);
 
-  /* ---- one product, many assets --------------------------------------- */
-  var DATA = [
-    ["1:1",  "Product Hero",    "The frame that has to carry the sale. Shot static, lit for the material, with the label legible at thumbnail size."],
-    ["9:16", "Social Video",    "Vertical, legible with sound off, hook in the first second. Cut from the same setup as the hero so the product reads identically."],
-    ["4:5",  "Ad Creative",     "Paid variants built as a set, with negative space reserved so the copy never lands on the product."],
-    ["3:2",  "Lifestyle Image", "The product in a real context: hands, table, service. Shot to make the thing feel used, not displayed."],
-    ["16:9", "Website Image",   "Wide banners and section headers cropped from the same production, so the site and the ads agree."],
-    ["2:1",  "Email Creative",  "Small, bright and high-contrast, because it will be seen in a preview pane on a phone."]
-  ];
-  var tabs = [].slice.call(document.querySelectorAll(".tab"));
-  var elR  = document.getElementById("p-ratio");
-  var elT  = document.getElementById("p-title");
-  var elC  = document.getElementById("p-copy");
-
-  function pick(i) {
-    var d = DATA[i];
-    if (!d) return;
-    elR.textContent = d[0];
-    elT.textContent = d[1];
-    elC.textContent = d[2];
-    tabs.forEach(function (t) {
-      t.setAttribute("aria-selected", String(Number(t.getAttribute("data-i")) === i));
-    });
-  }
-  tabs.forEach(function (t) {
-    t.addEventListener("click", function () { pick(Number(t.getAttribute("data-i"))); });
-  });
-  pick(0);
 })();
 </script>

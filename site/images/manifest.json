@@ -124,9 +124,9 @@
       "slot": "work",
       "designation": "CONCEPT",
       "status": "LIVE",
-      "qc": 80,
-      "alt": "Concept: the same product directed as a campaign-ready consumer-product hero",
-      "brief": "Same product, blank packaging preserved, fully directed. Clean gradient ground, controlled reflection, crisp edge light, considered negative space for copy. Premium e-commerce and campaign hero."
+      "qc": 92,
+      "alt": "Concept: an unbranded consumer product directed as a campaign-ready hero with copy space",
+      "brief": "Blank packaging preserved. Cream-to-blush gradient ground, crisp edge light, controlled reflection, generous negative space at right reserved for campaign copy. Horizontal 3:2. Packaging stays blank."
     },
     {
       "id": "cinema-camera",
@@ -137,6 +137,76 @@
       "qc": 86,
       "alt": "Professional cinema camera mounted on a tripod on a bright production set",
       "brief": "Cinema camera body on a tripod, low three-quarter angle, bright ivory set, equipment softly out of focus behind. No text, no logos, no people."
+    },
+    {
+      "id": "food-hero",
+      "path": "portfolio/food/food-hero.webp",
+      "slot": "work",
+      "designation": "CONCEPT",
+      "status": "LIVE",
+      "qc": 91,
+      "alt": "Commercial food photograph of a colorful seafood dish in bright directional daylight",
+      "brief": "Bright high-key plated seafood. Saturated fresh color, shallow depth of field, editorial food-magazine treatment. No text, no logos."
+    },
+    {
+      "id": "packaged-hero",
+      "path": "portfolio/packaged-food/packaged-hero.webp",
+      "slot": "work",
+      "designation": "CONCEPT",
+      "status": "LIVE",
+      "qc": 90,
+      "alt": "Commercial photograph of an unbranded bottle with a blank label on a warm gradient set",
+      "brief": "Premium packaged-goods hero. Tall bottle with a COMPLETELY BLANK label, warm coral and cream gradient, crisp edge light, herb and citrus supporting cast. Label stays blank."
+    },
+    {
+      "id": "beverage-hero",
+      "path": "portfolio/beverage/beverage-hero.webp",
+      "slot": "work",
+      "designation": "CONCEPT",
+      "status": "LIVE",
+      "qc": 89,
+      "alt": "Commercial beverage photograph of an unbranded citrus soda bottle with backlight and splash",
+      "brief": "Chilled unbranded bottle, COMPLETELY BLANK label, condensation, citrus and ice, physically correct splash, brilliant backlight. Label stays blank."
+    },
+    {
+      "id": "hospitality-hero",
+      "path": "portfolio/hospitality/hospitality-hero.webp",
+      "slot": "work",
+      "designation": "CONCEPT",
+      "status": "LIVE",
+      "qc": 91,
+      "alt": "Hospitality photograph of a bright restaurant dining room in warm afternoon light",
+      "brief": "Upscale dining room, set tables, linen and glassware, daylight through tall windows, warm wood and greenery. No people, no signage, no brand names."
+    },
+    {
+      "id": "chef-pass",
+      "path": "production/chef-pass.webp",
+      "slot": "about",
+      "designation": "CONCEPT",
+      "status": "LIVE",
+      "qc": 88,
+      "alt": "A chef finishing a plate on the pass under warm service light",
+      "brief": "Chef's hands plating on a restaurant pass, dining room softly out of focus behind. Human, warm, editorial. No faces in focus, no text, no logos."
+    },
+    {
+      "id": "lighting-setup",
+      "path": "production/lighting-setup.webp",
+      "slot": "craft",
+      "designation": "CONCEPT",
+      "status": "LIVE",
+      "qc": 88,
+      "alt": "Lighting setup shaping a food set with softbox, flag and bounce card",
+      "brief": "Honest production process shot: softbox key, black flag, white bounce card, C-stands, styled plate on a sweep. No text, no logos, no people."
+    },
+    {
+      "id": "production-hero",
+      "path": "portfolio/production/production-hero.webp",
+      "slot": "work",
+      "designation": "CONCEPT",
+      "status": "LIVE",
+      "qc": 90,
+      "alt": "Cinema camera and lit product set during a commercial production",
+      "brief": "Behind-the-scenes production still: cinema camera rig on a tripod with a director's monitor, softbox and LED panel, unbranded product set on a plinth. Bright studio. No people, no text, no logos."
     }
   ]
 }
