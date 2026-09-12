@@ -19,10 +19,18 @@ without owner authorization.
 | Primary category | Marketing Agency |
 | Phone | **(702) 480-9198** |
 | Email | hello@apexcontentstudio.online |
-| Website | https://apexcontentstudio.online |
+| Website | https://apexcontentstudio.online **- NOT LIVE YET. See below.** |
 | Business type | Service-area business (no storefront shown) |
 | Service areas | Las Vegas, Henderson, North Las Vegas, Summerlin |
 | Hours | Monday-Friday, 9:00 AM - 6:00 PM |
+
+> **CANONICAL URL STATUS: pending.** `apexcontentstudio.online` is the intended
+> canonical destination and it is already declared as canonical in the site's
+> own head, but **nothing is deployed and the domain is not connected.** The
+> first Vercel deploy produces a `*.vercel.app` URL that is usable immediately -
+> put that one on every platform below on day one and swap it for the custom
+> domain when DNS resolves. `DEPLOY.md` has the exact steps. Do not list a URL
+> that does not load.
 
 **NAP consistency** - name, address/area, phone - is a real local-SEO ranking
 input, not a formality. Google cross-references them. One mismatch between the

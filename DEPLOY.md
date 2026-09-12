@@ -38,77 +38,80 @@ rendered page in Chromium at 1440 / 820 / 390.
 
 ## CURRENT STATUS - read this first
 
-**DEPLOYMENT STATUS: NOT LIVE.**
-**DOMAIN STATUS: NOT CONNECTED.**
-**PUBLIC URL: none. There is no live URL to give out yet.**
+**MERGE: DONE.** `main` is now `2836880` and carries the verified build.
+**DEPLOYMENT: NOT LIVE.**
+**DOMAIN: NOT CONNECTED.**
+**PUBLIC URL: none yet.**
 
-What was established on 2026-09-12 through the Vercel integration:
+### Why the integration cannot finish this
 
-| Fact | State |
+Tested 2026-09-12, against the Vercel account "chef3600's projects" (Hobby):
+
+| Call | Result |
 |---|---|
-| Vercel account | Exists - "chef3600's projects", Hobby plan |
-| A project named `apex-content-studio` | **Already exists in the account.** Creating it returns 409 conflict. |
-| Readable through this integration | **No.** `list_projects` returns an empty list and `get_project` returns 404 for both names. |
-| Project `apex-content-os` | Created (`prj_PLOBCSNA2M7MNPhxkImNbE1A9xs8`), but **the GitHub link could not be verified** and the project cannot be read back. |
+| `list_projects` | `[]` - returns an empty list |
+| `get_project` (by id and by name) | `404 Not Found` |
+| `list_deployments` | **`403 Forbidden` - "You don't have permission to list the deployment."** |
+| `create_git_project` "apex-content-studio" | `409 conflict` - a project by that name already exists |
+| `create_git_project` "apex-content-os" | `409 conflict` - created earlier, cannot be read back or reused |
 
-The integration's token can create projects but cannot read or configure them,
-so deployment cannot be completed or confirmed from a session. **Nothing has
-been published.**
+The integration's token can create projects but cannot read, list or configure
+them, and the documented reuse path returns 409 instead of reusing. That is a
+permissions problem on the connection, not something a different call fixes.
+**No deployment was made and no URL exists.**
 
-### The blocker that matters more than the integration
+Two projects may now exist in the account: `apex-content-studio` (pre-existing)
+and `apex-content-os` (created during this attempt, never linked). Keep one.
 
-`main` is **three commits behind** this branch. Deploying `main` today would
-publish a site with real defects that have since been fixed:
+### The shortest path to live - about 6 minutes
 
-- no doctype - the page renders in **quirks mode**
-- **nine WCAG AA contrast failures**
-- no OG image, no favicon, no `robots.txt`, no `sitemap.xml`
-- image heights wrong on five card types
+1. **vercel.com/dashboard.** If both `apex-content-studio` and
+   `apex-content-os` exist, delete `apex-content-os` - it was never linked to
+   anything.
+2. Open `apex-content-studio` -> **Settings -> Git -> Connect Git Repository ->
+   `Chef3600/apex-content-os`**. If the project will not connect, delete it too
+   and use **Add New -> Project -> Import** on the same repo. One project only.
+3. **Settings -> Build & Deployment:**
+   - Framework Preset: **Other**
+   - Root Directory: **`site`**
+   - Build Command: **empty** (toggle the override off)
+   - Output Directory: **empty**
+   - Install Command: **empty**
+4. **Settings -> Git -> Production Branch: `main`.**
+5. **Deployments -> Redeploy**, or push any commit to `main`.
 
-That page would be worse than no page, under the company's own name. So the
-first action is not a deploy setting - it is getting the verified build onto
-the branch Vercel will deploy.
+The deploy takes under a minute - there is no build, only file upload.
 
-### Exact owner actions, in order
+### Then send back the `*.vercel.app` URL
 
-**1. Get the verified build onto `main`** (2 minutes)
+That URL is usable the moment it exists. It goes on the Google Business
+Profile, LinkedIn and outreach on day one. **Do not wait for DNS to start
+using it.**
 
-Open a pull request from `claude/keen-ritchie-62fsn0` into `main` and merge it,
-or authorize the merge and it will be done. Until this happens, every deploy
-path publishes the defective version.
+### DNS, once the deploy is live
 
-**2. Connect the project** (5 minutes, Vercel dashboard)
+**Vercel now issues per-project DNS targets** (for example
+`xyz.vercel-dns-016.com`), so the exact values are shown on the domain card
+inside your project and cannot be read from here. **Use what the dashboard
+shows.** The legacy values below still work and are what Vercel falls back to:
 
-Open the existing `apex-content-studio` project. If it has no repository
-connected: Settings -> Git -> Connect `Chef3600/apex-content-os`.
+| Host | Type | Value | TTL |
+|---|---|---|---|
+| `@` | A | `76.76.21.21` | Automatic |
+| `www` | CNAME | `cname.vercel-dns.com` | Automatic |
 
-If it is a stale or empty project from an earlier attempt, delete it and the
-duplicate `apex-content-os` project, then import the repo fresh - one project,
-not three.
+At Namecheap: **Domain List -> Manage -> Advanced DNS**. Delete any parking
+or redirect records for `@` and `www` first, or they will conflict.
 
-Settings, either way:
+**Namecheap will not be touched from here without explicit authorization.**
 
-- Framework Preset: **Other**
-- Root Directory: **site**
-- Build Command: empty
-- Output Directory: empty
-- Production Branch: **main**
+In the Vercel project add **both** `apexcontentstudio.online` and
+`www.apexcontentstudio.online`, and set `www` to redirect to the apex. The page
+declares `https://apexcontentstudio.online/` as canonical, so the apex is the
+destination.
 
-**3. Deploy and capture the URL** (1 minute)
-
-The first deploy produces a `*.vercel.app` URL. **That URL is usable
-immediately** - it can go on the Google Business Profile, on LinkedIn and in
-outreach on day one. Do not wait for DNS to start using it.
-
-**4. Attach the domain** (10 minutes + DNS propagation)
-
-Vercel project -> Domains -> add `apexcontentstudio.online` and
-`www.apexcontentstudio.online`, then create exactly the records Vercel shows
-at the registrar. See the DNS section below.
-
-**5. Report the live URL back**, so it can be set as the canonical destination
-everywhere at once - Google profile, LinkedIn, YouTube, proposals, outreach,
-`docs/business-platforms.md`.
+TLS is issued automatically once the records resolve - usually minutes, up to
+48 hours.
 
 ## Deploying on Vercel
 
