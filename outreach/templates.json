@@ -1,34 +1,38 @@
 {
   "_note": "Single source of truth for outreach copy. `node tools/pipeline.mjs msg <id>` fills these from the prospect record. outreach/templates.md is the prose guidance; this file is what actually gets sent. Edit here.",
-  "_slots": {
-    "{{name}}": "contact first name, or the company if unknown",
-    "{{company}}": "company name",
-    "{{observation}}": "what a human SAW during verification - never generated",
-    "{{product}}": "the specific dish, bottle, bag, treatment or class to shoot",
-    "{{consequence}}": "why that observation costs them something specific"
-  },
-
+  "_slots": "{{name}} {{company}} {{observation}} {{product}} {{consequence}} {{subject}} {{locations}} {{signal}}",
   "cold-email": {
     "channel": "Email",
     "subject": "your {{product}} photos",
     "body": "{{name}} -\n\n{{observation}}\n\nThat's fixable, and it's the one I'd fix first - {{consequence}}.\n\nI'm a chef. I shoot food and product commercially now. If it's useful I'll put together a one-page plan for {{product}}: camera, lighting, composition, background, and the hook the frame should carry. Free, no call needed, and you can hand it to whoever shoots for you.\n\nWant it?\n\nLarry\nApex Content Studio",
-    "rules": ["Under 120 words", "No link", "No price", "No attachment", "One question only"]
+    "rules": [
+      "Under 120 words",
+      "No link",
+      "No price",
+      "No attachment",
+      "One question only"
+    ]
   },
-
   "dm": {
     "channel": "Instagram DM",
     "subject": "",
     "body": "{{name}} - {{observation}}\n\nI'm a chef who shoots food and product commercially. Happy to send a one-page plan for how I'd light {{product}} - free, no strings.\n\nWant it?",
-    "rules": ["No link in a first DM, ever", "Under 60 words", "Lower case is fine here, this is not email"]
+    "rules": [
+      "No link in a first DM, ever",
+      "Under 60 words",
+      "Lower case is fine here, this is not email"
+    ]
   },
-
   "linkedin": {
     "channel": "LinkedIn",
     "subject": "",
     "body": "{{name}} - we haven't met. I'm a chef in Las Vegas who now shoots commercial food and product content.\n\n{{observation}}\n\nNot pitching a retainer at you on a first message. If it's useful I'll put together a one-page creative plan for {{product}} - free, and yours to use with anyone.\n\nWorth sending over?",
-    "rules": ["Slightly more formal than DM", "Connection note version: first 2 lines only, 300 char limit", "No link"]
+    "rules": [
+      "Slightly more formal than DM",
+      "Connection note version: first 2 lines only, 300 char limit",
+      "No link"
+    ]
   },
-
   "followup-1": {
     "channel": "same as opener",
     "subject": "re: {{subject}}",
@@ -40,7 +44,6 @@
       "For a prospect scoring 9-10, shoot one actual frame instead of writing the plan. Nothing outsells the work."
     ]
   },
-
   "followup-2": {
     "channel": "same as opener",
     "subject": "re: {{subject}}",
@@ -51,26 +54,67 @@
       "This is the last message that offers anything."
     ]
   },
-
   "breakup": {
     "channel": "same as opener",
     "subject": "re: {{subject}}",
     "body": "Going to stop bothering you, {{name}}.\n\nThe plan I sent is yours either way. If it ever moves up the list, I'm easy to find.\n\nLarry",
     "day": 11,
-    "rules": ["Then genuinely stop.", "90 days before this company is touched again.", "A third chase converts nobody and costs the sending domain."]
+    "rules": [
+      "Then genuinely stop.",
+      "90 days before this company is touched again.",
+      "A third chase converts nobody and costs the sending domain."
+    ]
   },
-
   "warm-direct": {
     "channel": "Email or text",
     "subject": "quick one",
     "body": "{{name}} - I've started doing commercial content properly, on my own now. Product and food photography, short video, the assets brands actually need for menus, socials and paid.\n\nYou know what my standards are in a kitchen. Same thing, pointed at a camera.\n\nTwo things I'd value:\n\n1. If {{company}} needs product or menu photography, I'd rather do your first one than a stranger's.\n2. If not - who's the one person you'd introduce me to?\n\nEither answer is useful. No pitch attached.\n\nLarry",
-    "rules": ["For people who already know Larry", "No observation needed - the relationship is the qualification"]
+    "rules": [
+      "For people who already know Larry",
+      "No observation needed - the relationship is the qualification"
+    ]
   },
-
   "warm-referral": {
     "channel": "Email or text",
     "subject": "one intro",
     "body": "{{name}} - not selling you anything. I'm building the content side out properly and I'm after one introduction, not ten.\n\nWho do you know running a food brand, restaurant or bottled product whose photography doesn't match how good the actual product is?\n\nThat's the whole ask. Happy to send you the work first if it's easier to vouch for.\n\nLarry",
-    "rules": ["Ask for ONE intro. A list gets deferred, then forgotten."]
+    "rules": [
+      "Ask for ONE intro. A list gets deferred, then forgotten."
+    ]
+  },
+  "multi-location": {
+    "channel": "Email",
+    "subject": "your {{locations}} locations",
+    "body": "{{name}} -\n\n{{observation}}\n\nWith {{locations}} locations that compounds: each one ends up looking like a different business, and the one people judge you on is whichever they happen to find first.\n\nI'm a chef who shoots commercially. The way I'd handle it is to build the look once - lighting, color, how the spaces and the food are framed - and then shoot each location to it, so the second and third cost less than the first.\n\nIf it's useful I'll put a one-page plan together for one location, free, and you can judge it from that. Want it?\n\nLarry\nApex Content Studio",
+    "rules": [
+      "Under 140 words",
+      "Only for rows with a recorded location count of 2+",
+      "No price",
+      "One question only",
+      "The plan is for ONE location - never open at the full group"
+    ]
+  },
+  "signal": {
+    "channel": "Email",
+    "subject": "{{company}} - {{product}}",
+    "body": "{{name}} -\n\n{{signal}}\n\n{{observation}}\n\nI'm a chef who shoots commercially. Openings and launches are the one moment where the photography either carries the thing or quietly costs you the first month of it.\n\nIf it helps I'll put together a one-page plan for it - what to shoot, in what light, in what order on the day. Free, and you can hand it to whoever is shooting.\n\nWant it?\n\nLarry\nApex Content Studio",
+    "rules": [
+      "Only for rows with BOTH signal and signalSource recorded",
+      "The signal must be something published, not inferred",
+      "Under 130 words",
+      "No price"
+    ]
+  },
+  "wedge": {
+    "channel": "Email",
+    "subject": "one {{product}}, not a pitch",
+    "body": "{{name}} -\n\n{{observation}}\n\nI'm not going to pitch you on covering the whole group - you already have people for that, and I'd rather be judged on work than on a deck.\n\nOne thing instead: let me produce {{product}}. One scope, one deadline, priced as a single engagement. If it's better than what you're getting, the conversation continues on its own. If it isn't, you've lost one project.\n\nI'm a chef who shoots commercially, and that narrow lane - food, product, facility, team - is the whole of what I do.\n\nWorth a short call?\n\nLarry\nApex Content Studio",
+    "rules": [
+      "Lane C only - 10+ locations",
+      "NEVER pitch the group",
+      "Name ONE engagement: one location, one campaign, one launch, one recruiting push",
+      "Do not claim crew size or enterprise capacity",
+      "No price in the opener"
+    ]
   }
 }

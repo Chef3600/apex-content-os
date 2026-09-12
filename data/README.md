@@ -36,25 +36,40 @@ reply at that size and a number would mislead. 10-29 is indicative. 30+ is
 measured. **Do not act on a bucket below 30.** `pipeline.mjs report` enforces
 this rather than trusting anyone to remember it.
 
+## Account fields
+
+| Field | Notes |
+|---|---|
+| `industry` | One of the keys in `tools/verticals.mjs` |
+| `locations` | **A number means a number was published or counted.** `null` means unrecorded - never "one". |
+| `locationsSource` | Where the count came from |
+| `lane` | A single / B 2-9 / C 10+. Derived, not typed. |
+| `accountScore` | 0-36, `docs/account-scoring.md`. Orders the verification queue. |
+| `signal`, `signalSource` | A published growth event. Unsourced signals cannot be used in a message. |
+| `sourceSaid` | What the search result actually stated, verbatim in substance |
+
 ## Current state
 
-**52 sourced. 0 verified. 0 contacted.**
+**111 sourced across 18 industries. 0 verified. 0 contacted.**
 
-| Tier | Rows | P1 |
-|---|---|---|
-| Beverage (roasters, breweries, distillery) | 18 | 9 |
-| Packaged food | 9 | 5 |
-| Beauty / med spa | 8 | 3 |
-| Bakery | 7 | 3 |
-| Restaurant (chef-owned) | 5 | 1 |
-| Fitness / wellness | 5 | 0 |
+| Lane | Rows |
+|---|---|
+| A - single location, or count unrecorded | 87 |
+| B - 2 to 9 locations | 21 |
+| C - 10 or more | 3 |
+
+33 rows carry a **published** location count. The other 78 are unrecorded and
+scored as one location, which is the conservative reading - several of them
+will move up the queue the moment someone counts.
 
 Every row is `NEW` with an **empty `contentWeakness`**. Nothing is claimed
 about any of their content, because site fetching is blocked by the network
 egress proxy and nothing has been seen.
 
-Each row carries `useCase` - why content plausibly matters to that *business
-model*. That is a statement about the category, not about them.
+Each row carries `sourceSaid` - what the search result stated - and, where it
+existed before, `useCase`, why content plausibly matters to that *business
+model*. Both are statements about a category or a published fact, never about
+what their content looks like.
 
 Verification is the one manual step. Three minutes per company:
 

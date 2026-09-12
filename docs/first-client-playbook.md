@@ -10,7 +10,7 @@ gets there, not by how it looks.
   client has paid for any of it.
 - Clients to date: **zero**. Say so when asked; it survives due diligence and
   pretending does not.
-- Pipeline: **52 sourced companies, 0 verified, 0 contacted.**
+- Pipeline: **111 sourced companies across 18 industries, 0 verified, 0 contacted.**
 - The strongest asset is not on the website: **Larry is a working chef with a
   career's worth of professional relationships.**
 
@@ -32,15 +32,21 @@ could introduce. Twenty sends beats two hundred cold ones.
 conversations, and a genuine chance one of them closes. No cold campaign
 gets near that in week one.
 
-### Day 2 - verify the priority-1 rows (60 minutes)
+### Day 2 - verify the top of the queue (60 minutes)
 
 ```
-node tools/pipeline.mjs list p1        # the 20 best-fit rows
-node tools/pipeline.mjs verify         # walks them one at a time
+node tools/account-score.mjs immediate   # the 25 fastest realistic conversations
+node tools/pipeline.mjs verify           # walks them, highest account score first
 ```
 
-Three minutes each. Open the site, open the grid, look at the four things
-the screen names, then:
+Verify from the **immediate** list this week. The **value** list
+(`account-score.mjs value`) is the larger accounts and it is worked in
+parallel, a few rows a week - it is where the company comes from, but it is
+not where the first invoice comes from.
+
+Three minutes each. Open the site, open the grid, look at the five things the
+screen names - including **counting their locations**, which is ten seconds and
+moves the account score more than anything else in the record - then:
 
 ```
 node tools/pipeline.mjs qualify <id> <0-10> "what you actually saw"

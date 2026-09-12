@@ -31,6 +31,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { VERTICALS, ANGLES } from './verticals.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DB = process.env.APEX_DB || join(root, 'data', 'prospects.json');
@@ -71,6 +72,8 @@ function render(r, key) {
     '{{product}}': r.product || '',
     '{{consequence}}': r.consequence || '',
     '{{subject}}': r.subject || '',
+    '{{locations}}': r.locations == null ? '' : String(r.locations),
+    '{{signal}}': r.signal || '',
   };
   const fill = s => Object.entries(vals).reduce((a, [k, v]) => a.split(k).join(v), s || '');
   const body = fill(t.body), subject = fill(t.subject);
@@ -105,21 +108,38 @@ case 'open': case 'show': {
 
 /* -------------------------------------------------------------- VERIFY */
 case 'verify': {
-  const r = rest[0] ? find(rest[0]) : db.find(x => x.state === 'NEW');
+  // Highest account score first: the queue is worked in value order, not file
+  // order, so the hour spent verifying goes where the money could be.
+  const r = rest[0] ? find(rest[0])
+    : [...db].filter(x => x.state === 'NEW')
+        .sort((a, b) => (b.accountScore ?? 0) - (a.accountScore ?? 0))[0];
   if (!r) { console.log('nothing left in NEW'); break; }
   r.state = 'VERIFY'; save(db);
   const left = db.filter(x => x.state === 'NEW').length;
+  const v = VERTICALS[r.industry] || {};
+  const a = ANGLES[r.industry] || {};
   console.log('');
   rule();
   console.log(`  VERIFY   ${r.company}       (${left} still NEW after this)`);
   rule();
-  console.log(`  ${r.tier} · P${r.priority} · ${r.market}`);
+  console.log(`  ${r.industry} · lane ${r.lane} · P${r.priority} · account ${r.accountScore}/36 · ${r.market}`);
+  console.log(`  locations ${r.locations == null ? 'UNRECORDED' : r.locations}`);
   if (r.website) console.log(`  site     ${r.website}`);
   if (r.contact) console.log(`  contact  ${r.contact}`);
+  if (r.sourceSaid) console.log(`  source said: ${r.sourceSaid}`);
+  if (r.signal) console.log(`  signal:  ${r.signal}`);
+  if (a.work) console.log(`\n  What Apex would produce here:\n    ${a.work}`);
+  if (a.angle) console.log(`  Common opening in this category (CHECK IT, never assume it):\n    ${a.angle}`);
+  if (v.regulated) {
+    console.log(`\n  REGULATED CATEGORY. If this one converts:`);
+    console.log(`    no medical or outcome claims, no patient results, no before/after`);
+    console.log(`    presented as typical, no patient information handled. Commercial`);
+    console.log(`    production only - facility, team, service, brand, recruiting.`);
+  }
   console.log(`\n  OPEN TWO TABS. Three minutes.`);
   console.log(`    1. Their website${r.website ? ' - ' + r.website : ' (search the name)'}`);
   console.log(`    2. Their Instagram grid (search the name on Instagram)`);
-  console.log(`\n  LOOK AT FOUR THINGS AND WRITE DOWN WHAT YOU SEE:`);
+  console.log(`\n  LOOK AT FIVE THINGS AND WRITE DOWN WHAT YOU SEE:`);
   console.log(`\n    A. THE PHOTOGRAPHY`);
   console.log(`       Phone photos under available light? Supplier stock? Feed`);
   console.log(`       inconsistent post to post? Missing or mismatched images?`);
@@ -130,15 +150,20 @@ case 'verify': {
   console.log(`       retail presence, email or loyalty program - any one counts.`);
   console.log(`\n    D. IS THERE ONE NAMED PERSON`);
   console.log(`       Owner, chef-owner, founder, or a single marketing contact.`);
+  console.log(`\n    E. HOW MANY LOCATIONS - count them on their own site`);
+  console.log(`       This is the single field that most changes what the account`);
+  console.log(`       is worth, and it takes ten seconds:`);
+  console.log(`         node tools/pipeline.mjs set ${r.id} locations <n>`);
   console.log(`\n  THEN RUN ONE OF THESE:`);
   console.log(`\n    Content is weak AND they spend AND there's a person:`);
   console.log(`      node tools/pipeline.mjs qualify ${r.id} <0-10> "what you saw"`);
   console.log(`\n    Content already strong, no spend, agency, or can't find anyone:`);
   console.log(`      node tools/pipeline.mjs disqualify ${r.id} "reason"`);
-  console.log(`\n  Scoring: +3 weakness nameable in one sentence · +2 food or`);
-  console.log(`  hospitality · +2 named decision maker · +2 recurring need`);
-  console.log(`  (menu, SKUs, seasons) · +1 retail or wholesale presence`);
-  console.log(`  -3 agency of record · -2 content already strong\n`);
+  console.log(`\n  Scoring (content weakness, 0-10 - NOT the account score above):`);
+  console.log(`  +3 weakness nameable in one sentence · +2 recurring need`);
+  console.log(`  (menu, SKUs, services, seasons, locations) · +2 named decision`);
+  console.log(`  maker · +1 more than one location · +1 retail or wholesale`);
+  console.log(`  -3 agency of record · -2 content already strong · -2 no spend\n`);
   console.log(`  A fast disqualify is a good outcome. Three minutes beats a bad send.\n`);
   break;
 }
@@ -177,13 +202,25 @@ case 'disqualify': {
 case 'msg': {
   const r = find(rest[0]);
   let key = rest[1];
+  // Auto-pick follows the record: a published signal beats a general opener,
+  // and a recorded multi-location count beats a single-site one.
   if (!key) key = r.state === 'CONTACTED' && r.followups === 0 ? 'followup-1'
     : r.state === 'CONTACTED' && r.followups === 1 ? 'followup-2'
     : r.state === 'CONTACTED' ? 'breakup'
-    : r.tier === 'Warm' ? 'warm-direct' : 'cold-email';
+    : r.tier === 'Warm' ? 'warm-direct'
+    : (r.signal && r.signalSource) ? 'signal'
+    : (r.locations >= 10) ? 'wedge'
+    : (r.locations >= 2) ? 'multi-location'
+    : 'cold-email';
   if (!r.observation && !String(key).startsWith('warm')) {
     die(`${r.company} has no verified observation. Nothing is sendable from an unverified row.\n  node tools/pipeline.mjs verify ${r.id}`);
   }
+  // A message that states a fact the record does not hold is the one mistake
+  // with no recovery, so the shape of the message has to match the record.
+  if (key === 'multi-location' && !(r.locations >= 2))
+    die(`${r.company} has no recorded location count of 2 or more. That message claims one.\n  node tools/pipeline.mjs set ${r.id} locations <n>`);
+  if (key === 'signal' && !(r.signal && r.signalSource))
+    die(`${r.company} has no sourced signal. That message opens on one.\n  node tools/pipeline.mjs set ${r.id} signalSource "where you read it"`);
   const { t, body, subject, missing } = render(r, key);
   console.log('');
   rule();
@@ -206,8 +243,24 @@ case 'set': {
   const [id, field, ...v] = rest;
   const r = find(id);
   const allowed = ['product', 'consequence', 'email', 'emailSource', 'social',
-                   'website', 'contact', 'opportunity', 'notes', 'subject'];
+                   'website', 'contact', 'opportunity', 'notes', 'subject',
+                   'locations', 'industry', 'signal', 'signalSource'];
   if (!allowed.includes(field)) die(`field must be one of: ${allowed.join(' ')}`);
+  if (field === 'locations') {
+    const n = Number(v.join(' '));
+    if (!Number.isInteger(n) || n < 1) die('locations must be a whole number of locations, 1 or more');
+    r.locations = n; r.locationsSource = 'Counted by hand on their own site';
+    const { scoreAccount, lane } = await import('./account-score.mjs');
+    const sc = scoreAccount(r);
+    if (sc.total != null) { r.accountScore = sc.total; r.priority = sc.priority; r.lane = lane(r); }
+    save(db);
+    console.log(`${r.company}: ${n} location(s). Account score ${r.accountScore}/36, lane ${r.lane}, P${r.priority}.`);
+    break;
+  }
+  if (field === 'industry' && !VERTICALS[v.join(' ')])
+    die(`unknown industry. have: ${Object.keys(VERTICALS).join(' ')}`);
+  if (field === 'signal' && !r.signalSource)
+    console.log('  note: set signalSource too. An unsourced signal cannot be used in a message.');
   if (field === 'email' && !r.emailSource && !v.join(' ').includes('|'))
     console.log('  note: set emailSource too. An unsourced address is unusable data.');
   r[field] = v.join(' ');
@@ -514,6 +567,28 @@ case 'selftest': {
   let badContact = false;
   try { run('contact', 'T2', 'email'); } catch { badContact = true; }
   checks.push(['NEW row cannot be contacted', badContact, String(badContact)]);
+
+  // Lane guards: a message must never state a fact the record does not hold.
+  writeFileSync(tmp, JSON.stringify([{ ...fixture[0], id: 'T3', company: 'Single Site Co',
+    state: 'QUALIFIED', industry: 'bakery', locations: null, signal: '', signalSource: '',
+    observation: 'hero on the site is a phone photo' }], null, 2));
+  let noLoc = false;
+  try { run('msg', 'T3', 'multi-location'); } catch { noLoc = true; }
+  checks.push(['multi-location message refused with no location count', noLoc, String(noLoc)]);
+  let noSig = false;
+  try { run('msg', 'T3', 'signal'); } catch { noSig = true; }
+  checks.push(['signal message refused with no sourced signal', noSig, String(noSig)]);
+
+  run('set', 'T3', 'locations', '4');
+  const st3 = JSON.parse(readFileSync(tmp, 'utf8'))[0];
+  checks.push(['locations rescores the account', st3.accountScore > 0 && st3.lane === 'B',
+    `${st3.accountScore}/${st3.lane}`]);
+  const ml = run('msg', 'T3');
+  checks.push(['multi-location auto-picked at 4 locations', ml.includes('multi-location'), 'picked']);
+  checks.push(['location count appears in the message', ml.includes('4 locations'), 'filled']);
+  let badLoc = false;
+  try { run('set', 'T3', 'locations', 'lots'); } catch { badLoc = true; }
+  checks.push(['non-numeric location count is refused', badLoc, String(badLoc)]);
 
   console.log('\n  PIPELINE SELF-TEST\n');
   let fail = 0;

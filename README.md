@@ -35,7 +35,10 @@ is what this business sells.
 | `data/jobs.json` | Every paid job: revenue, cost, hours, margin, rights. |
 | `tools/pipeline.mjs` | Getting the client. Open, verify, qualify, message, contact, log, follow up, propose. |
 | `tools/job.mjs` | Whether the client was worth getting. Cost, hours, effective rate, margin. |
-| `tools/seed-prospects.mjs` | Rebuilds the sourced prospect list with attribution. |
+| `tools/seed-prospects.mjs` | The original food and beverage list, with attribution. |
+| `tools/seed-accounts.mjs` | Broad-market accounts across 18 industries, with attribution. |
+| `tools/account-score.mjs` | 0-36 account score, lanes, and the two target lists. |
+| `tools/verticals.mjs` | Category priors and per-vertical angles. One table, three consumers. |
 | `outreach/templates.json` | Canonical outreach copy the pipeline fills. |
 | `outreach/proposal-template.md` | The Pilot proposal the pipeline fills and writes out. |
 | `outreach/proposals/` | Generated proposals, one per prospect. Read before sending. |
@@ -53,15 +56,19 @@ Revenue is the project. The site is done.
 |---|---|
 | `docs/first-client-playbook.md` | **Entry point.** What to do, in order. |
 | `docs/warm-list.md` | The highest-converting list Apex owns. Build it first. |
-| `docs/qualification.md` | The four gates and the scoring rubric. |
+| `docs/qualification.md` | The four gates and the content-score rubric. |
+| `docs/account-scoring.md` | The account score, the lanes, and the two target lists. |
+| `docs/lanes-and-offers.md` | Lane A/B/C, multi-location economics, the enterprise wedge. |
 | `docs/first-client-offer.md` | The Pilot, the ladder, and the market data behind the prices. |
 | `outreach/templates.md` | What to actually send. |
 | `docs/scope-and-terms.md` | What is included, what a revision is, payment and rights. |
 | `docs/delivery-runbook.md` | Day 0 to day 7 once someone says yes. |
 
 ```
-node tools/pipeline.mjs          # what to do today
-node tools/job.mjs               # what is owed, and on which job
+node tools/pipeline.mjs                     # what to do today
+node tools/account-score.mjs immediate      # top 25 fastest conversations
+node tools/account-score.mjs value          # top 25 largest accounts
+node tools/job.mjs                          # what is owed, and on which job
 ```
 
 Two tools, one chain. `pipeline.mjs` runs **PROSPECT → VERIFY → QUALIFY →
@@ -81,10 +88,12 @@ read and send.
 - Clients: **none.**
 - Revenue: **none.** `node tools/job.mjs report` says $0 and will keep saying
   it until a job is opened.
-- Prospects: **52 sourced, 0 verified, 0 contacted.** Site fetching is blocked
-  by the network egress proxy, so verification is a manual step - three
-  minutes per company via `node tools/pipeline.mjs verify`. No row is
-  sendable until a human has looked, and the tool enforces it.
+- Prospects: **111 sourced across 18 industries, 0 verified, 0 contacted.**
+  Site fetching is blocked by the network egress proxy, so verification is a
+  manual step - three minutes per company via `node tools/pipeline.mjs
+  verify`. No row is sendable until a human has looked, and the tool enforces
+  it. The number that matters is not 111; it is conversations, and that is
+  still zero.
 - Production method: reference-locked generation, validated on 4 test shots (2 scored 10/10 by the founder). Roughly 2 credits and ~2 minutes per still.
 
 Nothing here is a client case study. Do not present it as one.

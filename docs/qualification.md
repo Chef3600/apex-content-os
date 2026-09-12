@@ -23,12 +23,21 @@ already published.**
 
 Open their website and their Instagram grid. At least one must be true:
 
-- Product or food photographed on a phone under available light
-- Hero images that are supplier stock, not their own product
+- Product, food, facility or team photographed on a phone under available light
+- Hero images that are stock, not their own product, room or people
 - Feed inconsistent post to post - different white balance, different crops
 - Last post more than 30 days old
 - No video at all, in a category where competitors run video
-- Menu or product page with missing images, or images at different scales
+- Menu, service or product page with missing images, or images at different scales
+- **Multiple locations sharing one set of photographs of one of them**
+- **A real business represented entirely by stock models**
+
+The last two are the multi-location and professional-services versions of the
+same failure, and they are the easiest of all to name in one sentence.
+
+`pipeline.mjs verify` prints the opening that is most common in that specific
+category. It is a place to look, never something to assert - the category prior
+says nothing about the company on the screen.
 
 If their content is already strong and consistent, they are **not** a
 prospect. Write `KILL - content already strong` and move on. This happens and
@@ -50,8 +59,25 @@ longer. Deprioritize, do not delete.
 ### 4. Physically producible
 
 The thing they sell can be photographed - a dish, a bottle, a jar, a garment,
-a treatment room, a space. If the product is purely digital, Apex has nothing
-to shoot.
+a treatment room, a clinic, a fleet, a showroom, a class, a listing, a team.
+If the product is purely digital and there is no place, product or person
+behind it, Apex has nothing to shoot.
+
+Note what this gate does **not** say: it does not say food. Facility, team,
+service and recruiting content is real, recurring, well-funded work in
+medical, dental, veterinary, fitness, home services and professional
+services - and `docs/lanes-and-offers.md` carries the rules that come with the
+regulated ones.
+
+## Regulated categories
+
+Medical, dental, med spa, physical therapy, chiropractic, veterinary and urgent
+care are legitimate accounts and several rank near the top of both target
+lists. The rules are absolute and no fee changes them: **no medical, health or
+outcome claims; no patient results or before/after presented as typical; no
+patient information handled or in frame; written consent for staff.** What is
+being sold is commercial production - facility, team, service, brand,
+recruiting. `verify` prints these on the row when they apply.
 
 ## The verification rule - unchanged and absolute
 
@@ -102,12 +128,18 @@ Score each verified prospect 0-10. Work the list in descending order.
 | Points | Signal |
 |---|---|
 | +3 | Content weakness is obvious and specific enough to name in one sentence |
-| +2 | Chef-owned, or food/hospitality - the category where Apex has real standing |
+| +2 | Recurring need - rotating menu, multiple SKUs, a service catalog, seasons |
 | +2 | Single decision maker, named and reachable |
-| +2 | Multiple SKUs or a rotating menu - recurring need, not a one-off |
+| +1 | More than one location - the same fix pays for itself more than once |
 | +1 | Physical retail or wholesale presence - creative has sell-through value |
 | -3 | Agency of record |
 | -2 | Content already strong |
 | -2 | No evidence of any marketing spend |
 
 **7+** work now. **4-6** second wave. **Below 4** leave it.
+
+This is the **content score**, and it is not the account score. The account
+score (0-36, `docs/account-scoring.md`) says how much the account could be
+worth and orders the verification queue. This one says how weak their content
+actually is and orders the send queue. A 33/36 account with excellent content
+is not a prospect.

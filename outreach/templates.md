@@ -25,7 +25,7 @@ The pipeline refuses to generate a message for a row with no verified
 observation. That is deliberate and it is the most important guard rail in
 the system.
 
-## The six
+## The sequence
 
 | Template | When | Channel |
 |---|---|---|
@@ -38,6 +38,32 @@ the system.
 
 Plus `warm-direct` and `warm-referral` for people who already know Larry -
 those need no observation, because the relationship is the qualification.
+
+## The three openers that replace `cold-email` when the record earns them
+
+`msg` picks these automatically. Each is **refused** if the record does not
+hold the fact the message states - that guard is the whole point of them.
+
+| Template | Used when | Refused when |
+|---|---|---|
+| `signal` | `signal` and `signalSource` are both recorded | Either is missing |
+| `wedge` | 10+ recorded locations | - |
+| `multi-location` | 2-9 recorded locations | Count is unrecorded or 1 |
+
+**`signal`** opens on something they published - an opening, a launch, a new
+location, a rebrand. It is the strongest cold opener there is, because the
+reason for the email is theirs rather than Apex's. It requires a source for
+exactly that reason: a congratulations on something that did not happen is
+unrecoverable.
+
+**`multi-location`** names the count and the compounding problem: several sites
+that look like several companies. It is the Lane B opener and it sets up the
+system-built-once economics without quoting them.
+
+**`wedge`** is Lane C and it does one thing - **it refuses to pitch the group.**
+It offers one engagement and says so explicitly. A new studio that opens by
+proposing to cover thirty-five stores invites a comparison it cannot win on
+paper; one project invites a comparison it can win on the work.
 
 ### Why day 4 is the one that matters
 
