@@ -63,30 +63,81 @@ permissions problem on the connection, not something a different call fixes.
 Two projects may now exist in the account: `apex-content-studio` (pre-existing)
 and `apex-content-os` (created during this attempt, never linked). Keep one.
 
-### The shortest path to live - about 6 minutes
+### MANUAL PROCEDURE - the only path that works
 
-1. **vercel.com/dashboard.** If both `apex-content-studio` and
-   `apex-content-os` exist, delete `apex-content-os` - it was never linked to
-   anything.
-2. Open `apex-content-studio` -> **Settings -> Git -> Connect Git Repository ->
-   `Chef3600/apex-content-os`**. If the project will not connect, delete it too
-   and use **Add New -> Project -> Import** on the same repo. One project only.
-3. **Settings -> Build & Deployment:**
-   - Framework Preset: **Other**
-   - Root Directory: **`site`**
-   - Build Command: **empty** (toggle the override off)
-   - Output Directory: **empty**
-   - Install Command: **empty**
-4. **Settings -> Git -> Production Branch: `main`.**
-5. **Deployments -> Redeploy**, or push any commit to `main`.
+The integration is done being tried. This is a dashboard job.
 
-The deploy takes under a minute - there is no build, only file upload.
+**Step 1 - decide which project survives (1 min)**
 
-### Then send back the `*.vercel.app` URL
+Open **vercel.com/dashboard**. You may see up to two projects:
 
-That URL is usable the moment it exists. It goes on the Google Business
-Profile, LinkedIn and outreach on day one. **Do not wait for DNS to start
-using it.**
+- `apex-content-studio` - pre-existing, contents unknown from here
+- `apex-content-os` - created during the integration attempt, **never linked to
+  anything, has no deployments.** Delete it: project -> Settings -> scroll to
+  the bottom -> Delete Project.
+
+**Step 2 - connect the surviving project (2 min)**
+
+Open `apex-content-studio` -> **Settings -> Git**.
+
+- If it shows no repository: **Connect Git Repository -> GitHub ->
+  `Chef3600/apex-content-os`**.
+- If GitHub is not authorized, Vercel prompts to install its GitHub App. Grant
+  it access to `Chef3600/apex-content-os` (or All repositories).
+- If it is already connected to a different or wrong repo: **Disconnect**, then
+  connect this one.
+
+**If the project cannot be connected, or will not open at all - replace it:**
+
+1. Delete `apex-content-studio` (Settings -> Delete Project).
+2. Dashboard -> **Add New -> Project**.
+3. Under Import Git Repository, choose `Chef3600/apex-content-os`. If it is not
+   listed, click **Adjust GitHub App Permissions** and grant access to it.
+4. Name the project `apex-content-studio` - the name sets the
+   `*.vercel.app` hostname, and it is worth having the right one.
+5. Configure per Step 3 **on the import screen**, before clicking Deploy.
+
+Either way the result is **one project**, not two.
+
+**Step 3 - settings (2 min)**
+
+**Settings -> Build & Deployment:**
+
+| Setting | Value |
+|---|---|
+| Framework Preset | **Other** |
+| Root Directory | **`site`** |
+| Build Command | **empty** - turn the Override toggle OFF |
+| Output Directory | **empty** - Override OFF |
+| Install Command | **empty** - Override OFF |
+| Node.js Version | irrelevant, nothing runs |
+
+**Settings -> Git -> Production Branch: `main`.**
+
+The single most common failure here is Root Directory left at `./`. That
+serves the repository root, and the result is a 404 at `/` with the site
+sitting one directory down.
+
+**Step 4 - deploy (1 min)**
+
+**Deployments -> the top deployment -> ... -> Redeploy**, or push any commit to
+`main`. There is no build step - it is a file upload - so it finishes in
+seconds.
+
+If the Deployments tab is empty, deploy by pushing: any commit to `main`
+triggers it once the repo is connected.
+
+**Step 5 - the URL**
+
+The project's Production deployment shows the domain. It is
+`https://<project-name>.vercel.app`. **Send it back.**
+
+Use it immediately - Google Business Profile, LinkedIn, outreach. It is a real,
+permanent, HTTPS URL. Waiting for DNS before using it costs days for no reason.
+
+**If the deploy fails**, the Deployments tab shows the log. The only realistic
+failures for a static folder are: Root Directory wrong, a Build Command left
+set, or the repository not actually connected.
 
 ### DNS, once the deploy is live
 
