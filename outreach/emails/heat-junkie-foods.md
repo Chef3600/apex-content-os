@@ -31,4 +31,4 @@ line, one that works for both — free, no call needed.
 If it's useful we can talk. If not, no reply needed.
 
 Larry Hills Jr.
-Apex AI Content Studio
+Apex Content Studio

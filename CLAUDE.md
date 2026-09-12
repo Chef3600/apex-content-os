@@ -1,4 +1,4 @@
-# APEX AI CONTENT STUDIO — Permanent Operating Handbook
+# APEX CONTENT STUDIO — Permanent Operating Handbook
 
 This file is the standing instruction set for this repository. It is not a
 style guide and not a suggestion. Rules marked **NEVER** and **ALWAYS** hold
@@ -14,7 +14,7 @@ asking a question.
 | Layer | Name | Used for |
 |---|---|---|
 | Legal entity | **Apex Hospitality Group LLC** | Contracts, invoices, filings, banking |
-| Customer-facing brand | **APEX AI CONTENT STUDIO** | Website, sales materials, offers, client documents, outreach, portfolio, presentations, marketing |
+| Customer-facing brand | **APEX CONTENT STUDIO** | Website, sales materials, offers, client documents, outreach, portfolio, presentations, marketing |
 | Internal software / OS | **APEX CONTENT OS** | This repository, the ops app, internal tooling |
 | Repository name | `apex-content-os` | Internal technical name. Does not need to match the customer-facing brand. |
 

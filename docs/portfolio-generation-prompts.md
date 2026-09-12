@@ -1,4 +1,4 @@
-# Portfolio generation prompts — APEX AI CONTENT STUDIO
+# Portfolio generation prompts — APEX CONTENT STUDIO
 
 Thirteen assets. Food leads. Every one is **SPEC / PORTFOLIO CONCEPT** work for
 invented brands — no real client product identity is reproduced anywhere here.
