@@ -62,9 +62,12 @@ export function scoreAccount(r) {
     ['case-study value', clamp(1 + lb + (v.visual >= 4 ? 1 : 0)),
       `locations ${lb}${v.visual >= 4 ? ' + visually strong category' : ''}`],
   ];
-  // A verified growth signal is a real, dated reason to be in touch. It is
-  // worth a point, and only when its source is recorded.
-  if (r.signal && r.signalSource) dims.push(['verified signal', 1, r.signal]);
+  // A sourced growth signal is the only input in this model that is BOTH a
+  // verified fact about this specific company AND a legitimate reason for the
+  // email to exist at all. Everything else here is a prior or a proxy. It is
+  // worth two points, and only when its source is recorded - an unsourced
+  // signal scores nothing, because it cannot be used in a message.
+  if (r.signal && r.signalSource) dims.push(['sourced signal', 2, r.signal]);
 
   const total = dims.reduce((a, d) => a + d[1], 0);
   return { total, dims, priority: total >= 27 ? 1 : total >= 21 ? 2 : total >= 14 ? 3 : 4 };
@@ -128,7 +131,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     if (s.total == null) { console.log(`  ${s.why}\n`); process.exit(1); }
     for (const [k, n, why] of s.dims) console.log(`    ${pad(k, 22)}${n}    ${why}`);
     console.log(`    ${pad('', 22)}--`);
-    console.log(`    ${pad('account score', 22)}${s.total} / 36   ->  P${s.priority}`);
+    console.log(`    ${pad('account score', 22)}${s.total} / ${s.dims.length > 9 ? 38 : 36}   ->  P${s.priority}`);
     console.log(`\n  Five of nine dimensions are category priors, not facts about this\n  company. The score orders the queue. It does not qualify anyone.\n`);
     process.exit(0);
   }

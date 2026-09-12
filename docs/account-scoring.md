@@ -40,11 +40,39 @@ anyone to say a word about a specific company's content.
 | Likelihood of buying | Category prior: how commonly the category buys from an independent studio |
 | Case-study value | Locations + whether the category photographs well |
 
-Plus **one point for a verified growth signal** - and only when `signalSource`
-records where it came from. An unsourced signal earns nothing, because an
-unsourced signal cannot be used in a message.
+Plus **two points for a sourced growth signal.**
 
-**Bands:** P1 27+ | P2 21-26 | P3 14-20 | P4 below 14.
+That is the heaviest single input in the model and it is deliberate. It is the
+only dimension that is **both** a verified fact about that specific company
+**and** a legitimate reason for the email to exist at all. Every other
+dimension is a prior or a proxy. An opening, an expansion, a new concept or a
+new service gives the first line an author other than Apex, and that is worth
+more than any category judgment.
+
+It scores nothing without `signalSource`. An unsourced signal cannot be used
+in a message, so it is not allowed to move the queue either.
+
+```
+node tools/pipeline.mjs list signals
+```
+
+**Bands:** P1 27+ | P2 21-26 | P3 14-20 | P4 below 14. Maximum is 36, or 38
+with a sourced signal.
+
+## Sourcing by signal rather than by category
+
+The strongest rows in the database were not found by searching for an industry.
+They were found by searching for **published business events** - openings,
+expansions, new concepts, new locations. A company that just opened has a
+content need it already knows about, and the email writes itself without
+inventing anything.
+
+This is the prospecting method to repeat. Category searches fill the list;
+signal searches fill the calendar.
+
+A signal is **not** an observation. It changes what the first line is *about*.
+It does not make a row sendable - `msg` still refuses every row with no
+verified observation, signal or no signal.
 
 ## The location count is the highest-leverage field in the database
 

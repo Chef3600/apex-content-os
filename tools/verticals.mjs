@@ -44,6 +44,11 @@ export const VERTICALS = {
   'automotive':           { spend: 3, demand: 4, visual: 3, recurring: 4, cred: 1, buy: 3, layers: 1 },
   'real-estate':          { spend: 3, demand: 4, visual: 4, recurring: 3, cred: 2, buy: 4, layers: 0 },
   'retail':               { spend: 2, demand: 3, visual: 3, recurring: 3, cred: 2, buy: 2, layers: 1 },
+  // A supermarket with a bakery, a meat counter and a prepared-food kitchen is
+  // a food business with a storefront, not a retailer that happens to sell
+  // food. The generic retail prior undervalues it on exactly the two
+  // dimensions Apex wins on, so it gets its own row.
+  'grocery-prepared-food':{ spend: 3, demand: 4, visual: 4, recurring: 4, cred: 4, buy: 2, layers: 1 },
   'professional-services':{ spend: 2, demand: 2, visual: 1, recurring: 2, cred: 1, buy: 2, layers: 1 },
   'entertainment':        { spend: 2, demand: 4, visual: 4, recurring: 3, cred: 3, buy: 2, layers: 2 },
   'ecommerce':            { spend: 3, demand: 4, visual: 4, recurring: 4, cred: 2, buy: 4, layers: 1 },
@@ -76,6 +81,7 @@ export const ANGLES = {
   'automotive':        { work: 'Inventory and lifestyle photography, store and staff content, campaign creative.', angle: 'Lot photography shot on a phone in bad light.' },
   'real-estate':       { work: 'Agent and team brand photography, listing and neighborhood video, campaign sets.', angle: 'A luxury listing presented with non-luxury imagery.' },
   'retail':            { work: 'Product and store photography, seasonal sets, campaign creative.', angle: 'An in-store range that does not exist online in any usable image.' },
+  'grocery-prepared-food': { work: 'Bakery, meat counter, prepared-food and produce photography; store-opening and recruiting content.', angle: 'A bakery and hot-food counter that never appear in the store\'s own advertising.' },
   'professional-services': { work: 'Team and office brand photography, recruiting and credibility content.', angle: 'A firm represented entirely by stock imagery.' },
   'entertainment':     { work: 'Venue, show and event photography, promo video, campaign creative.', angle: 'An event promoted with a text-only graphic.' },
   'ecommerce':         { work: 'Packshots, lifestyle, paid-social variants, seasonal refreshes.', angle: 'Paid creative that has not changed in months.' },

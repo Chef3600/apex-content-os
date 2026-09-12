@@ -18,7 +18,8 @@
  *   node tools/pipeline.mjs proposal <id> <amount>   writes a sendable proposal
  *   node tools/pipeline.mjs won|lost <id> [detail]
  *   node tools/pipeline.mjs add "Company" [tier] ["contact"]
- *   node tools/pipeline.mjs list [STATE|tier|p1]
+ *   node tools/pipeline.mjs add-warm <file>     bulk warm capture, one per line
+ *   node tools/pipeline.mjs list [STATE|industry|p1|a|b|c|signals]
  *   node tools/pipeline.mjs report
  *   node tools/pipeline.mjs selftest             end-to-end, on a temp copy
  *
@@ -458,14 +459,61 @@ case 'add': {
   break;
 }
 
+/* Bulk warm capture. The warm list comes out of memory in one sitting, and
+ * stopping to run a command after every name is what makes people stop at
+ * six. Write the names in a text file, load them in one go. */
+case 'add-warm': {
+  const file = rest[0];
+  if (!file) die('usage: add-warm <file>\n  One per line:  Name | Company | how you know them');
+  if (!existsSync(file)) die(`no file "${file}"`);
+  const lines = readFileSync(file, 'utf8').split('\n')
+    .map(l => l.trim()).filter(l => l && !l.startsWith('#'));
+  const have = new Set(db.map(x => x.company.toLowerCase().trim()));
+  let added = 0, dupe = 0;
+  for (const line of lines) {
+    const [who, company, how] = line.split('|').map(x => (x || '').trim());
+    const name = company || who;
+    if (have.has(name.toLowerCase())) { dupe++; continue; }
+    const id = `w${String(db.length + 1).padStart(3, '0')}`;
+    db.push({
+      id, company: name, tier: 'Warm', industry: 'restaurant', category: how || '',
+      market: 'Las Vegas, NV', website: '', social: '', contact: company ? who : '',
+      email: '', emailSource: '', locations: null, locationsSource: '',
+      source: 'Larry - existing relationship', sourceSaid: how || '',
+      useCase: '', signal: '', signalSource: '', priority: 1, lane: 'A',
+      accountScore: null,
+      contentWeakness: '',
+      // A warm row needs no content gate. The relationship IS the
+      // qualification, and that is the one exemption in this system.
+      observation: `Warm - ${how || 'known personally'}`,
+      opportunity: '', state: 'QUALIFIED', score: 9, verifiedAt: today(),
+      angle: 'warm', offer: '', subject: '', channel: '', contactedAt: '',
+      followupAt: '', followups: 0, response: '', respondedAt: '', replyText: '',
+      nextAction: 'msg with warm-direct or warm-referral', notes: '',
+    });
+    have.add(name.toLowerCase());
+    added++;
+  }
+  save(db);
+  console.log(`\n  ${added} warm row(s) added QUALIFIED${dupe ? `, ${dupe} already present` : ''}.`);
+  console.log('  They skip verification because the relationship is the qualification.\n');
+  console.log('    node tools/pipeline.mjs list warm');
+  console.log('    node tools/pipeline.mjs msg <id>            # warm-direct, if they could buy');
+  console.log('    node tools/pipeline.mjs msg <id> warm-referral   # if they could introduce\n');
+  break;
+}
+
 /* ---------------------------------------------------------------- LIST */
 case 'list': {
   const f = (rest[0] || '').toLowerCase();
   let rows = db;
-  if (f.startsWith('p') && f.length === 2) rows = db.filter(r => String(r.priority) === f[1]);
+  if (f === 'signal' || f === 'signals') rows = db.filter(r => r.signal && r.signalSource);
+  else if (f === 'a' || f === 'b' || f === 'c') rows = db.filter(r => r.lane === f.toUpperCase());
+  else if (f.startsWith('p') && f.length === 2) rows = db.filter(r => String(r.priority) === f[1]);
   else if (STATES.includes(f.toUpperCase())) rows = db.filter(r => r.state === f.toUpperCase());
   else if (f) rows = db.filter(r => r.tier.toLowerCase().includes(f));
-  rows = [...rows].sort((a, b) => (b.score ?? -1) - (a.score ?? -1) || a.priority - b.priority);
+  rows = [...rows].sort((a, b) => (b.score ?? -1) - (a.score ?? -1) ||
+    (b.accountScore ?? -1) - (a.accountScore ?? -1) || a.priority - b.priority);
   console.log(`\n${pad('ID', 6)}${pad('COMPANY', 32)}${pad('TIER', 15)}${pad('P', 3)}${pad('STATE', 14)}${pad('SC', 4)}NEXT`);
   rule(112);
   for (const r of rows)

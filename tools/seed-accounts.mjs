@@ -46,7 +46,78 @@ const Q = {
   re:   'WebSearch 2026-09: "Las Vegas real estate brokerage luxury team multiple offices Nevada 2026"',
   hosp: 'WebSearch 2026-09: "Nevada regional hotel casino group locally owned multiple properties non-Strip"',
   hair: 'WebSearch 2026-09: "Las Vegas salon barbershop group multiple locations locally owned Nevada 2026"',
+  sig1: 'WebSearch 2026-09: "Las Vegas restaurant opening 2026 new location announced chef"',
+  sig2: 'WebSearch 2026-09: "Las Vegas business expansion new location opening announcement September 2026"',
+  sig3: 'WebSearch 2026-09: "Las Vegas med spa clinic opens new location 2026 expansion Henderson"',
+  sig4: 'WebSearch 2026-09: "Las Vegas Weekly dining news new restaurants September 2026"',
 };
+
+/* SIGNAL-SOURCED ACCOUNTS.
+ *
+ * Sourced by looking for PUBLISHED BUSINESS EVENTS rather than by category.
+ * These are the strongest cold rows in the database, because the reason for
+ * the email belongs to them: an opening, an expansion, a new concept.
+ *
+ * The signal is a published fact with a source. It is NOT an observation about
+ * their content, and it does not make a row sendable on its own - `msg` still
+ * refuses every row with no verified observation. A signal changes what the
+ * first line is ABOUT; verification is still what earns the right to send it.
+ *
+ * [company, industry, locations, website, contact, source, sourceSaid, notes, signal]
+ */
+const SIGNAL_ACCOUNTS = [
+  ['El Super - North Las Vegas', 'retail', 5, '', '', Q.sig2,
+    'Fifth valley store, 1601 W. Craig Road, 32,000 sq ft, opening September 2026, hiring about 120.',
+    'Full-service meat, in-house bakery, pan dulce and tortillas, prepared food. A grocery retailer with a real food-production operation - unusually strong fit, plus a recruiting-content need at 120 hires.',
+    'Opening a fifth Las Vegas Valley store in September 2026 and hiring about 120 people.'],
+  ["Zippy's Las Vegas", 'restaurant-group', null, '', '', Q.sig2,
+    'Announced two more planned Las Vegas locations.', '',
+    'Announced two additional Las Vegas locations.'],
+  ['Alex Prime at El Cortez', 'restaurant', 1, '', 'David Robins, Joe Swan', Q.sig1,
+    'El Cortez announced an early-fall opening for a luxury New York-style steakhouse. Both chefs named.',
+    'A locally owned downtown property rather than a Strip resort, which usually means the decision sits closer.',
+    'Opening a new steakhouse concept in early fall 2026.'],
+  ['Maiz Mama', 'restaurant', 1, '', '', Q.sig4,
+    'Opened at 5045 W. Tropicana Ave. Handmade tortillas, trompo-roasted meats.',
+    'New independent concept whose entire product is visually strong - tortillas, a vertical spit, birria. Among the best-fit rows in the database.',
+    'Recently opened a new restaurant on W. Tropicana Ave.'],
+  ["Villa's Tacos Las Vegas", 'restaurant', 1, '', '', Q.sig4,
+    'Opened its first location outside Los Angeles, in the Durango Resort food court.',
+    'First market outside LA. A brand at this stage usually has LA creative that does not cover the new market.',
+    'Opened a first location outside Los Angeles.'],
+  ["Master Kim's Wagyu House", 'restaurant-group', 2, '', '', Q.sig4,
+    'An extension of local favourite Master Kim\'s Korean BBQ, opened at Palace Station.',
+    'Second concept from a local operator - the point at which one visual system across both starts to matter.',
+    'Opened a second concept at Palace Station.'],
+  ["Finney's Crafthouse - Downtown Summerlin", 'restaurant', 1, '', '', Q.sig4,
+    'Opening September 21 at Downtown Summerlin, first location outside California.',
+    'A dated opening. Time-sensitive either way.',
+    'Opening a first Nevada location at Downtown Summerlin on September 21.'],
+  ['Estetica Wellness Medical Spa', 'medspa', 1, '', '', Q.sig3,
+    'Grand opening March 2026 at 7660 W Sahara Ave; medical aesthetics and wellness.',
+    'New independent med spa. Regulated - commercial production only.',
+    'Opened in 2026 as a new medical aesthetics and wellness clinic.'],
+  ['Ah Spa by Ageless Humans - Westin Lake Las Vegas', 'medspa', 1, '', '', Q.sig3,
+    'First full-service Ageless Humans spa inside a hospitality property; formal grand opening to follow in the fall.',
+    'Regulated. Buyer may be the spa brand or the resort - establish which before any message.',
+    'Opening a first spa inside a hotel, with a formal grand opening in the fall.'],
+  ['Cantina Contramar', 'restaurant', 1, '', 'Gabriela Camara', Q.sig1,
+    'Opened at Fontainebleau in late March 2026; sibling of Contramar in Mexico City.',
+    'INFERENCE, NOT FACT: creative for a Strip resort restaurant is usually handled by the resort marketing department. Verify before assuming the wedge.',
+    'Opened a new Las Vegas restaurant in 2026.'],
+  ['Maroon by Kwame Onwuachi', 'restaurant', 1, '', 'Kwame Onwuachi', Q.sig1,
+    'Opened April 24 at Sahara Las Vegas in the former Bazaar Meat space.',
+    'INFERENCE, NOT FACT: likely resort-managed creative. Verify.',
+    'Opened a new Las Vegas restaurant in 2026.'],
+  ["Sartiano's Italian Steakhouse", 'restaurant', 1, '', 'Scott Sartiano', Q.sig1,
+    'Opened March 4 as the West Coast sibling of the Manhattan original.',
+    'INFERENCE, NOT FACT: likely resort-managed creative. Verify.',
+    'Opened a first West Coast location in 2026.'],
+  ['In-N-Out Burger - The BLVD', 'restaurant-group', null, '', '', Q.sig2,
+    'A three-story, 10,520 sq ft restaurant confirmed for The BLVD in 2026.',
+    'National corporate marketing. Realistically unreachable as a first account - kept for visibility, not for pursuit.',
+    'Opening a flagship Las Vegas location in 2026.'],
+];
 
 /* [company, industry, locations|null, website, contact, source, sourceSaid, notes] */
 const ACCOUNTS = [
@@ -181,7 +252,7 @@ for (const r of db) {
 const have = new Map(db.map(r => [r.company.toLowerCase().trim(), r]));
 let added = 0, enriched = 0;
 let n = db.length;
-for (const [company, industry, locations, website, contact, source, sourceSaid, notes, signal] of ACCOUNTS) {
+for (const [company, industry, locations, website, contact, source, sourceSaid, notes, signal] of [...ACCOUNTS, ...SIGNAL_ACCOUNTS]) {
   const existing = have.get(company.toLowerCase().trim());
   if (existing) {
     // A second search that publishes a location count or a principal's name is
