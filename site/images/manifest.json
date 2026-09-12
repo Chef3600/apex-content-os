@@ -89,8 +89,8 @@
       "pair": "beverage",
       "side": "before",
       "designation": "CONCEPT",
-      "status": "PENDING",
-      "qc": null,
+      "status": "LIVE",
+      "qc": 85,
       "alt": "Concept: a cold drink shot flat on a bar top, before art direction",
       "brief": "Deliberately ORDINARY. A tall cold drink on a bar top under flat warm downlight, condensation unremarkable, background clutter, muddy color, phone-camera look."
     },
@@ -101,8 +101,8 @@
       "pair": "beverage",
       "side": "after",
       "designation": "CONCEPT",
-      "status": "PENDING",
-      "qc": null,
+      "status": "LIVE",
+      "qc": 90,
       "alt": "Concept: the same drink directed as a campaign-ready beverage hero with backlight and motion",
       "brief": "Same drink, fully directed. Strong backlight through the glass, ice reading crystalline, a physically correct splash frozen at 1/2000, citrus and mint supporting cast, saturated but natural color. Premium beverage advertising."
     },
@@ -120,15 +120,23 @@
     },
     {
       "id": "consumer-product-after",
-      "path": "portfolio/before-after/consumer-product-after.webp",
-      "slot": "before-after",
-      "pair": "consumer-product",
-      "side": "after",
+      "path": "portfolio/consumer-products/product-hero.webp",
+      "slot": "work",
       "designation": "CONCEPT",
-      "status": "PENDING",
-      "qc": null,
+      "status": "LIVE",
+      "qc": 80,
       "alt": "Concept: the same product directed as a campaign-ready consumer-product hero",
       "brief": "Same product, blank packaging preserved, fully directed. Clean gradient ground, controlled reflection, crisp edge light, considered negative space for copy. Premium e-commerce and campaign hero."
+    },
+    {
+      "id": "cinema-camera",
+      "path": "production/cinema-camera.webp",
+      "slot": "craft",
+      "designation": "CONCEPT",
+      "status": "LIVE",
+      "qc": 86,
+      "alt": "Professional cinema camera mounted on a tripod on a bright production set",
+      "brief": "Cinema camera body on a tripod, low three-quarter angle, bright ivory set, equipment softly out of focus behind. No text, no logos, no people."
     }
   ]
 }
