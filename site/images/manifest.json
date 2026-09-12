@@ -1,0 +1,138 @@
+{
+  "_comment": "Single source of truth for every planned site image. The page renders a block ONLY when its asset exists on disk; tools/verify-site.mjs enforces that. status: PENDING = not yet generated, LIVE = file present and QC-passed.",
+  "_qc": "Every LIVE asset must carry a qc score (0-100) recorded from a visual review, and a designation of CONCEPT or PRODUCTION.",
+  "priority": [
+    "hero-camera-food-set",
+    "food-after",
+    "packaged-food-after",
+    "beverage-after",
+    "consumer-product-after",
+    "lens-detail",
+    "food-before",
+    "packaged-food-before",
+    "beverage-before",
+    "consumer-product-before"
+  ],
+  "assets": [
+    {
+      "id": "hero-camera-food-set",
+      "path": "production/hero-camera-food-set.jpg",
+      "slot": "hero",
+      "designation": "CONCEPT",
+      "status": "PENDING",
+      "qc": null,
+      "alt": "Professional cinema camera on a lit commercial food set, shallow depth of field across a plated dish",
+      "brief": "Bright commercial production still. Cinema camera body and lens in the near foreground, angled at a plated dish on a warm set. Softbox and practical lighting visible but OUT of frame edges. Warm ivory and food-red palette, high clarity, editorial. Horizontal 16:9. No text, no logos, no faces."
+    },
+    {
+      "id": "lens-detail",
+      "path": "production/lens-detail.jpg",
+      "slot": "craft",
+      "designation": "CONCEPT",
+      "status": "PENDING",
+      "qc": null,
+      "alt": "Macro detail of a cinema lens aperture ring and front element",
+      "brief": "Macro of a cinema prime lens: aperture ring, focus marks, front element catching a warm highlight. Bright, clean, premium. Shallow depth of field. No text, no logos."
+    },
+
+    {
+      "id": "food-before",
+      "path": "portfolio/before-after/food-before.jpg",
+      "slot": "before-after",
+      "pair": "food",
+      "side": "before",
+      "designation": "CONCEPT",
+      "status": "PENDING",
+      "qc": null,
+      "alt": "Concept: a plated dish shot flat under overhead kitchen light, before art direction",
+      "brief": "Deliberately ORDINARY reference frame. A good dish photographed badly: flat overhead fluorescent light, cluttered pass in background, dull color, phone-camera look, slight overexposure. Must read as an untreated real-world snapshot, NOT as a styled image."
+    },
+    {
+      "id": "food-after",
+      "path": "portfolio/before-after/food-after.jpg",
+      "slot": "before-after",
+      "pair": "food",
+      "side": "after",
+      "designation": "CONCEPT",
+      "status": "PENDING",
+      "qc": null,
+      "alt": "Concept: the same dish directed, lit and composed as campaign-ready commercial food photography",
+      "brief": "Same subject, fully directed. Bright directional daylight from camera left, controlled falloff, rich natural color, considered negative space, editorial food-magazine treatment. Physically correct steam and sheen. No text, no logos."
+    },
+
+    {
+      "id": "packaged-food-before",
+      "path": "portfolio/before-after/packaged-food-before.jpg",
+      "slot": "before-after",
+      "pair": "packaged-food",
+      "side": "before",
+      "designation": "CONCEPT",
+      "status": "PENDING",
+      "qc": null,
+      "alt": "Concept: an unbranded jar shot flat on a countertop, before art direction",
+      "brief": "Deliberately ORDINARY. An unbranded jar with a BLANK cream label on a cluttered kitchen counter, flat overhead light, harsh small-source shadow, dull color. Phone-camera look. Label must stay blank - never invent a brand."
+    },
+    {
+      "id": "packaged-food-after",
+      "path": "portfolio/before-after/packaged-food-after.jpg",
+      "slot": "before-after",
+      "pair": "packaged-food",
+      "side": "after",
+      "designation": "CONCEPT",
+      "status": "PENDING",
+      "qc": null,
+      "alt": "Concept: the same jar directed as a campaign-ready packaged-food hero",
+      "brief": "Same jar, BLANK label preserved, fully directed. Static camera, controlled specular on glass, warm key with a cool rim, fresh ingredient supporting cast, wet slate or warm stone ground. Premium packaged-goods hero. Label stays blank."
+    },
+
+    {
+      "id": "beverage-before",
+      "path": "portfolio/before-after/beverage-before.jpg",
+      "slot": "before-after",
+      "pair": "beverage",
+      "side": "before",
+      "designation": "CONCEPT",
+      "status": "PENDING",
+      "qc": null,
+      "alt": "Concept: a cold drink shot flat on a bar top, before art direction",
+      "brief": "Deliberately ORDINARY. A tall cold drink on a bar top under flat warm downlight, condensation unremarkable, background clutter, muddy color, phone-camera look."
+    },
+    {
+      "id": "beverage-after",
+      "path": "portfolio/before-after/beverage-after.jpg",
+      "slot": "before-after",
+      "pair": "beverage",
+      "side": "after",
+      "designation": "CONCEPT",
+      "status": "PENDING",
+      "qc": null,
+      "alt": "Concept: the same drink directed as a campaign-ready beverage hero with backlight and motion",
+      "brief": "Same drink, fully directed. Strong backlight through the glass, ice reading crystalline, a physically correct splash frozen at 1/2000, citrus and mint supporting cast, saturated but natural color. Premium beverage advertising."
+    },
+
+    {
+      "id": "consumer-product-before",
+      "path": "portfolio/before-after/consumer-product-before.jpg",
+      "slot": "before-after",
+      "pair": "consumer-product",
+      "side": "before",
+      "designation": "CONCEPT",
+      "status": "PENDING",
+      "qc": null,
+      "alt": "Concept: an unbranded consumer product shot flat on a desk, before art direction",
+      "brief": "Deliberately ORDINARY. An unbranded consumer product (blank packaging) on a desk, flat ceiling light, keystone distortion, dull color, phone-camera look. Packaging stays blank."
+    },
+    {
+      "id": "consumer-product-after",
+      "path": "portfolio/before-after/consumer-product-after.jpg",
+      "slot": "before-after",
+      "pair": "consumer-product",
+      "side": "after",
+      "designation": "CONCEPT",
+      "status": "PENDING",
+      "qc": null,
+      "alt": "Concept: the same product directed as a campaign-ready consumer-product hero",
+      "brief": "Same product, blank packaging preserved, fully directed. Clean gradient ground, controlled reflection, crisp edge light, considered negative space for copy. Premium e-commerce and campaign hero."
+    }
+  ]
+}

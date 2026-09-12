@@ -334,3 +334,37 @@ feature is done when the build passes, the workflow works, data persists,
 errors are handled, and a real user can use it.
 
 Truth over comfort. Evidence over assumption. Finished over started.
+
+---
+
+## 13. NO EMPTY BOXES (permanent)
+
+A visitor must never see an empty image slot. This is enforced in three places
+and all three must stay in place:
+
+1. **CSS.** `[data-block]:not(.ready){display:none!important}`. Every image
+   block is hidden by default. With JavaScript off, nothing renders. With a
+   missing file, nothing renders.
+2. **JavaScript.** A block gets `.ready` only after its image actually decodes
+   (`complete && naturalWidth > 0`). A grid whose blocks all stayed hidden
+   hides itself. A before/after arrow shows only when both cells are up.
+3. **`tools/verify-site.mjs`.** Checks the *rendered* page in Chromium and
+   fails the build if any visible block lacks a decoded image.
+
+Never "fix" a missing image by shipping a gray placeholder box, a spinner, or
+alt text in a bordered frame. Either the asset exists or the block is gone.
+
+## 14. ASSET MANIFEST
+
+`site/images/manifest.json` is the single source of truth for every planned
+image. Each entry carries: `path`, `alt`, `brief`, `designation`
+(CONCEPT or PRODUCTION), `status` (PENDING or LIVE) and `qc` (0-100).
+
+The verifier cross-checks manifest against disk and fails on any disagreement:
+a file present while the manifest says PENDING, a manifest LIVE with no file,
+or a LIVE asset with no QC score recorded. Promote an asset to LIVE only after
+a visual review has produced a real score.
+
+Concept work is labeled **CONCEPT / SPEC WORK** on the page, always. Products
+shown in concept work stay unbranded. Never place another company's product in
+the portfolio without their agreement.
