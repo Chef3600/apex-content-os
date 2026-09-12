@@ -65,6 +65,10 @@
   --maxw:1240px;
 }
 *{box-sizing:border-box}
+/* Keyboard users need to see where they are. */
+a:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.about a:focus-visible,footer a:focus-visible{outline-color:var(--bone)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 body{margin:0;background:var(--ivory);color:var(--ink);font-family:var(--body);
      font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
 img{max-width:100%;display:block}
@@ -286,7 +290,7 @@ footer .r{margin-left:auto}
   <!-- ============ STRIP ============ -->
   <section class="strip">
     <div class="wrap g">
-      <div class="stat"><b>Food and hospitality</b><span>Built by people who have run a kitchen, not browsed a stock library.</span></div>
+      <div class="stat"><b>Product, food and beverage</b><span>Packaged goods, consumer products and hospitality &mdash; with a working chef on the food.</span></div>
       <div class="stat"><b>One shoot, many assets</b><span>A single production feeds paid, organic, site and email.</span></div>
       <div class="stat"><b>Direction first</b><span>Camera, light and composition are decided before anything rolls.</span></div>
     </div>
@@ -300,9 +304,9 @@ footer .r{margin-left:auto}
       <p class="lede" style="margin-top:20px">Every frame starts with direction.</p>
 
       <div class="craftgrid" data-sec>
-        <figure data-block><img data-asset src="images/production/cinema-camera.webp" alt="Cinema camera body on a production set" width="460" height="343"><figcaption>Cinema camera</figcaption></figure>
-        <figure data-block><img data-asset src="images/production/lens-detail.webp" alt="Macro detail of a cinema lens aperture ring and front element" width="480" height="358"><figcaption>Lens</figcaption></figure>
-        <figure data-block><img data-asset src="images/production/lighting-setup.webp" alt="Lighting setup shaping a food set" width="380" height="284"><figcaption>Lighting</figcaption></figure>
+        <figure data-block><img data-asset src="images/production/cinema-camera.webp" alt="Cinema camera body on a production set" width="460" height="343" decoding="async"><figcaption>Cinema camera</figcaption></figure>
+        <figure data-block><img data-asset src="images/production/lens-detail.webp" alt="Macro detail of a cinema lens aperture ring and front element" width="480" height="358" decoding="async"><figcaption>Lens</figcaption></figure>
+        <figure data-block><img data-asset src="images/production/lighting-setup.webp" alt="Lighting setup shaping a food set" width="380" height="284" decoding="async"><figcaption>Lighting</figcaption></figure>
       </div>
     </div>
   </section>
@@ -318,14 +322,14 @@ footer .r{margin-left:auto}
         <div class="ba-head"><h3>Food</h3><span class="tag spec">Concept / Spec Work</span></div>
         <div class="ba-grid">
           <div class="ba-cell" data-block><span class="lbl">Before</span>
-            <img data-asset src="images/portfolio/before-after/food-before.webp" alt="Concept: a plated dish shot flat under overhead kitchen light, before art direction" width="420" height="521"></div>
+            <img data-asset src="images/portfolio/before-after/food-before.webp" alt="Concept: a plated dish shot flat under overhead kitchen light, before art direction" width="420" height="521" decoding="async"></div>
           <div class="arrow" data-block aria-hidden="true">&rarr;</div>
           <div class="plan">
             <div class="t">Apex Creative Plan</div>
             <ul><li>Camera</li><li>Lighting</li><li>Composition</li><li>Color</li><li>Background</li><li>Hook</li><li>CTA</li></ul>
           </div>
           <div class="ba-cell after" data-block><span class="lbl">After</span>
-            <img data-asset src="images/portfolio/before-after/food-after.webp" alt="Concept: the same dish directed, lit and composed as campaign-ready commercial food photography" width="420" height="521"></div>
+            <img data-asset src="images/portfolio/before-after/food-after.webp" alt="Concept: the same dish directed, lit and composed as campaign-ready commercial food photography" width="420" height="521" decoding="async"></div>
         </div>
       </div>
 
@@ -333,14 +337,14 @@ footer .r{margin-left:auto}
         <div class="ba-head"><h3>Packaged Food</h3><span class="tag spec">Concept / Spec Work</span></div>
         <div class="ba-grid">
           <div class="ba-cell" data-block><span class="lbl">Before</span>
-            <img data-asset src="images/portfolio/before-after/packaged-food-before.webp" alt="Concept: an unbranded jar shot flat on a countertop, before art direction" width="400" height="497"></div>
+            <img data-asset src="images/portfolio/before-after/packaged-food-before.webp" alt="Concept: an unbranded jar shot flat on a countertop, before art direction" width="400" height="497" decoding="async"></div>
           <div class="arrow" data-block aria-hidden="true">&rarr;</div>
           <div class="plan">
             <div class="t">Apex Creative Plan</div>
             <ul><li>Camera</li><li>Lighting</li><li>Composition</li><li>Color</li><li>Background</li><li>Hook</li><li>CTA</li></ul>
           </div>
           <div class="ba-cell after" data-block><span class="lbl">After</span>
-            <img data-asset src="images/portfolio/before-after/packaged-food-after.webp" alt="Concept: the same jar directed as a campaign-ready packaged-food hero" width="420" height="521"></div>
+            <img data-asset src="images/portfolio/before-after/packaged-food-after.webp" alt="Concept: the same jar directed as a campaign-ready packaged-food hero" width="420" height="521" decoding="async"></div>
         </div>
       </div>
 
@@ -348,14 +352,29 @@ footer .r{margin-left:auto}
         <div class="ba-head"><h3>Beverage</h3><span class="tag spec">Concept / Spec Work</span></div>
         <div class="ba-grid">
           <div class="ba-cell" data-block><span class="lbl">Before</span>
-            <img data-asset src="images/portfolio/before-after/beverage-before.webp" alt="Concept: a cold drink shot flat on a bar top, before art direction" width="360" height="447"></div>
+            <img data-asset src="images/portfolio/before-after/beverage-before.webp" alt="Concept: a cold drink shot flat on a bar top, before art direction" width="360" height="447" decoding="async"></div>
           <div class="arrow" data-block aria-hidden="true">&rarr;</div>
           <div class="plan">
             <div class="t">Apex Creative Plan</div>
             <ul><li>Camera</li><li>Lighting</li><li>Composition</li><li>Color</li><li>Background</li><li>Hook</li><li>CTA</li></ul>
           </div>
           <div class="ba-cell after" data-block><span class="lbl">After</span>
-            <img data-asset src="images/portfolio/before-after/beverage-after.webp" alt="Concept: the same drink directed as a campaign-ready beverage hero with backlight and motion" width="360" height="447"></div>
+            <img data-asset src="images/portfolio/before-after/beverage-after.webp" alt="Concept: the same drink directed as a campaign-ready beverage hero with backlight and motion" width="360" height="447" decoding="async"></div>
+        </div>
+      </div>
+
+      <div class="ba-row">
+        <div class="ba-head"><h3>Consumer Product</h3><span class="tag spec">Concept / Spec Work</span></div>
+        <div class="ba-grid">
+          <div class="ba-cell" data-block><span class="lbl">Before</span>
+            <img data-asset src="images/portfolio/before-after/consumer-product-before.webp" alt="Concept: an unbranded pump bottle shot flat on a cluttered desk, before art direction" width="340" height="422" decoding="async"></div>
+          <div class="arrow" data-block aria-hidden="true">&rarr;</div>
+          <div class="plan">
+            <div class="t">Apex Creative Plan</div>
+            <ul><li>Camera</li><li>Lighting</li><li>Composition</li><li>Color</li><li>Background</li><li>Hook</li><li>CTA</li></ul>
+          </div>
+          <div class="ba-cell after" data-block><span class="lbl">After</span>
+            <img data-asset src="images/portfolio/before-after/consumer-product-after.webp" alt="Concept: the same bottle directed as a campaign-ready consumer-product hero" width="400" height="497" decoding="async"></div>
         </div>
       </div>
 
@@ -411,32 +430,32 @@ footer .r{margin-left:auto}
 
       <div class="pf-grid" data-sec>
         <article class="pf-card" data-block>
-          <img data-asset src="images/portfolio/food/food-hero.webp" alt="Commercial food photograph of a plated dish in directional daylight" width="470" height="315">
+          <img data-asset src="images/portfolio/food/food-hero.webp" alt="Commercial food photograph of a plated dish in directional daylight" width="470" height="315" decoding="async">
           <div class="meta"><h3>Food</h3><span class="tag spec">Concept</span></div>
           <p>Plated food shot for menus, delivery platforms and paid social.</p>
         </article>
         <article class="pf-card" data-block>
-          <img data-asset src="images/portfolio/packaged-food/packaged-hero.webp" alt="Commercial photograph of an unbranded jar on a warm stone surface" width="760" height="510">
+          <img data-asset src="images/portfolio/packaged-food/packaged-hero.webp" alt="Commercial photograph of an unbranded jar on a warm stone surface" width="760" height="510" decoding="async">
           <div class="meta"><h3>Packaged Food</h3><span class="tag spec">Concept</span></div>
           <p>Shelf and e-commerce heroes with the label held still and legible.</p>
         </article>
         <article class="pf-card" data-block>
-          <img data-asset src="images/portfolio/beverage/beverage-hero.webp" alt="Commercial beverage photograph with backlight through ice" width="470" height="315">
+          <img data-asset src="images/portfolio/beverage/beverage-hero.webp" alt="Commercial beverage photograph with backlight through ice" width="470" height="315" decoding="async">
           <div class="meta"><h3>Beverage</h3><span class="tag spec">Concept</span></div>
           <p>Pour, splash and condensation shot at shutter speeds that hold the physics.</p>
         </article>
         <article class="pf-card" data-block>
-          <img data-asset src="images/portfolio/consumer-products/product-hero.webp" alt="Commercial photograph of an unbranded consumer product on a gradient ground" width="760" height="510">
+          <img data-asset src="images/portfolio/consumer-products/product-hero.webp" alt="Commercial photograph of an unbranded consumer product on a gradient ground" width="760" height="510" decoding="async">
           <div class="meta"><h3>Consumer Products</h3><span class="tag spec">Concept</span></div>
           <p>Clean product heroes with negative space reserved for campaign copy.</p>
         </article>
         <article class="pf-card" data-block>
-          <img data-asset src="images/portfolio/hospitality/hospitality-hero.webp" alt="Hospitality photograph of a dining room in warm evening light" width="420" height="282">
+          <img data-asset src="images/portfolio/hospitality/hospitality-hero.webp" alt="Hospitality photograph of a dining room in warm evening light" width="420" height="282" decoding="async">
           <div class="meta"><h3>Hospitality</h3><span class="tag spec">Concept</span></div>
           <p>Rooms, service and the pass, shot the way guests actually experience them.</p>
         </article>
         <article class="pf-card" data-block>
-          <img data-asset src="images/portfolio/production/production-hero.webp" alt="Cinema camera and lit product set during a commercial production" width="380" height="255">
+          <img data-asset src="images/portfolio/production/production-hero.webp" alt="Cinema camera and lit product set during a commercial production" width="380" height="255" decoding="async">
           <div class="meta"><h3>Production</h3><span class="tag spec">Concept</span></div>
           <p>Camera, lighting and art direction handled in one pass, on one call sheet.</p>
         </article>
@@ -456,7 +475,7 @@ footer .r{margin-left:auto}
         <p>Most content studios can light a plate. Fewer can tell you the plate is wrong.</p>
       </div>
       <div data-block>
-        <img data-asset src="images/production/chef-pass.webp" alt="A chef finishing a plate on the pass under warm service light" width="420" height="282">
+        <img data-asset src="images/production/chef-pass.webp" alt="A chef finishing a plate on the pass under warm service light" width="420" height="282" decoding="async">
       </div>
     </div>
   </section>

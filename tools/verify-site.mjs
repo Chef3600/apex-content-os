@@ -205,6 +205,18 @@ else {
     [...document.querySelectorAll('img')].filter(i => i.complete && i.naturalWidth > 0).length);
   ok(`${shown} image(s) actually rendering`);
 
+  // The gate hides a block until its image decodes. Anything that stops a
+  // real file from decoding (lazy loading, a bad path) silently collapses
+  // the page while "no empty slot is visible" still passes. So: a block
+  // whose file is on disk MUST be showing.
+  const stuck = await page.evaluate(() =>
+    [...document.querySelectorAll('[data-block]')]
+      .filter(b => getComputedStyle(b).display === 'none')
+      .map(b => { const i = b.querySelector('img[data-asset]'); return i ? i.getAttribute('src') : 'arrow'; }));
+  const reallyStuck = stuck.filter(src => src !== 'arrow' && existsSync(join(siteDir, src)));
+  if (reallyStuck.length) reallyStuck.forEach(s => bad(`BLOCK HIDDEN but file exists: ${s}`));
+  else ok(`no block is hidden while its file exists (${stuck.length} hidden total)`);
+
   // Every in-page anchor must resolve to a real target.
   const deadAnchors = await page.evaluate(() =>
     [...document.querySelectorAll('a[href^="#"]')]

@@ -113,10 +113,10 @@
       "pair": "consumer-product",
       "side": "before",
       "designation": "CONCEPT",
-      "status": "PENDING",
-      "qc": null,
-      "alt": "Concept: an unbranded consumer product shot flat on a desk, before art direction",
-      "brief": "Deliberately ORDINARY. An unbranded consumer product (blank packaging) on a desk, flat ceiling light, keystone distortion, dull color, phone-camera look. Packaging stays blank."
+      "status": "LIVE",
+      "qc": 90,
+      "alt": "Concept: an unbranded pump bottle shot flat on a cluttered desk, before art direction",
+      "brief": "Deliberately ORDINARY. An unbranded frosted pump bottle with COMPLETELY BLANK packaging on a cluttered office desk, flat fluorescent ceiling light, keystone distortion, dull washed-out color, phone-camera look. Packaging stays blank."
     },
     {
       "id": "consumer-product-after",
@@ -207,6 +207,18 @@
       "qc": 90,
       "alt": "Cinema camera and lit product set during a commercial production",
       "brief": "Behind-the-scenes production still: cinema camera rig on a tripod with a director's monitor, softbox and LED panel, unbranded product set on a plinth. Bright studio. No people, no text, no logos."
+    },
+    {
+      "id": "consumer-product-after-ba",
+      "path": "portfolio/before-after/consumer-product-after.webp",
+      "slot": "before-after",
+      "pair": "consumer-product",
+      "side": "after",
+      "designation": "CONCEPT",
+      "status": "LIVE",
+      "qc": 90,
+      "alt": "Concept: the same bottle directed as a campaign-ready consumer-product hero",
+      "brief": "Same bottle WITH ITS PUMP CAP FITTED so the product matches the before frame, packaging COMPLETELY BLANK. Cream-to-blush gradient, crisp edge light, controlled reflection, negative space for copy. A first pass without the cap was rejected at QC 72 for breaking product continuity."
     }
   ]
 }
