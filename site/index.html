@@ -35,9 +35,21 @@
   "url": "https://apexcontentstudio.online/",
   "description": "Commercial content studio producing photography and video for food, packaged goods, beverage, consumer products and hospitality brands.",
   "email": "hello@apexcontentstudio.online",
+  "telephone": "+1-702-480-9198",
   "image": "https://apexcontentstudio.online/og-image.jpg",
   "parentOrganization": { "@type": "Organization", "name": "Apex Hospitality Group LLC" },
-  "areaServed": "US",
+  "areaServed": [
+    { "@type": "City", "name": "Las Vegas, NV" },
+    { "@type": "City", "name": "Henderson, NV" },
+    { "@type": "City", "name": "North Las Vegas, NV" },
+    { "@type": "Place", "name": "Summerlin, NV" }
+  ],
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    "opens": "09:00",
+    "closes": "18:00"
+  },
   "knowsAbout": [
     "Commercial photography",
     "Short-form video",
@@ -229,6 +241,11 @@ nav .links a:hover{color:var(--gold-ink)}
 .contact{background:var(--gold-lt)}
 .contact .g{display:grid;grid-template-columns:1fr auto;gap:34px;align-items:center}
 @media (max-width:760px){.contact .g{grid-template-columns:1fr;justify-items:start}}
+.cta{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.cta-alt{margin:0;font-size:.9rem;line-height:1.55;color:var(--ink-mid)}
+.cta-alt a{color:var(--gold-ink);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(132,94,30,.35)}
+.cta-alt a:hover{border-bottom-color:var(--gold-ink)}
+.cta-alt span{color:var(--ink-soft);font-size:.82rem}
 
 /* ---------- footer ---------- */
 footer{background:var(--char);color:var(--bone-dim);padding:50px 0;font-size:13.5px}
@@ -495,7 +512,11 @@ footer .r{margin-left:auto}
         <p class="lede" style="margin-top:18px">Send the product, the channel and the deadline. You
           will get a creative plan back before anyone talks about a quote.</p>
       </div>
-      <a class="btn" href="mailto:hello@apexcontentstudio.online?subject=Project%20inquiry&amp;body=Product%3A%0AChannel%3A%0ADeadline%3A%0A">Email the Studio</a>
+      <div class="cta">
+        <a class="btn" href="mailto:hello@apexcontentstudio.online?subject=Project%20inquiry&amp;body=Product%3A%0AChannel%3A%0ADeadline%3A%0A">Email the Studio</a>
+        <p class="cta-alt">or call <a href="tel:+17024809198">(702) 480-9198</a><br>
+          <span>Mon&ndash;Fri, 9am&ndash;6pm &middot; Las Vegas, Henderson, North Las Vegas, Summerlin</span></p>
+      </div>
     </div>
   </section>
 </main>

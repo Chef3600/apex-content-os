@@ -4876,7 +4876,8 @@
     "replyText": "",
     "nextAction": "Verify",
     "notes": "Regulated. Buyer may be the spa brand or the resort - establish which before any message.",
-    "accountScore": 29
+    "accountScore": 29,
+    "layersOverride": 2
   },
   {
     "id": "a120",
@@ -4917,7 +4918,8 @@
     "replyText": "",
     "nextAction": "Verify",
     "notes": "INFERENCE, NOT FACT: creative for a Strip resort restaurant is usually handled by the resort marketing department. Verify before assuming the wedge.",
-    "accountScore": 30
+    "accountScore": 30,
+    "layersOverride": 2
   },
   {
     "id": "a121",
@@ -4958,7 +4960,8 @@
     "replyText": "",
     "nextAction": "Verify",
     "notes": "INFERENCE, NOT FACT: likely resort-managed creative. Verify.",
-    "accountScore": 30
+    "accountScore": 30,
+    "layersOverride": 2
   },
   {
     "id": "a122",
@@ -4999,7 +5002,8 @@
     "replyText": "",
     "nextAction": "Verify",
     "notes": "INFERENCE, NOT FACT: likely resort-managed creative. Verify.",
-    "accountScore": 30
+    "accountScore": 30,
+    "layersOverride": 2
   },
   {
     "id": "a123",
@@ -5040,6 +5044,7 @@
     "replyText": "",
     "nextAction": "Verify",
     "notes": "National corporate marketing. Realistically unreachable as a first account - kept for visibility, not for pursuit.",
-    "accountScore": 29
+    "accountScore": 29,
+    "layersOverride": 2
   }
 ]

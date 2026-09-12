@@ -20,6 +20,7 @@
  *   node tools/account-score.mjs <id>         one row, every dimension explained
  *   node tools/account-score.mjs immediate    top 25 fastest realistic conversations
  *   node tools/account-score.mjs value        top 25 largest potential accounts
+ *   node tools/account-score.mjs targets      THE 25 - a deliberate mix, in work order
  *
  * Those last two are DIFFERENT LISTS and both are worked. The immediate list
  * is where the first invoice comes from. The value list is where the company
@@ -88,8 +89,13 @@ export function immediateScore(r) {
   const v = VERTICALS[r.industry]; if (!v) return null;
   const d = scoreAccount(r).dims;
   const access = d[5][1];
+  // A restaurant inside a major resort is an independent restaurant on paper
+  // and a corporate marketing department in practice. The industry prior
+  // cannot see that, so a row may carry its own layer count - recorded in the
+  // data with its reason in `notes`, never buried in the formula.
+  const layers = Number.isInteger(r.layersOverride) ? r.layersOverride : (v.layers ?? 1);
   return access * 2 + v.buy * 2 + v.cred + v.demand
-    - (v.layers ?? 1) * 3 - (r.locations >= 10 ? 3 : 0);
+    - layers * 3 - (r.locations >= 10 ? 3 : 0);
 }
 
 /* Largest potential account. Weighted toward locations and recurrence. */
@@ -104,6 +110,56 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const args = process.argv.slice(2);
   const write = args.includes('--write');
   const one = args.find(a => !a.startsWith('--'));
+
+  /* THE 25.
+   *
+   * Not the 25 largest and not the 25 easiest - either list alone builds the
+   * wrong company. A freelancer's list is all easy; a pipeline that never
+   * closes is all large. The composition is fixed so it cannot drift:
+   *
+   *   12  first-sale targets   reachable, buys production, few decision layers
+   *    8  high-value targets   locations, recurrence, room to expand
+   *    5  signal targets       a published reason for the email to exist
+   */
+  if (one === 'targets') {
+    const take = (f, n, seen) => db.map(r => ({ r, n: f(r) })).filter(x => x.n != null && !seen.has(x.r.id))
+      .sort((a, b) => b.n - a.n || (b.r.accountScore ?? 0) - (a.r.accountScore ?? 0))
+      .slice(0, n);
+    const seen = new Set();
+    const out = [];
+    const push = (rows, why) => { for (const { r } of rows) { seen.add(r.id); out.push({ r, why }); } };
+    push(take(immediateScore, 12, seen), 'first sale');
+    push(take(valueScore, 8, seen), 'account value');
+    push(take(r => (r.signal && r.signalSource) ? (r.accountScore ?? 0) : null, 5, seen), 'signal');
+
+    console.log('\n  THE 25 - the current target list\n');
+    console.log('  12 first-sale, 8 account-value, 5 signal. Deliberately mixed: the');
+    console.log('  easy list alone builds a freelancer, the large list alone builds a');
+    console.log('  pipeline that never closes.\n');
+    let group = '';
+    for (const { r, why } of out) {
+      if (why !== group) {
+        group = why;
+        const head = { 'first sale': 'FIRST SALE - reachable, buys production, short path',
+                       'account value': 'ACCOUNT VALUE - locations, recurrence, room to expand',
+                       'signal': 'SIGNAL - a published reason for the email to exist' }[why];
+        console.log(`\n  ${head}`);
+        console.log('  ' + '-'.repeat(74));
+      }
+      console.log(`    ${pad(r.id, 6)}${pad(r.company, 38)}${pad(r.industry, 20)}${pad('L' + r.lane, 4)}${r.accountScore}`);
+      if (why === 'signal' && r.signal) console.log(`           ${r.signal}`);
+    }
+    const nSig = out.filter(x => x.r.signal && x.r.signalSource).length;
+    const nMulti = out.filter(x => x.r.locations >= 2).length;
+    console.log(`\n  ${out.length} accounts. ${nMulti} multi-location, ${nSig} carrying a sourced signal.`);
+    console.log(`  ${out.filter(x => x.r.state === 'NEW').length} still NEW - not one of them is sendable.\n`);
+    console.log('  WORK ORDER');
+    console.log('    1. node tools/pipeline.mjs verify        walks them, highest value first');
+    console.log('    2. node tools/pipeline.mjs set <id> locations <n>    while you are on their site');
+    console.log('    3. node tools/pipeline.mjs qualify <id> <0-10> "what you saw"');
+    console.log('    4. node tools/pipeline.mjs msg <id>      copy-ready, refuses unverified rows\n');
+    process.exit(0);
+  }
 
   if (one === 'immediate' || one === 'value') {
     const immediate = one === 'immediate';

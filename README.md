@@ -61,6 +61,7 @@ Revenue is the project. The site is done.
 | `docs/account-scoring.md` | The account score, the lanes, and the two target lists. |
 | `docs/lanes-and-offers.md` | Lane A/B/C, multi-location economics, the enterprise wedge. |
 | `docs/30-day-plan.md` | The activity that gives Apex a chance at a first client. |
+| `docs/business-platforms.md` | Google profile, LinkedIn, YouTube - the exact values to paste. |
 | `docs/first-client-offer.md` | The Pilot, the ladder, and the market data behind the prices. |
 | `outreach/templates.md` | What to actually send. |
 | `docs/scope-and-terms.md` | What is included, what a revision is, payment and rights. |
@@ -69,8 +70,9 @@ Revenue is the project. The site is done.
 ```
 node tools/dashboard.mjs                    # the whole company, one screen
 node tools/pipeline.mjs                     # what to do today
-node tools/account-score.mjs immediate      # top 25 fastest conversations
-node tools/account-score.mjs value          # top 25 largest accounts
+node tools/account-score.mjs targets        # THE 25 - the current target list
+node tools/account-score.mjs immediate      # fastest conversations
+node tools/account-score.mjs value          # largest accounts
 node tools/job.mjs                          # what is owed, and on which job
 ```
 
@@ -85,7 +87,10 @@ read and send.
 
 ## Status — read this before claiming anything works
 
-- Site: **build-complete, not deployed.** No domain attached. 19 live assets,
+- Site: **build-complete, NOT LIVE, no public URL.** No domain attached. The
+  Vercel integration can create projects but cannot read or configure them, and
+  `main` is three commits behind with known defects. `DEPLOY.md` has the exact
+  owner actions. 19 live assets,
   verifier passing with 0 failures. See `DEPLOY.md`.
 - Portfolio: **speculative.** Every piece is concept work with no client relationship. Labeled that way on the site and it stays that way.
 - Clients: **none.**

@@ -36,6 +36,80 @@ and render mode, the SEO and social tags, that every asset the head
 references exists, markup hygiene, encoding, the brand rules, and then the
 rendered page in Chromium at 1440 / 820 / 390.
 
+## CURRENT STATUS - read this first
+
+**DEPLOYMENT STATUS: NOT LIVE.**
+**DOMAIN STATUS: NOT CONNECTED.**
+**PUBLIC URL: none. There is no live URL to give out yet.**
+
+What was established on 2026-09-12 through the Vercel integration:
+
+| Fact | State |
+|---|---|
+| Vercel account | Exists - "chef3600's projects", Hobby plan |
+| A project named `apex-content-studio` | **Already exists in the account.** Creating it returns 409 conflict. |
+| Readable through this integration | **No.** `list_projects` returns an empty list and `get_project` returns 404 for both names. |
+| Project `apex-content-os` | Created (`prj_PLOBCSNA2M7MNPhxkImNbE1A9xs8`), but **the GitHub link could not be verified** and the project cannot be read back. |
+
+The integration's token can create projects but cannot read or configure them,
+so deployment cannot be completed or confirmed from a session. **Nothing has
+been published.**
+
+### The blocker that matters more than the integration
+
+`main` is **three commits behind** this branch. Deploying `main` today would
+publish a site with real defects that have since been fixed:
+
+- no doctype - the page renders in **quirks mode**
+- **nine WCAG AA contrast failures**
+- no OG image, no favicon, no `robots.txt`, no `sitemap.xml`
+- image heights wrong on five card types
+
+That page would be worse than no page, under the company's own name. So the
+first action is not a deploy setting - it is getting the verified build onto
+the branch Vercel will deploy.
+
+### Exact owner actions, in order
+
+**1. Get the verified build onto `main`** (2 minutes)
+
+Open a pull request from `claude/keen-ritchie-62fsn0` into `main` and merge it,
+or authorize the merge and it will be done. Until this happens, every deploy
+path publishes the defective version.
+
+**2. Connect the project** (5 minutes, Vercel dashboard)
+
+Open the existing `apex-content-studio` project. If it has no repository
+connected: Settings -> Git -> Connect `Chef3600/apex-content-os`.
+
+If it is a stale or empty project from an earlier attempt, delete it and the
+duplicate `apex-content-os` project, then import the repo fresh - one project,
+not three.
+
+Settings, either way:
+
+- Framework Preset: **Other**
+- Root Directory: **site**
+- Build Command: empty
+- Output Directory: empty
+- Production Branch: **main**
+
+**3. Deploy and capture the URL** (1 minute)
+
+The first deploy produces a `*.vercel.app` URL. **That URL is usable
+immediately** - it can go on the Google Business Profile, on LinkedIn and in
+outreach on day one. Do not wait for DNS to start using it.
+
+**4. Attach the domain** (10 minutes + DNS propagation)
+
+Vercel project -> Domains -> add `apexcontentstudio.online` and
+`www.apexcontentstudio.online`, then create exactly the records Vercel shows
+at the registrar. See the DNS section below.
+
+**5. Report the live URL back**, so it can be set as the canonical destination
+everywhere at once - Google profile, LinkedIn, YouTube, proposals, outreach,
+`docs/business-platforms.md`.
+
 ## Deploying on Vercel
 
 The project root must point at `site/`, with no build command and no output
@@ -74,6 +148,6 @@ apex should be the destination and `www` the redirect.
 
 ## Rolling back
 
-Every deploy is a commit on `claude/keen-ritchie-62fsn0`. Redeploy an earlier
-commit from the Vercel dashboard; there is no state to migrate and no cache
+Once production tracks `main`, every deploy is a commit on `main`. Redeploy an
+earlier commit from the Vercel dashboard; there is no state to migrate and no cache
 to clear beyond the CDN, which Vercel invalidates on deploy.
