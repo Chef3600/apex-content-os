@@ -16,17 +16,17 @@
   "assets": [
     {
       "id": "hero-camera-food-set",
-      "path": "production/hero-camera-food-set.jpg",
+      "path": "production/hero-camera-food-set.webp",
       "slot": "hero",
       "designation": "CONCEPT",
-      "status": "PENDING",
-      "qc": null,
+      "status": "LIVE",
+      "qc": 89,
       "alt": "Professional cinema camera on a lit commercial food set, shallow depth of field across a plated dish",
       "brief": "Bright commercial production still. Cinema camera body and lens in the near foreground, angled at a plated dish on a warm set. Softbox and practical lighting visible but OUT of frame edges. Warm ivory and food-red palette, high clarity, editorial. Horizontal 16:9. No text, no logos, no faces."
     },
     {
       "id": "lens-detail",
-      "path": "production/lens-detail.jpg",
+      "path": "production/lens-detail.webp",
       "slot": "craft",
       "designation": "CONCEPT",
       "status": "PENDING",
@@ -34,35 +34,33 @@
       "alt": "Macro detail of a cinema lens aperture ring and front element",
       "brief": "Macro of a cinema prime lens: aperture ring, focus marks, front element catching a warm highlight. Bright, clean, premium. Shallow depth of field. No text, no logos."
     },
-
     {
       "id": "food-before",
-      "path": "portfolio/before-after/food-before.jpg",
+      "path": "portfolio/before-after/food-before.webp",
       "slot": "before-after",
       "pair": "food",
       "side": "before",
       "designation": "CONCEPT",
-      "status": "PENDING",
-      "qc": null,
+      "status": "LIVE",
+      "qc": 88,
       "alt": "Concept: a plated dish shot flat under overhead kitchen light, before art direction",
       "brief": "Deliberately ORDINARY reference frame. A good dish photographed badly: flat overhead fluorescent light, cluttered pass in background, dull color, phone-camera look, slight overexposure. Must read as an untreated real-world snapshot, NOT as a styled image."
     },
     {
       "id": "food-after",
-      "path": "portfolio/before-after/food-after.jpg",
+      "path": "portfolio/before-after/food-after.webp",
       "slot": "before-after",
       "pair": "food",
       "side": "after",
       "designation": "CONCEPT",
-      "status": "PENDING",
-      "qc": null,
+      "status": "LIVE",
+      "qc": 90,
       "alt": "Concept: the same dish directed, lit and composed as campaign-ready commercial food photography",
       "brief": "Same subject, fully directed. Bright directional daylight from camera left, controlled falloff, rich natural color, considered negative space, editorial food-magazine treatment. Physically correct steam and sheen. No text, no logos."
     },
-
     {
       "id": "packaged-food-before",
-      "path": "portfolio/before-after/packaged-food-before.jpg",
+      "path": "portfolio/before-after/packaged-food-before.webp",
       "slot": "before-after",
       "pair": "packaged-food",
       "side": "before",
@@ -74,7 +72,7 @@
     },
     {
       "id": "packaged-food-after",
-      "path": "portfolio/before-after/packaged-food-after.jpg",
+      "path": "portfolio/before-after/packaged-food-after.webp",
       "slot": "before-after",
       "pair": "packaged-food",
       "side": "after",
@@ -84,10 +82,9 @@
       "alt": "Concept: the same jar directed as a campaign-ready packaged-food hero",
       "brief": "Same jar, BLANK label preserved, fully directed. Static camera, controlled specular on glass, warm key with a cool rim, fresh ingredient supporting cast, wet slate or warm stone ground. Premium packaged-goods hero. Label stays blank."
     },
-
     {
       "id": "beverage-before",
-      "path": "portfolio/before-after/beverage-before.jpg",
+      "path": "portfolio/before-after/beverage-before.webp",
       "slot": "before-after",
       "pair": "beverage",
       "side": "before",
@@ -99,7 +96,7 @@
     },
     {
       "id": "beverage-after",
-      "path": "portfolio/before-after/beverage-after.jpg",
+      "path": "portfolio/before-after/beverage-after.webp",
       "slot": "before-after",
       "pair": "beverage",
       "side": "after",
@@ -109,10 +106,9 @@
       "alt": "Concept: the same drink directed as a campaign-ready beverage hero with backlight and motion",
       "brief": "Same drink, fully directed. Strong backlight through the glass, ice reading crystalline, a physically correct splash frozen at 1/2000, citrus and mint supporting cast, saturated but natural color. Premium beverage advertising."
     },
-
     {
       "id": "consumer-product-before",
-      "path": "portfolio/before-after/consumer-product-before.jpg",
+      "path": "portfolio/before-after/consumer-product-before.webp",
       "slot": "before-after",
       "pair": "consumer-product",
       "side": "before",
@@ -124,7 +120,7 @@
     },
     {
       "id": "consumer-product-after",
-      "path": "portfolio/before-after/consumer-product-after.jpg",
+      "path": "portfolio/before-after/consumer-product-after.webp",
       "slot": "before-after",
       "pair": "consumer-product",
       "side": "after",

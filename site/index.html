@@ -43,6 +43,7 @@ section{padding:clamp(64px,9vw,128px) 0}
    never reach a visitor. Text-only blocks are never gated. */
 [data-block]:not(.ready){display:none!important}
 [data-sec]:not(.ready){display:none!important}
+[data-sechide]:not(.ready){display:none!important}
 
 /* ---------- nav ---------- */
 nav{position:sticky;top:0;z-index:50;background:rgba(253,251,246,.94);
@@ -216,7 +217,7 @@ footer .r{margin-left:auto}
       </div>
 
       <div class="heroshot" data-block>
-        <img data-asset src="images/production/hero-camera-food-set.jpg"
+        <img data-asset src="images/production/hero-camera-food-set.webp"
              alt="Professional cinema camera on a lit commercial food set, shallow depth of field across a plated dish"
              width="1600" height="900" fetchpriority="high">
       </div>
@@ -239,19 +240,19 @@ footer .r{margin-left:auto}
   </section>
 
   <!-- ============ CRAFT ============ -->
-  <section class="craft" id="craft">
+  <section class="craft" id="craft" data-sechide>
     <div class="wrap">
       <p class="eyebrow">The Studio</p>
       <h2>Built around the craft.</h2>
       <p class="lede" style="margin-top:20px">Every frame starts with direction.</p>
 
       <div class="craftgrid" data-sec>
-        <figure data-block><img data-asset src="images/production/cinema-camera.jpg" alt="Cinema camera body on a production set" width="1200" height="900"><figcaption>Cinema camera</figcaption></figure>
-        <figure data-block><img data-asset src="images/production/lens-detail.jpg" alt="Macro detail of a cinema lens aperture ring and front element" width="1200" height="900"><figcaption>Lens</figcaption></figure>
-        <figure data-block><img data-asset src="images/production/lighting-setup.jpg" alt="Lighting setup shaping a food set" width="1200" height="900"><figcaption>Lighting</figcaption></figure>
-        <figure data-block><img data-asset src="images/production/camera-monitor.jpg" alt="Camera monitor showing a framed composition" width="1200" height="900"><figcaption>Composition</figcaption></figure>
-        <figure data-block><img data-asset src="images/production/product-setup.jpg" alt="Product photography setup with controlled reflection" width="1200" height="900"><figcaption>Product setup</figcaption></figure>
-        <figure data-block><img data-asset src="images/production/workstation.jpg" alt="Creative workstation during a color grading session" width="1200" height="900"><figcaption>Grade</figcaption></figure>
+        <figure data-block><img data-asset src="images/production/cinema-camera.webp" alt="Cinema camera body on a production set" width="1200" height="900"><figcaption>Cinema camera</figcaption></figure>
+        <figure data-block><img data-asset src="images/production/lens-detail.webp" alt="Macro detail of a cinema lens aperture ring and front element" width="1200" height="900"><figcaption>Lens</figcaption></figure>
+        <figure data-block><img data-asset src="images/production/lighting-setup.webp" alt="Lighting setup shaping a food set" width="1200" height="900"><figcaption>Lighting</figcaption></figure>
+        <figure data-block><img data-asset src="images/production/camera-monitor.webp" alt="Camera monitor showing a framed composition" width="1200" height="900"><figcaption>Composition</figcaption></figure>
+        <figure data-block><img data-asset src="images/production/product-setup.webp" alt="Product photography setup with controlled reflection" width="1200" height="900"><figcaption>Product setup</figcaption></figure>
+        <figure data-block><img data-asset src="images/production/workstation.webp" alt="Creative workstation during a color grading session" width="1200" height="900"><figcaption>Grade</figcaption></figure>
       </div>
     </div>
   </section>
@@ -267,14 +268,14 @@ footer .r{margin-left:auto}
         <div class="ba-head"><h3>Food</h3><span class="tag spec">Concept / Spec Work</span></div>
         <div class="ba-grid">
           <div class="ba-cell" data-block><span class="lbl">Before</span>
-            <img data-asset src="images/portfolio/before-after/food-before.jpg" alt="Concept: a plated dish shot flat under overhead kitchen light, before art direction" width="800" height="1000"></div>
+            <img data-asset src="images/portfolio/before-after/food-before.webp" alt="Concept: a plated dish shot flat under overhead kitchen light, before art direction" width="800" height="1000"></div>
           <div class="arrow" data-block aria-hidden="true">&rarr;</div>
           <div class="plan">
             <div class="t">Apex Creative Plan</div>
             <ul><li>Camera</li><li>Lighting</li><li>Composition</li><li>Color</li><li>Background</li><li>Hook</li><li>CTA</li></ul>
           </div>
           <div class="ba-cell after" data-block><span class="lbl">After</span>
-            <img data-asset src="images/portfolio/before-after/food-after.jpg" alt="Concept: the same dish directed, lit and composed as campaign-ready commercial food photography" width="800" height="1000"></div>
+            <img data-asset src="images/portfolio/before-after/food-after.webp" alt="Concept: the same dish directed, lit and composed as campaign-ready commercial food photography" width="800" height="1000"></div>
         </div>
       </div>
 
@@ -282,14 +283,14 @@ footer .r{margin-left:auto}
         <div class="ba-head"><h3>Packaged Food</h3><span class="tag spec">Concept / Spec Work</span></div>
         <div class="ba-grid">
           <div class="ba-cell" data-block><span class="lbl">Before</span>
-            <img data-asset src="images/portfolio/before-after/packaged-food-before.jpg" alt="Concept: an unbranded jar shot flat on a countertop, before art direction" width="800" height="1000"></div>
+            <img data-asset src="images/portfolio/before-after/packaged-food-before.webp" alt="Concept: an unbranded jar shot flat on a countertop, before art direction" width="800" height="1000"></div>
           <div class="arrow" data-block aria-hidden="true">&rarr;</div>
           <div class="plan">
             <div class="t">Apex Creative Plan</div>
             <ul><li>Camera</li><li>Lighting</li><li>Composition</li><li>Color</li><li>Background</li><li>Hook</li><li>CTA</li></ul>
           </div>
           <div class="ba-cell after" data-block><span class="lbl">After</span>
-            <img data-asset src="images/portfolio/before-after/packaged-food-after.jpg" alt="Concept: the same jar directed as a campaign-ready packaged-food hero" width="800" height="1000"></div>
+            <img data-asset src="images/portfolio/before-after/packaged-food-after.webp" alt="Concept: the same jar directed as a campaign-ready packaged-food hero" width="800" height="1000"></div>
         </div>
       </div>
 
@@ -297,14 +298,14 @@ footer .r{margin-left:auto}
         <div class="ba-head"><h3>Beverage</h3><span class="tag spec">Concept / Spec Work</span></div>
         <div class="ba-grid">
           <div class="ba-cell" data-block><span class="lbl">Before</span>
-            <img data-asset src="images/portfolio/before-after/beverage-before.jpg" alt="Concept: a cold drink shot flat on a bar top, before art direction" width="800" height="1000"></div>
+            <img data-asset src="images/portfolio/before-after/beverage-before.webp" alt="Concept: a cold drink shot flat on a bar top, before art direction" width="800" height="1000"></div>
           <div class="arrow" data-block aria-hidden="true">&rarr;</div>
           <div class="plan">
             <div class="t">Apex Creative Plan</div>
             <ul><li>Camera</li><li>Lighting</li><li>Composition</li><li>Color</li><li>Background</li><li>Hook</li><li>CTA</li></ul>
           </div>
           <div class="ba-cell after" data-block><span class="lbl">After</span>
-            <img data-asset src="images/portfolio/before-after/beverage-after.jpg" alt="Concept: the same drink directed as a campaign-ready beverage hero with backlight and motion" width="800" height="1000"></div>
+            <img data-asset src="images/portfolio/before-after/beverage-after.webp" alt="Concept: the same drink directed as a campaign-ready beverage hero with backlight and motion" width="800" height="1000"></div>
         </div>
       </div>
 
@@ -312,14 +313,14 @@ footer .r{margin-left:auto}
         <div class="ba-head"><h3>Consumer Product</h3><span class="tag spec">Concept / Spec Work</span></div>
         <div class="ba-grid">
           <div class="ba-cell" data-block><span class="lbl">Before</span>
-            <img data-asset src="images/portfolio/before-after/consumer-product-before.jpg" alt="Concept: an unbranded consumer product shot flat on a desk, before art direction" width="800" height="1000"></div>
+            <img data-asset src="images/portfolio/before-after/consumer-product-before.webp" alt="Concept: an unbranded consumer product shot flat on a desk, before art direction" width="800" height="1000"></div>
           <div class="arrow" data-block aria-hidden="true">&rarr;</div>
           <div class="plan">
             <div class="t">Apex Creative Plan</div>
             <ul><li>Camera</li><li>Lighting</li><li>Composition</li><li>Color</li><li>Background</li><li>Hook</li><li>CTA</li></ul>
           </div>
           <div class="ba-cell after" data-block><span class="lbl">After</span>
-            <img data-asset src="images/portfolio/before-after/consumer-product-after.jpg" alt="Concept: the same product directed as a campaign-ready consumer-product hero" width="800" height="1000"></div>
+            <img data-asset src="images/portfolio/before-after/consumer-product-after.webp" alt="Concept: the same product directed as a campaign-ready consumer-product hero" width="800" height="1000"></div>
         </div>
       </div>
 
@@ -371,7 +372,7 @@ footer .r{margin-left:auto}
   </section>
 
   <!-- ============ PORTFOLIO ============ -->
-  <section id="work" style="background:var(--cream);border-top:1px solid var(--rule)">
+  <section id="work" data-sechide style="background:var(--cream);border-top:1px solid var(--rule)">
     <div class="wrap">
       <p class="eyebrow">Work</p>
       <h2>Selected work.</h2>
@@ -379,27 +380,27 @@ footer .r{margin-left:auto}
 
       <div class="pf-grid" data-sec>
         <article class="pf-card" data-block>
-          <img data-asset src="images/portfolio/food/food-hero.jpg" alt="Commercial food photograph of a plated dish in directional daylight" width="1200" height="800">
+          <img data-asset src="images/portfolio/food/food-hero.webp" alt="Commercial food photograph of a plated dish in directional daylight" width="1200" height="800">
           <div class="meta"><h3>Food</h3><span class="tag spec">Concept</span></div>
           <p>Plated food shot for menus, delivery platforms and paid social.</p>
         </article>
         <article class="pf-card" data-block>
-          <img data-asset src="images/portfolio/packaged-food/packaged-hero.jpg" alt="Commercial photograph of an unbranded jar on a warm stone surface" width="1200" height="800">
+          <img data-asset src="images/portfolio/packaged-food/packaged-hero.webp" alt="Commercial photograph of an unbranded jar on a warm stone surface" width="1200" height="800">
           <div class="meta"><h3>Packaged Food</h3><span class="tag spec">Concept</span></div>
           <p>Shelf and e-commerce heroes with the label held still and legible.</p>
         </article>
         <article class="pf-card" data-block>
-          <img data-asset src="images/portfolio/beverage/beverage-hero.jpg" alt="Commercial beverage photograph with backlight through ice" width="1200" height="800">
+          <img data-asset src="images/portfolio/beverage/beverage-hero.webp" alt="Commercial beverage photograph with backlight through ice" width="1200" height="800">
           <div class="meta"><h3>Beverage</h3><span class="tag spec">Concept</span></div>
           <p>Pour, splash and condensation shot at shutter speeds that hold the physics.</p>
         </article>
         <article class="pf-card" data-block>
-          <img data-asset src="images/portfolio/consumer-products/product-hero.jpg" alt="Commercial photograph of an unbranded consumer product on a gradient ground" width="1200" height="800">
+          <img data-asset src="images/portfolio/consumer-products/product-hero.webp" alt="Commercial photograph of an unbranded consumer product on a gradient ground" width="1200" height="800">
           <div class="meta"><h3>Consumer Products</h3><span class="tag spec">Concept</span></div>
           <p>Clean product heroes with negative space reserved for campaign copy.</p>
         </article>
         <article class="pf-card" data-block>
-          <img data-asset src="images/portfolio/hospitality/hospitality-hero.jpg" alt="Hospitality photograph of a dining room in warm evening light" width="1200" height="800">
+          <img data-asset src="images/portfolio/hospitality/hospitality-hero.webp" alt="Hospitality photograph of a dining room in warm evening light" width="1200" height="800">
           <div class="meta"><h3>Hospitality</h3><span class="tag spec">Concept</span></div>
           <p>Rooms, service and the pass, shot the way guests actually experience them.</p>
         </article>
@@ -419,7 +420,7 @@ footer .r{margin-left:auto}
         <p>Most content studios can light a plate. Fewer can tell you the plate is wrong.</p>
       </div>
       <div data-block>
-        <img data-asset src="images/production/chef-pass.jpg" alt="A chef finishing a plate on the pass under warm service light" width="800" height="1000">
+        <img data-asset src="images/production/chef-pass.webp" alt="A chef finishing a plate on the pass under warm service light" width="800" height="1000">
       </div>
     </div>
   </section>
@@ -474,6 +475,11 @@ footer .r{margin-left:auto}
 
     // Grids gated as a whole.
     [].forEach.call(document.querySelectorAll("[data-sec]"), function (sec) {
+      if (sec.querySelector("[data-block].ready")) sec.classList.add("ready");
+    });
+
+    // A whole section disappears rather than show a heading above nothing.
+    [].forEach.call(document.querySelectorAll("[data-sechide]"), function (sec) {
       if (sec.querySelector("[data-block].ready")) sec.classList.add("ready");
     });
   }
