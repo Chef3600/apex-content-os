@@ -29,8 +29,8 @@
       "path": "production/lens-detail.webp",
       "slot": "craft",
       "designation": "CONCEPT",
-      "status": "PENDING",
-      "qc": null,
+      "status": "LIVE",
+      "qc": 92,
       "alt": "Macro detail of a cinema lens aperture ring and front element",
       "brief": "Macro of a cinema prime lens: aperture ring, focus marks, front element catching a warm highlight. Bright, clean, premium. Shallow depth of field. No text, no logos."
     },
@@ -65,8 +65,8 @@
       "pair": "packaged-food",
       "side": "before",
       "designation": "CONCEPT",
-      "status": "PENDING",
-      "qc": null,
+      "status": "LIVE",
+      "qc": 88,
       "alt": "Concept: an unbranded jar shot flat on a countertop, before art direction",
       "brief": "Deliberately ORDINARY. An unbranded jar with a BLANK cream label on a cluttered kitchen counter, flat overhead light, harsh small-source shadow, dull color. Phone-camera look. Label must stay blank - never invent a brand."
     },
@@ -77,8 +77,8 @@
       "pair": "packaged-food",
       "side": "after",
       "designation": "CONCEPT",
-      "status": "PENDING",
-      "qc": null,
+      "status": "LIVE",
+      "qc": 90,
       "alt": "Concept: the same jar directed as a campaign-ready packaged-food hero",
       "brief": "Same jar, BLANK label preserved, fully directed. Static camera, controlled specular on glass, warm key with a cool rim, fresh ingredient supporting cast, wet slate or warm stone ground. Premium packaged-goods hero. Label stays blank."
     },
