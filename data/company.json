@@ -9,10 +9,29 @@
   "phoneE164": "+1-702-480-9198",
   "phoneHref": "tel:+17024809198",
   "primaryCategory": "Marketing Agency",
-  "additionalCategories": ["Photographer", "Commercial Photographer", "Video Production Service"],
+  "additionalCategories": [
+    "Photographer",
+    "Commercial Photographer",
+    "Video Production Service"
+  ],
   "businessType": "Service-area business",
-  "serviceAreas": ["Las Vegas, NV", "Henderson, NV", "North Las Vegas, NV", "Summerlin, NV"],
-  "hours": { "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "09:00", "closes": "18:00" },
+  "serviceAreas": [
+    "Las Vegas, NV",
+    "Henderson, NV",
+    "North Las Vegas, NV",
+    "Summerlin, NV"
+  ],
+  "hours": {
+    "days": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday"
+    ],
+    "opens": "09:00",
+    "closes": "18:00"
+  },
   "status": {
     "_comment": "Measured, not assumed. Update only with evidence.",
     "websiteLive": false,
@@ -21,7 +40,10 @@
     "emailEvidence": "2026-09-13: live test bounced 554 5.7.1 Relay access denied from eforward1.registrar-servers.com",
     "googleDomainVerified": false,
     "googleTxtPublished": false,
-    "publicUrl": null
+    "publicUrl": null,
+    "formProvider": "Web3Forms",
+    "formConfigured": false,
+    "primaryCta": "https://apexcontentstudio.online/start-a-project.html"
   },
   "workspace": {
     "_comment": "The existing Google Workspace is on a DIFFERENT domain. apexcontentstudio.online is to be added to it as a user alias domain.",

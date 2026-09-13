@@ -25,6 +25,7 @@ The table below mirrors that file.
 | Phone | **(702) 480-9198** |
 | Email | hello@apexcontentstudio.online |
 | Website | https://apexcontentstudio.online **- NOT LIVE YET. See below.** |
+| Primary CTA | https://apexcontentstudio.online/start-a-project.html |
 | Business type | Service-area business (no storefront shown) |
 | Service areas | Las Vegas, Henderson, North Las Vegas, Summerlin |
 | Hours | Monday-Friday, 9:00 AM - 6:00 PM |
@@ -149,6 +150,13 @@ publish.
 **Caption every one as concept or spec work where it is.** Do not caption a
 spec frame as a client job.
 
+### The website link
+
+Point the Google profile's website field at the home page, but use
+`/start-a-project.html` as the link on **Posts** and in the **Services**
+descriptions. A local-search visitor is high intent; the form is a shorter path
+than the home page.
+
 ### Posts
 
 One a week is enough and more than most competitors manage. Rotate: a finished
@@ -186,7 +194,10 @@ into a maybe. That is its entire job.
 Photography · Short-Form Video · Brand Photography · Campaign Creative ·
 Content Production · Creative Direction · Multi-Location Content
 
-**Custom button:** "Visit website" pointing at the site.
+**Custom button:** "Visit website" pointing at **the project request form**,
+`/start-a-project.html`, not the home page. Someone who clicks a CTA on a
+company page has already decided to make contact - send them to the form, not
+back to browsing.
 
 ### Content cadence - two posts a week, and that is a ceiling not a floor
 
