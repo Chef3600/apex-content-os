@@ -131,6 +131,7 @@ const bottleneck =
 
 console.log(`\n  BOTTLENECK: ${bottleneck[0]}`);
 console.log(`    ${bottleneck[1]}`);
+if (contacted > 0) console.log(`\n  node tools/pipeline.mjs learn     what the market has said so far`);
 
 if (process.argv.includes('--week')) {
   console.log('\n  THIS WEEK - see docs/30-day-plan.md');

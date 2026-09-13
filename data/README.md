@@ -29,6 +29,32 @@ Driven by `tools/pipeline.mjs`. Do not hand-edit unless fixing a typo.
 | `response`, `respondedAt`, `replyText` | **`replyText` verbatim.** Their exact words are the most valuable field in this file. |
 | `nextAction`, `notes` | What happens next, and why a row died |
 
+## The market experiment
+
+The first 25 contacted accounts are an experiment, not just a list. Three
+fields make it readable, and all three are lost forever if not captured at the
+moment they happen:
+
+| Field | Set by | Why |
+|---|---|---|
+| `angle` | `msg` - automatically | Which message was put in front of them |
+| `objection` | `log no <id> "..." --why=<tag>` | Why a loss died, in a countable vocabulary |
+| `signal` / `signalSource` | seeding or `set` | Whether a published reason to write existed |
+
+Objection tags: `price` `timing` `have-someone` `no-need` `no-proof`
+`no-decision` `scope` `other`. Free text alone cannot be counted, and a count
+is the entire point - after thirty losses the company knows whether it has a
+price problem, a timing problem or a proof problem. The verbatim is kept too.
+
+```
+node tools/pipeline.mjs learn
+```
+
+Cuts the sends by vertical, lane, signal and message, and lists why the losses
+died. Every cut is suppressed below 5 in a bucket and the whole readout is
+labeled not-decision-grade below 30 sends - a 100% reply rate off one send is
+not a finding.
+
 ## Reading the rates
 
 Under 10 sends in a bucket: no rate is shown. Rates move several points per

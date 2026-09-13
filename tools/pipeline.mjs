@@ -20,6 +20,7 @@
  *   node tools/pipeline.mjs add "Company" [tier] ["contact"]
  *   node tools/pipeline.mjs add-warm <file>     bulk warm capture, one per line
  *   node tools/pipeline.mjs list [STATE|industry|p1|a|b|c|signals]
+ *   node tools/pipeline.mjs learn              what the market actually said
  *   node tools/pipeline.mjs report
  *   node tools/pipeline.mjs selftest             end-to-end, on a temp copy
  *
@@ -42,6 +43,20 @@ const STATES = ['NEW', 'VERIFY', 'QUALIFIED', 'DISQUALIFIED', 'CONTACTED',
                 'REPLIED', 'MEETING', 'PROPOSAL', 'WON', 'LOST'];
 const OPEN_STATES = ['QUALIFIED', 'CONTACTED', 'REPLIED', 'MEETING', 'PROPOSAL'];
 
+/* Why a deal died, in a fixed vocabulary. Free text cannot be counted, and a
+ * count is the whole point - after thirty of these the company knows whether
+ * it has a price problem, a timing problem or a proof problem. */
+const OBJECTIONS = {
+  price: 'Too expensive, or no budget for it',
+  timing: 'Not now - later, next quarter, after something else',
+  'have-someone': 'Already have a photographer, agency or in-house',
+  'no-need': 'Do not believe they need it',
+  'no-proof': 'Wanted client work or references Apex does not have yet',
+  'no-decision': 'Went quiet, or could not get a decision made',
+  scope: 'Wanted something Apex does not do',
+  other: 'Something else - see the verbatim',
+};
+
 const load = () => JSON.parse(readFileSync(DB, 'utf8'));
 const save = d => writeFileSync(DB, JSON.stringify(d, null, 2) + '\n');
 const today = () => new Date().toISOString().slice(0, 10);
@@ -50,7 +65,10 @@ const pad = (s, n) => String(s ?? '').slice(0, n).padEnd(n);
 const rule = (n = 78) => console.log('-'.repeat(n));
 
 const db = load();
-const [, , cmd = 'next', ...rest] = process.argv;
+const rawArgs = process.argv.slice(2);
+const whyArg = rawArgs.find(a => a.startsWith('--why='));
+const why = whyArg ? whyArg.slice(6) : '';
+const [cmd = 'next', ...rest] = rawArgs.filter(a => !a.startsWith('--why='));
 const find = id => {
   const r = db.find(x => x.id === id) || db.find(x => x.company.toLowerCase() === String(id).toLowerCase());
   if (!r) { console.error(`no prospect "${id}"`); process.exit(1); }
@@ -223,6 +241,10 @@ case 'msg': {
   if (key === 'signal' && !(r.signal && r.signalSource))
     die(`${r.company} has no sourced signal. That message opens on one.\n  node tools/pipeline.mjs set ${r.id} signalSource "where you read it"`);
   const { t, body, subject, missing } = render(r, key);
+  // Record which angle was put in front of them. Without this the market
+  // experiment cannot answer "which message works", and the answer is not
+  // recoverable later from anything else on the row.
+  if (r.angle !== key) { r.angle = key; save(db); }
   console.log('');
   rule();
   console.log(`  ${key}   ->   ${r.company}   (${t.channel})`);
@@ -300,8 +322,11 @@ case 'log': {
     case 'no': case 'decline': case 'declined':
       r.state = 'LOST'; r.response = 'declined'; r.respondedAt = today();
       r.replyText = text; r.followupAt = '';
+      if (why && !OBJECTIONS[why]) die(`--why must be one of: ${Object.keys(OBJECTIONS).join(' ')}`);
+      r.objection = why || '';
       r.nextAction = 'Leave 90 days. Then it may be re-sourced.';
       console.log(`${r.company}: LOST - declined. Logged verbatim.`);
+      if (!why) console.log(`  No reason recorded. Add one - it is the only thing a loss is worth:\n    --why=${Object.keys(OBJECTIONS).join(' | ')}`);
       break;
     case 'bounce': case 'bounced':
       r.state = 'DISQUALIFIED'; r.email = ''; r.emailSource = '';
@@ -427,11 +452,14 @@ case 'won': {
 }
 case 'lost': {
   const r = find(rest[0]);
+  if (why && !OBJECTIONS[why]) die(`--why must be one of: ${Object.keys(OBJECTIONS).join(' ')}`);
   r.state = 'LOST'; r.followupAt = '';
+  r.objection = why || r.objection || '';
   r.notes = `LOST ${today()}: ${rest[1] || ''}`;
   r.nextAction = 'Leave 90 days.';
   save(db);
-  console.log(`${r.company}: LOST - ${rest[1] || ''}`);
+  console.log(`${r.company}: LOST${why ? ' (' + why + ')' : ''} - ${rest[1] || ''}`);
+  if (!why) console.log(`  Add --why=<${Object.keys(OBJECTIONS).join('|')}> so the loss teaches something.`);
   break;
 }
 
@@ -545,6 +573,70 @@ case 'report': {
   break;
 }
 
+/* ---------------------------------------------------------------- LEARN
+ * The first 25 contacted accounts are a market experiment, not just a list.
+ * This reads back what the market actually said, cut the ways that change a
+ * decision: which vertical answers, which size, which signal, which message,
+ * and why the losses died. Every cut is suppressed below the sample size at
+ * which it would mislead - a 100% reply rate off one send is not a finding. */
+case 'learn': {
+  const sent = db.filter(r => r.contactedAt);
+  const replied = r => r.response === 'replied';
+  const MIN = 5;
+
+  console.log(`\n  WHAT THE MARKET SAID   ${sent.length} contacted\n`);
+  if (!sent.length) {
+    console.log('  Nothing has been sent, so the market has said nothing.');
+    console.log('  This becomes the most valuable command in the repo at send 30.\n');
+    break;
+  }
+
+  const cut = (label, keyFn) => {
+    const groups = {};
+    for (const r of sent) {
+      const k = keyFn(r) || 'unrecorded';
+      (groups[k] ||= { n: 0, replies: 0, won: 0 });
+      groups[k].n++;
+      if (replied(r)) groups[k].replies++;
+      if (r.state === 'WON') groups[k].won++;
+    }
+    const rows = Object.entries(groups).sort((a, b) => b[1].n - a[1].n);
+    console.log(`  BY ${label}`);
+    for (const [k, g] of rows) {
+      const rate = g.n >= MIN ? `${(g.replies / g.n * 100).toFixed(0)}%` : `- (${g.n} sent, needs ${MIN})`;
+      console.log(`    ${pad(k, 26)}${pad(g.n + ' sent', 11)}${pad(g.replies + ' replied', 12)}${pad(rate, 14)}${g.won ? g.won + ' WON' : ''}`);
+    }
+    console.log('');
+  };
+
+  cut('VERTICAL', r => r.industry);
+  cut('LANE', r => 'lane ' + r.lane + (r.lane === 'A' ? ' (1 site)' : r.lane === 'B' ? ' (2-9)' : ' (10+)'));
+  cut('SIGNAL', r => (r.signal && r.signalSource) ? 'had a sourced signal' : 'no signal');
+  cut('MESSAGE', r => r.angle);
+
+  const lost = db.filter(r => r.state === 'LOST');
+  console.log(`  WHY ${lost.length} LOSS(ES) DIED`);
+  if (!lost.length) console.log('    None yet.');
+  else {
+    const byWhy = {};
+    for (const r of lost) byWhy[r.objection || 'unrecorded'] = (byWhy[r.objection || 'unrecorded'] || 0) + 1;
+    for (const [k, n] of Object.entries(byWhy).sort((a, b) => b[1] - a[1]))
+      console.log(`    ${pad(k, 20)}${pad(n, 5)}${OBJECTIONS[k] || ''}`);
+    const unrec = byWhy.unrecorded || 0;
+    if (unrec) console.log(`\n    ${unrec} loss(es) have no reason recorded. Those taught nothing.`);
+  }
+
+  console.log('');
+  if (sent.length < 30) {
+    console.log(`  ${sent.length} sends. Nothing here is decision-grade yet - 30 is where a cut`);
+    console.log('  stops moving double digits on one more reply. Read it, do not act on it.\n');
+  } else {
+    console.log('  30+ sends. These cuts are now worth acting on: double down on the');
+    console.log('  vertical, lane and message that answer, and cut the ones that do not.\n');
+  }
+  break;
+}
+
 /* ------------------------------------------------------------ SELFTEST */
 case 'selftest': {
   const tmp = join(root, 'data', '.selftest.json');
@@ -637,6 +729,24 @@ case 'selftest': {
   let badLoc = false;
   try { run('set', 'T3', 'locations', 'lots'); } catch { badLoc = true; }
   checks.push(['non-numeric location count is refused', badLoc, String(badLoc)]);
+
+  // Losses must teach something, and free text cannot be counted.
+  writeFileSync(tmp, JSON.stringify([{ ...fixture[0], id: 'T4', company: 'Lost Co',
+    state: 'CONTACTED', industry: 'bakery', angle: 'cold-email', lane: 'A',
+    contactedAt: '2026-09-01', observation: 'seen' }], null, 2));
+  run('log', 'T4', 'no', 'we already have someone', '--why=have-someone');
+  const st4 = JSON.parse(readFileSync(tmp, 'utf8'))[0];
+  checks.push(['objection tag recorded on a loss', st4.objection === 'have-someone', st4.objection]);
+  checks.push(['their words kept verbatim alongside it', st4.replyText === 'we already have someone', st4.replyText]);
+  let badWhy = false;
+  try { run('log', 'T4', 'no', 'x', '--why=made-up-reason'); } catch { badWhy = true; }
+  checks.push(['an invented objection tag is refused', badWhy, String(badWhy)]);
+  const learn = run('learn');
+  checks.push(['learn cuts by vertical, lane, signal and message',
+    ['BY VERTICAL', 'BY LANE', 'BY SIGNAL', 'BY MESSAGE'].every(h => learn.includes(h)), 'all four']);
+  checks.push(['learn suppresses rates below the sample size',
+    learn.includes('needs 5') || learn.includes('do not act on it'), 'suppressed']);
+  checks.push(['learn names the objection', learn.includes('have-someone'), 'named']);
 
   console.log('\n  PIPELINE SELF-TEST\n');
   let fail = 0;
