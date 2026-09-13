@@ -12,6 +12,11 @@ without owner authorization.
 
 ## CANONICAL IDENTITY - copy from here, never retype from memory
 
+**`data/company.json` is the machine-readable source of truth, and
+`tools/verify-site.mjs` asserts the website matches it.** Change a value there
+and the verifier fails until the site agrees, so the two cannot silently drift.
+The table below mirrors that file.
+
 | Field | Value |
 |---|---|
 | Business name | **Apex Content Studio** |

@@ -1,0 +1,33 @@
+{
+  "_comment": "CANONICAL COMPANY IDENTITY. One source of truth. tools/verify-site.mjs asserts the website matches this file, so the two cannot drift. Change a value here and the verifier fails until the site agrees.",
+  "name": "Apex Content Studio",
+  "legalEntity": "Apex Hospitality Group LLC",
+  "url": "https://apexcontentstudio.online",
+  "origin": "https://apexcontentstudio.online",
+  "email": "hello@apexcontentstudio.online",
+  "phone": "(702) 480-9198",
+  "phoneE164": "+1-702-480-9198",
+  "phoneHref": "tel:+17024809198",
+  "primaryCategory": "Marketing Agency",
+  "additionalCategories": ["Photographer", "Commercial Photographer", "Video Production Service"],
+  "businessType": "Service-area business",
+  "serviceAreas": ["Las Vegas, NV", "Henderson, NV", "North Las Vegas, NV", "Summerlin, NV"],
+  "hours": { "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "09:00", "closes": "18:00" },
+  "status": {
+    "_comment": "Measured, not assumed. Update only with evidence.",
+    "websiteLive": false,
+    "domainConnected": false,
+    "emailReceives": false,
+    "emailEvidence": "2026-09-13: live test bounced 554 5.7.1 Relay access denied from eforward1.registrar-servers.com",
+    "googleDomainVerified": false,
+    "googleTxtPublished": false,
+    "publicUrl": null
+  },
+  "workspace": {
+    "_comment": "The existing Google Workspace is on a DIFFERENT domain. apexcontentstudio.online is to be added to it as a user alias domain.",
+    "primaryDomain": "apexhospitalitygrouplvcom.com",
+    "ownerAccount": "larryhillsjr@apexhospitalitygrouplvcom.com",
+    "plannedRelationship": "user alias domain",
+    "verificationTxt": "google-site-verification=E_cQb7PmJqiSDwQD1cPd7DZWZoYh1EPAv4FeL5GHi3Q"
+  }
+}

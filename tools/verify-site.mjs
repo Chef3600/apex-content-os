@@ -113,6 +113,32 @@ for (const [f, needle] of [['robots.txt', 'Sitemap:'], ['sitemap.xml', '<loc>']]
 }
 
 /* ---------------------------------------------------------------- 4 */
+/* The website and data/company.json must agree. An address or a phone number
+ * that differs between the site, the Google profile and LinkedIn is a real
+ * local-SEO penalty and it only ever happens because the facts live in two
+ * places. They live in one place, and this asserts it. */
+console.log('\n=== 3b . canonical identity ===');
+const companyPath = join(root, 'data', 'company.json');
+if (!existsSync(companyPath)) bad('data/company.json is missing - the identity has no source of truth');
+else {
+  const c = JSON.parse(readFileSync(companyPath, 'utf8'));
+  const ident = [
+    ['email', c.email, html.includes(c.email)],
+    ['phone, displayed', c.phone, html.includes(c.phone)],
+    ['phone, tel: link', c.phoneHref, html.includes(c.phoneHref)],
+    ['phone, structured data', c.phoneE164, html.includes(c.phoneE164)],
+    ['canonical origin', c.origin, (canonical || '').startsWith(c.origin)],
+    ['business name', c.name, html.includes(c.name)],
+    ['legal entity', c.legalEntity, html.includes(c.legalEntity)],
+  ];
+  for (const [label, value, present] of ident)
+    present ? ok(`${label} matches company.json (${value})`)
+            : bad(`${label} in company.json is "${value}" but the site does not carry it`);
+  const areasOk = c.serviceAreas.every(a => html.includes(a.replace(', NV', '')));
+  areasOk ? ok(`all ${c.serviceAreas.length} service areas present`)
+          : bad('a service area in company.json is missing from the site');
+}
+
 console.log('\n=== 4 . markup hygiene ===');
 const imgTags = [...html.matchAll(/<img\b[^>]*>/g)].map(m => m[0]);
 const noAlt = imgTags.filter(t => !/\balt=/.test(t));

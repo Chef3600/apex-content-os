@@ -111,6 +111,61 @@ saving several rows at once instead of one at a time with the green checkmark.
 
 ---
 
+## EMAIL ARCHITECTURE - the decision, and why
+
+**Add `apexcontentstudio.online` to the existing Workspace as a USER ALIAS
+DOMAIN. Not a secondary domain.**
+
+Google's own documentation makes this a settled question rather than a
+preference:
+
+| | User alias domain | Secondary domain |
+|---|---|---|
+| Existing users get an address on the new domain | **Automatically, all of them** | No |
+| Cost | **None.** Up to 20 alias domains, no change to the bill | A **paid license per user** created on it |
+| Setup work per user | None | Create and license every account by hand |
+| Best for | One company, two names | Two companies with different staff |
+
+Apex is one operator. A secondary domain would mean paying a second license to
+recreate an identity that an alias domain grants for free.
+
+### What the alias domain produces
+
+| Address | How it exists | Cost |
+|---|---|---|
+| `larryhillsjr@apexcontentstudio.online` | Mirrored automatically by the alias domain | $0 |
+| `hello@apexcontentstudio.online` | Add `hello` as a **user alias** on the existing account; the alias domain then mirrors it | $0 |
+
+Google allows up to 30 user aliases per account, so `hello@` costs nothing and
+needs no second mailbox. Both addresses land in the existing inbox.
+
+**Sending from them** needs one more step Google documents explicitly: Gmail ->
+Settings -> Accounts and Import -> "Send mail as" -> add the address. No SMTP
+configuration - Workspace recognizes its own alias domains.
+
+### The one trade-off, stated plainly
+
+An alias domain **mirrors**. Every user on the Workspace automatically gets the
+matching address at apexcontentstudio.online, and there is no way to have a
+person exist at one domain but not the other. For a solo operator that is a
+feature. If Apex Content Studio ever hires staff who should *not* have
+addresses at the hospitality domain, that is the day to convert to a secondary
+domain - not before.
+
+### The emergency bridge - documented separately, on purpose
+
+**Namecheap email forwarding is a bridge, not the architecture.** It takes two
+minutes, costs nothing, and makes `hello@` work today while Workspace
+verification is still blocked on a DNS record that will not save.
+
+It is a bridge because it only forwards - mail cannot be *sent* from
+`hello@apexcontentstudio.online`, so replies to a prospect would come from a
+different address than the one they wrote to. That is survivable for a week and
+corrosive as a permanent setup.
+
+**It also dies the instant MX changes to Google.** That is expected and correct:
+the bridge exists to be replaced.
+
 ## THE SEQUENCE - dependency order, with the reasoning
 
 **Two of these are independent and should run in parallel.** The Vercel deploy
@@ -118,7 +173,8 @@ needs no DNS at all; waiting on DNS to deploy wastes days for nothing.
 
 ### Track A - email, and it is the urgent one
 
-**A1. Create the `hello@` forwarder. Two minutes, free, works today.**
+**A1. Create the `hello@` forwarder - THE BRIDGE, not the architecture. Two
+minutes, free, works today.**
 
 Namecheap -> Domain List -> Manage -> **Domain** tab -> **Redirect Email** ->
 Add Forwarder:
@@ -182,12 +238,32 @@ already removed in C1.
 record types, so they should be - but check, because this is the step where
 email gets broken by accident.
 
-### Track E - Google Workspace mail on this domain, LAST and optional
+### Track E - the real architecture, after C4
 
-Only after C4 succeeds, and only if a real mailbox is wanted instead of
-forwarding. Add apexcontentstudio.online as a domain in the Workspace admin
-console, then change MX to `smtp.google.com` and SPF to
-`v=spf1 include:_spf.google.com ~all`.
+Only after Google verification succeeds.
+
+**E1.** Workspace Admin -> Account -> Domains -> Manage domains -> **Add a
+domain** -> `apexcontentstudio.online` -> choose **user alias domain**.
+
+**E2.** Add `hello` as a user alias on `larryhillsjr@apexhospitalitygrouplvcom.com`
+(Admin -> Directory -> Users -> the account -> Alternate email addresses).
+
+**E3.** Change MX to Google:
+
+| Type | Host | Value | Priority |
+|---|---|---|---|
+| MX | `@` | `smtp.google.com` | 1 |
+
+Delete all five `eforward*.registrar-servers.com` records at the same time.
+
+**E4.** Change SPF from `v=spf1 include:spf.efwd.registrar-servers.com ~all` to
+**`v=spf1 include:_spf.google.com ~all`**. One SPF record only - two is a
+misconfiguration that fails validation.
+
+**E5.** Gmail -> Settings -> Accounts and Import -> "Send mail as" -> add both
+`hello@` and `larryhillsjr@` at apexcontentstudio.online.
+
+**E6.** Test receive AND send. Neither is verified without evidence.
 
 > **DO NOT CHANGE MX BEFORE THE DOMAIN IS ADDED IN WORKSPACE.** Pointing MX at
 > Google for a domain Google does not yet host means mail is accepted by
