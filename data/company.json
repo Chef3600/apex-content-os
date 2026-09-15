@@ -2,9 +2,9 @@
   "_comment": "CANONICAL COMPANY IDENTITY. One source of truth. tools/verify-site.mjs asserts the website matches this file, so the two cannot drift. Change a value here and the verifier fails until the site agrees.",
   "name": "Apex Content Studio",
   "legalEntity": "Apex Hospitality Group LLC",
-  "url": "https://apexcontentstudio.online",
-  "origin": "https://apexcontentstudio.online",
-  "email": "hello@apexcontentstudio.online",
+  "url": "https://apexhospitalitygrouplv.org",
+  "origin": "https://apexhospitalitygrouplv.org",
+  "email": "hello@apexhospitalitygrouplv.org",
   "phone": "(702) 480-9198",
   "phoneE164": "+1-702-480-9198",
   "phoneHref": "tel:+17024809198",
@@ -43,10 +43,10 @@
     "publicUrl": null,
     "formProvider": "Web3Forms",
     "formConfigured": false,
-    "primaryCta": "https://apexcontentstudio.online/start-a-project.html"
+    "primaryCta": "https://apexhospitalitygrouplv.org/start-a-project.html"
   },
   "workspace": {
-    "_comment": "The existing Google Workspace is on a DIFFERENT domain. apexcontentstudio.online is to be added to it as a user alias domain.",
+    "_comment": "Primary domain is apexhospitalitygrouplv.org. hello@ routes via Namecheap email forwarding (SPF already present) to the Google Workspace inbox.",
     "primaryDomain": "apexhospitalitygrouplvcom.com",
     "ownerAccount": "larryhillsjr@apexhospitalitygrouplvcom.com",
     "plannedRelationship": "user alias domain",
