@@ -14,7 +14,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const siteDir = join(root, 'site');
 const htmlPath = join(siteDir, 'index.html');
 const html = readFileSync(htmlPath, 'utf8');
-const ORIGIN = 'https://apexcontentstudio.online';
+const ORIGIN = 'https://apexhospitalitygrouplv.org';
 
 let fails = 0, warns = 0;
 const ok = m => console.log(`  ok    ${m}`);
@@ -310,12 +310,12 @@ else {
     else bad('honeypot spam trap is missing');
     if (/role="alert"/.test(fhtml)) ok('validation errors announced (role=alert)');
     else bad('validation errors are not announced to assistive tech');
-    if (fhtml.includes('rel="canonical" href="https://apexcontentstudio.online/start-a-project.html"'))
+    if (fhtml.includes('rel="canonical" href="https://apexhospitalitygrouplv.org/start-a-project.html"'))
       ok('canonical set on the form page');
     else bad('form page canonical is missing or wrong');
     if (/<link rel="icon"/.test(fhtml) && /og:image/.test(fhtml)) ok('favicon and social card on the form page');
     else bad('form page is missing favicon or social tags');
-    if (fhtml.includes('mailto:hello@apexcontentstudio.online')) ok('email fallback on the form page');
+    if (fhtml.includes('mailto:hello@apexhospitalitygrouplv.org')) ok('email fallback on the form page');
     else bad('form page has no email fallback');
     if (fhtml.includes('tel:+17024809198')) ok('phone fallback on the form page');
     else bad('form page has no phone fallback');
