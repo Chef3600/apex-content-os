@@ -143,6 +143,14 @@ else {
         `Every "Email Apex" link is currently a dead end. Fix the mailbox or change the address.`);
   } else if (c.status && c.status.emailReceives === true) {
     ok('company.json records the mailbox as verified to receive');
+  } else {
+    /* Unknown is not the same as fine. An address can be published, correctly
+     * spelled and pointed at a live MX, and still drop every lead - so an
+     * untested mailbox warns rather than passing quietly. */
+    wrn(`MAILBOX UNVERIFIED: ${c.email} is published on the site but has never been ` +
+        `confirmed to deliver into a real inbox. ` +
+        `Evidence: ${c.status && c.status.emailEvidence || 'see docs/dns-audit.md'}. ` +
+        `Send a live test and read the destination inbox before any outreach.`);
   }
 
   const areasOk = c.serviceAreas.every(a => html.includes(a.replace(', NV', '')));
