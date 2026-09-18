@@ -271,6 +271,29 @@ nav .links a:hover{color:var(--gold-ink)}
 .cta-alt a:hover{border-bottom-color:var(--gold-ink)}
 .cta-alt span{color:var(--ink-soft);font-size:.82rem}
 
+/* ---------- launch end-card ----------
+   Charcoal, so it closes the page as one dark block with the footer. Eyebrow
+   uses brand gold rather than the darker text gold, which measures 5.45:1 on
+   this background where --gold-ink does not clear AA. Type only: no image
+   slot, so nothing here can ever render empty. */
+.launch{background:var(--char);color:var(--bone);text-align:center}
+.launch .eyebrow{color:var(--gold)}
+.launch h2{color:var(--bone);margin-top:18px}
+.launch .date{display:block;color:var(--gold);font-family:var(--display);
+  font-size:clamp(28px,4.4vw,52px);line-height:1.1;margin-top:6px}
+.launch .services{margin:clamp(30px,4vw,46px) auto 0;padding:0;list-style:none;
+  display:flex;flex-wrap:wrap;justify-content:center;gap:10px 26px;
+  font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;
+  color:var(--bone-dim);max-width:60ch}
+.launch .booking{margin:clamp(28px,3.6vw,40px) auto 0;max-width:52ch;
+  font-size:15.5px;line-height:1.6;color:var(--bone-dim)}
+.launch .closer{margin:clamp(30px,4vw,44px) auto 0;font-family:var(--display);
+  font-size:clamp(19px,2.3vw,26px);color:var(--bone)}
+.launch .cta{flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;
+  margin-top:clamp(28px,3.6vw,38px)}
+.launch .btn.ghost{color:var(--bone);border-color:rgba(245,241,232,.34)}
+.launch .btn.ghost:hover{color:var(--gold);border-color:var(--gold);background:none}
+
 /* ---------- footer ---------- */
 footer{background:var(--char);color:var(--bone-dim);padding:50px 0;font-size:13.5px}
 footer .g{display:flex;gap:20px;flex-wrap:wrap;align-items:center}
@@ -298,6 +321,7 @@ footer .r{margin-left:auto}
     </a>
     <div class="links">
       <a href="#work">Work</a>
+      <a href="#industries">Industries</a>
       <a href="#craft">The Studio</a>
       <a href="#method">Method</a>
       <a href="#services">Services</a>
@@ -591,6 +615,31 @@ footer .r{margin-left:auto}
           <a href="tel:+17024809198">Call (702) 480-9198</a><br>
           <span>Mon&ndash;Fri, 9am&ndash;6pm &middot; Las Vegas, Henderson, North Las Vegas, Summerlin</span></p>
       </div>
+    </div>
+  </section>
+
+  <!-- ============ LAUNCH ============ -->
+  <section class="launch" id="launch">
+    <div class="wrap">
+      <p class="eyebrow">Apex Content Studio &middot; Coming Soon</p>
+      <h2>Launching<span class="date">October 1, 2026</span></h2>
+
+      <ul class="services">
+        <li>Commercial Photography</li>
+        <li>Video</li>
+        <li>Social Content</li>
+        <li>Advertising Creative</li>
+      </ul>
+
+      <p class="booking">The studio is open for bookings now, ahead of the public launch.
+        Send the product, the channel and the deadline and we will scope it directly.</p>
+
+      <div class="cta">
+        <a class="btn" href="start-a-project.html">Start a Project</a>
+        <a class="btn ghost" href="#work">View Our Work</a>
+      </div>
+
+      <p class="closer">Content that drives business.</p>
     </div>
   </section>
 </main>
