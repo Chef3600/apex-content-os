@@ -143,6 +143,14 @@ else {
         `Every "Email Apex" link is currently a dead end. Fix the mailbox or change the address.`);
   } else if (c.status && c.status.emailReceives === true) {
     ok('company.json records the mailbox as verified to receive');
+  } else {
+    /* Unknown is not the same as fine. An address can be published, correctly
+     * spelled and pointed at a live MX, and still drop every lead - so an
+     * untested mailbox warns rather than passing quietly. */
+    wrn(`MAILBOX UNVERIFIED: ${c.email} is published on the site but has never been ` +
+        `confirmed to deliver into a real inbox. ` +
+        `Evidence: ${c.status && c.status.emailEvidence || 'see docs/dns-audit.md'}. ` +
+        `Send a live test and read the destination inbox before any outreach.`);
   }
 
   const areasOk = c.serviceAreas.every(a => html.includes(a.replace(', NV', '')));
@@ -184,6 +192,15 @@ if (!/Apex Content Studio/i.test(stripped)) bad('"Apex Content Studio" not prese
 else ok('Apex Content Studio present');
 if (!/Apex Hospitality Group LLC/.test(stripped)) bad('legal entity missing');
 else ok('legal entity present');
+/* The launch date is a commitment a visitor may act on, so it carries its year
+ * every time it appears. A bare "October 1" reads as this year to a reader and
+ * as last year the moment the year turns. */
+const LAUNCH = 'October 1, 2026';
+if (!stripped.includes(LAUNCH)) bad(`launch date "${LAUNCH}" is not on the page`);
+else ok(`launch date present (${LAUNCH})`);
+const bareDate = [...stripped.matchAll(/October\s+1(?!\s*,\s*2026)(?![0-9])/g)];
+if (bareDate.length) bad(`${bareDate.length} bare "October 1" without the year - always write "${LAUNCH}"`);
+else ok('no "October 1" appears without its year');
 // Internal tooling must never surface to a customer, in copy OR metadata.
 const tools = html.match(/\b(Claude|Higgsfield|Runway|Midjourney|Sora|OpenAI|ChatGPT)\b/gi);
 if (tools) bad(`internal tool named publicly: ${[...new Set(tools)].join(', ')}`);

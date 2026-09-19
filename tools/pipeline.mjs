@@ -399,7 +399,7 @@ case 'proposal': {
     '{{product}}': r.product || '',
     '{{observation}}': sentence(r.observation),
     '{{opportunity}}': sentence(r.opportunity),
-    '{{email}}': 'hello@apexcontentstudio.online',
+    '{{email}}': 'hello@apexhospitalitygrouplv.org',
   };
   let doc = Object.entries(vals).reduce((a, [k, v]) => a.split(k).join(v), readFileSync(tpl, 'utf8'));
   // A proposal is the first thing a client reads with a price on it. An empty

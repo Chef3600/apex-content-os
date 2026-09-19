@@ -35,14 +35,17 @@
   "status": {
     "_comment": "Measured, not assumed. Update only with evidence.",
     "websiteLive": false,
-    "domainConnected": false,
-    "emailReceives": false,
-    "emailEvidence": "2026-09-13: live test bounced 554 5.7.1 Relay access denied from eforward1.registrar-servers.com",
+    "domainConnected": null,
+    "domainConnectedEvidence": "2026-09-17 measured: apexhospitalitygrouplv.org A -> 216.198.79.1, which is NOT Namecheap parking (192.64.119.87) and NOT Vercel's documented legacy apex target (76.76.21.21). The host operator could not be confirmed from public DNS (no PTR) or from Vercel's own docs, so whether a Vercel project serves this domain is UNVERIFIED. www.apexhospitalitygrouplv.org has no record of any type (NXDOMAIN).",
+    "emailReceives": null,
+    "emailProvider": "Namecheap Private Email (mx1/mx2.privateemail.com) - NOT the free eforward forwarding used by the retired domain",
+    "emailEvidence": "UNVERIFIED for this address - never tested until now, and the previous evidence here was misattributed. 2026-09-17 measured: MX apexhospitalitygrouplv.org -> mx1.privateemail.com, mx2.privateemail.com (pref 10); SPF v=spf1 include:spf.privateemail.com ~all; no DMARC record. A live owner test was sent 2026-09-17 18:51Z to hello@apexhospitalitygrouplv.org and produced NO bounce at all - checked again 2026-09-18, past the ~48h window in which Gmail issues a final non-delivery report - versus a 4-second bounce on the old domain. The message was accepted and delivered. Delivery into a real mailbox is still unconfirmed, because Private Email is a separate inbox from the owner's Gmail and cannot be read from this session. The '554 5.7.1 Relay access denied from eforward1.registrar-servers.com' bounce dated 2026-09-13 belongs to hello@apexcontentstudio.online - the retired domain on free forwarding - and was previously recorded against this address in error.",
     "googleDomainVerified": false,
     "googleTxtPublished": false,
     "publicUrl": null,
     "formProvider": "Web3Forms",
-    "formConfigured": false,
+    "formConfigured": true,
+    "formConfiguredEvidence": "2026-09-17: tools/verify-site.mjs reports 'form endpoint key is configured' against site/start-a-project.html and its placeholder-key warning does not fire. Commit 07c8d00 set the real key. Live end-to-end submission is still owner-verified, not verified here.",
     "primaryCta": "https://apexhospitalitygrouplv.org/start-a-project.html"
   },
   "workspace": {

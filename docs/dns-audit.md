@@ -279,3 +279,129 @@ misconfiguration that fails validation.
 - **Nameservers** - BasicDNS is correct and the editor is authoritative
 - No A record for `@` until Vercel names the value
 - No second CNAME on `www`
+
+---
+
+# ADDENDUM - 2026-09-17: the audit above is about the RETIRED domain
+
+**Read this before acting on anything above.** Everything above was measured on
+**2026-09-13 against `apexcontentstudio.online`.** The site has since moved to
+the canonical domain **`apexhospitalitygrouplv.org`**, and that domain has a
+**completely different mail architecture.** The conclusions above - free
+Namecheap forwarding, the missing `hello@` forwarder, the parked A record - do
+**not** describe the canonical domain.
+
+## VERIFIED - measured 2026-09-17 from public DNS (8.8.8.8, raw UDP/53)
+
+```
+apexhospitalitygrouplv.org
+  A      216.198.79.1
+  MX     10 mx1.privateemail.com
+         10 mx2.privateemail.com
+  TXT    v=spf1 include:spf.privateemail.com ~all
+  NS     pdns1.registrar-servers.com, pdns2.registrar-servers.com
+
+www.apexhospitalitygrouplv.org   NXDOMAIN - no record of any type
+_dmarc.apexhospitalitygrouplv.org                NXDOMAIN
+default._domainkey.apexhospitalitygrouplv.org    NXDOMAIN
+_vercel.apexhospitalitygrouplv.org               NXDOMAIN
+
+apexcontentstudio.online   unchanged from 2026-09-13
+  A      192.64.119.87  (Namecheap parking)
+  MX     eforward1/2/3 (10), eforward4 (15), eforward5 (20)
+  TXT    v=spf1 include:spf.efwd.registrar-servers.com ~all
+```
+
+### 1. Mail on the canonical domain is Namecheap PRIVATE EMAIL, not forwarding
+
+`mx1/mx2.privateemail.com` plus `include:spf.privateemail.com` is Namecheap's
+**paid mailbox** product. MX and SPF agree with each other - the mail
+configuration on this domain is **internally consistent and not obviously
+broken.** This is a different, and better, architecture than the bridge
+described above.
+
+Nameservers are still Namecheap BasicDNS, so the domain is in a Namecheap
+account and the Namecheap editor remains authoritative.
+
+### 2. The "554 Relay access denied" bounce was NEVER about this address
+
+Source: the owner's own Gmail. The 2026-09-13 test was sent to
+**`hello@apexcontentstudio.online`** and bounced in four seconds. That result
+was subsequently recorded in `data/company.json` against
+`hello@apexhospitalitygrouplv.org`, which was never tested. That
+misattribution has been corrected in `data/company.json`.
+
+### 3. Live test 2026-09-17 - the MX ACCEPTED the message
+
+A real message was sent 2026-09-17 18:51Z from
+`larryhillsjr@apexhospitalitygrouplvcom.com` to
+`hello@apexhospitalitygrouplv.org`, subject
+*"Owner delivery test - apexhospitalitygrouplv.org mailbox - 2026-09-17"*.
+
+**No bounce arrived within 13 minutes.** The comparison is the point: the old
+domain bounced in **four seconds**. A Private Email MX that rejects an unknown
+recipient does so at RCPT time, which produces a fast bounce. It did not.
+
+**Inference, not proof:** the message was accepted for delivery, which means
+`hello@` most likely exists as a mailbox or alias in the Private Email
+subscription.
+
+### 4. Why it still looks broken to the owner - the likely real answer
+
+**Private Email is a separate inbox.** It is not a forwarder. Mail accepted by
+`mx1.privateemail.com` lands in the Private Email mailbox at
+**privateemail.com**, *not* in the Google Workspace Gmail inbox on
+`apexhospitalitygrouplvcom.com`. An owner watching only Gmail would see
+nothing arrive and reasonably conclude the address was dead.
+
+**This is the single cheapest thing to check and it costs one login.**
+
+### 5. Two real gaps that are NOT the mailbox
+
+- **`www` does not exist.** `www.apexhospitalitygrouplv.org` is NXDOMAIN, so
+  anyone typing `www.` gets a DNS failure, not the site. Needs a record before
+  launch.
+- **No DMARC record.** Not a launch blocker, but with SPF already published,
+  adding `_dmarc` is a short, free deliverability win and should be done before
+  volume outreach.
+
+## NOT VERIFIED - stated as unknown on purpose
+
+- **What `216.198.79.1` is.** It is not Namecheap parking (`192.64.119.87`) and
+  not Vercel's documented legacy apex target (`76.76.21.21`). There is no PTR
+  record, and a search of Vercel's own documentation returned only the legacy
+  value. Whether a Vercel project serves this domain **could not be confirmed.**
+- **Whether the message in #3 reached a human-readable inbox.** Requires
+  reading the Private Email mailbox. Not possible from a Claude Code session.
+- **Whether `apexhospitalitygrouplv.org` sits in the same Namecheap account as
+  `apexcontentstudio.online`.** Namecheap's 2026-09-17 ICANN contact
+  verification notice lists **only `apexcontentstudio.online`**. That notice
+  lists only domains *pending verification*, so it is not evidence of absence.
+
+## URGENT AND UNRELATED - a suspension deadline nobody has actioned
+
+Namecheap emailed `larryhillsjr@apexhospitalitygrouplvcom.com` on
+**2026-09-17** (still unread at the time of this audit):
+
+> If you do not verify your contact information by **09/26/2026**, your domains
+> will be suspended.
+
+Listed domain: **`apexcontentstudio.online`**. This is ICANN registrant contact
+verification and it is a one-click link in that email. It does not touch the
+canonical domain, but a suspension would kill the old domain's DNS and any
+redirect built on it.
+
+## Vercel - re-tested 2026-09-17, unchanged
+
+| Call | Result |
+|---|---|
+| `list_projects` (team `chef3600's projects`) | `[]` |
+| `get_project apex-content-studio` | `404 Not Found` |
+| `get_project apex-content-os` | `404 Not Found` |
+| `get_project_deployment_protection apex-content-studio` | `404 Not Found` |
+
+The integration still cannot read this account's projects. **No third project
+was created and nothing was deployed** - the correct move is the dashboard,
+per `DEPLOY.md`. Note that the A record in #1 means *something* may already be
+serving this domain, so the dashboard should be inspected before any new
+project is created.
