@@ -232,6 +232,19 @@ nav .links a:hover{color:var(--gold-ink)}
 .ashape{height:clamp(112px,13vw,158px);max-width:100%;display:grid;place-items:center;
   background:var(--cream);border:1px solid var(--gold);border-radius:2px}
 .ashape span{font-family:var(--display);font-size:clamp(18px,2.2vw,28px);font-weight:600;color:var(--gold-ink);line-height:1}
+/* A video sits ON TOP of its ratio shape, never in place of it. The shape and its
+   label stay in the DOM, so a clip that fails to load leaves the original design
+   rather than a hole - NO EMPTY BOXES holds for video the same way it does for
+   images. The clip is revealed only once a frame has actually decoded. */
+.avid{position:relative;overflow:hidden}
+.avid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:0;transition:opacity .6s ease}
+.avid video.ready{opacity:1}
+.avid .tag{position:absolute;left:5px;bottom:5px;z-index:2;font-size:8px;font-weight:700;
+  letter-spacing:.04em;color:var(--bone);background:rgba(22,25,29,.72);border-radius:2px;
+  padding:2px 4px;opacity:0;transition:opacity .6s ease}
+.avid.live .tag{opacity:1}
+@media (prefers-reduced-motion:reduce){.avid video{transition:none}}
 .assets h3{font-family:var(--body);font-size:13px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin-top:18px}
 .assets p{font-size:14.5px;color:var(--ink-mid);margin-top:7px}
 
@@ -513,7 +526,7 @@ footer .r{margin-left:auto}
 
       <div class="assets">
         <article><div class="ashape" style="aspect-ratio:1/1"><span>1:1</span></div><h3>Product Hero</h3><p>The frame that has to carry the sale. Shot static, lit for the material, with the label legible at thumbnail size.</p></article>
-        <article><div class="ashape" style="aspect-ratio:9/16"><span>9:16</span></div><h3>Social Video</h3><p>Vertical, legible with sound off, hook in the first second. Cut from the same setup as the hero so the product reads identically.</p></article>
+        <article><div class="ashape avid" style="aspect-ratio:9/16"><span>9:16</span><span class="tag">CONCEPT</span><video data-asset muted loop playsinline preload="none" width="480" height="832" poster="videos/social-vertical-macro.jpg" aria-label="CONCEPT: vertical social cut - a cinema lens racks past a plated dish as steam rises"><source src="videos/social-vertical-macro.webm" type="video/webm"><source src="videos/social-vertical-macro.mp4" type="video/mp4"></video></div><h3>Social Video</h3><p>Vertical, legible with sound off, hook in the first second. Cut from the same setup as the hero so the product reads identically.</p></article>
         <article><div class="ashape" style="aspect-ratio:4/5"><span>4:5</span></div><h3>Ad Creative</h3><p>Paid variants built as a set, with negative space reserved so the copy never lands on the product.</p></article>
         <article><div class="ashape" style="aspect-ratio:3/2"><span>3:2</span></div><h3>Lifestyle Image</h3><p>The product in a real context: hands, table, service. Shot to make the thing feel used, not displayed.</p></article>
         <article><div class="ashape" style="aspect-ratio:16/9"><span>16:9</span></div><h3>Website Image</h3><p>Wide banners and section headers cropped from the same production, so the site and the ads agree.</p></article>
@@ -688,6 +701,50 @@ footer .r{margin-left:auto}
       if (sec.querySelector("[data-block].ready")) sec.classList.add("ready");
     });
   }
+
+  /* ---- VIDEO, same contract as images -------------------------------
+     Nothing is fetched until the clip is near the viewport, so the page's
+     first-visit weight is unchanged. A block is revealed only after a frame
+     has actually decoded; on any error the video is removed and the ratio
+     shape underneath is what the visitor keeps. Motion is opt-out: under
+     prefers-reduced-motion the clip is shown as a still poster and never
+     plays. */
+
+  var calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  [].forEach.call(document.querySelectorAll("video[data-asset]"), function (vid) {
+    var shell = vid.parentNode;
+
+    function show() {
+      vid.classList.add("ready");
+      if (shell) shell.classList.add("live");
+      if (!calm) {
+        var played = vid.play();
+        if (played && played.catch) played.catch(function () { /* autoplay refused: poster stands */ });
+      }
+    }
+
+    vid.addEventListener("loadeddata", show);
+    vid.addEventListener("error", function () {
+      if (vid.parentNode) vid.parentNode.removeChild(vid);
+    });
+
+    function load() {
+      if (vid.getAttribute("data-started")) return;
+      vid.setAttribute("data-started", "1");
+      vid.preload = "auto";
+      vid.load();
+    }
+
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { load(); io.disconnect(); } });
+      }, { rootMargin: "200px" });
+      io.observe(vid);
+    } else {
+      load();
+    }
+  });
 
   imgs.forEach(function (img) {
     if (img.complete) {
