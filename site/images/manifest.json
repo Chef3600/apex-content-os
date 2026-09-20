@@ -220,35 +220,5 @@
       "alt": "Concept: the same bottle directed as a campaign-ready consumer-product hero",
       "brief": "Same bottle WITH ITS PUMP CAP FITTED so the product matches the before frame, packaging COMPLETELY BLANK. Cream-to-blush gradient, crisp edge light, controlled reflection, negative space for copy. A first pass without the cap was rejected at QC 72 for breaking product continuity."
     }
-  ],
-  "_video": "Video assets. Paths are relative to site/ (not site/images/), because video lives at site/videos/. Same rules as images: a LIVE entry must exist on disk and carry a qc score from a real visual review. A clip with fabricated on-screen text is an automatic reject under the QC gate and never becomes LIVE.",
-  "videos": [
-    {
-      "id": "social-vertical-macro",
-      "path": "videos/social-vertical-macro.mp4",
-      "poster": "videos/social-vertical-macro.jpg",
-      "slot": "assets-9x16",
-      "designation": "CONCEPT",
-      "status": "LIVE",
-      "qc": 86,
-      "published": true,
-      "alt": "CONCEPT: vertical social cut - a cinema lens racks past a plated dish as steam rises",
-      "brief": "Vertical 9:16 b-roll. Cinema lens body in hard foreground, plated dish behind with live steam movement. No text, no logos, no faces, no on-screen UI. Silent - audio stripped for muted autoplay on the page.",
-      "qcNote": "Passes the gate: no text, no wordmarks, no fabricated UI, nothing to misread. Marked down from the 90s only on resolution - the source is 480x832, under the 1080x1920 that social placement wants. Fine small on the page; weak as a full-screen social deliverable. Shipped as VP9/WebM with an H.264/MP4 fallback: browsers take the first source they can decode, and VP9 is the smaller of the two for most visitors.",
-      "altPath": "videos/social-vertical-macro.webm"
-    },
-    {
-      "id": "apex-endcard",
-      "path": "../assets/video/apex-endcard.mp4",
-      "poster": "../assets/video/apex-endcard-poster.jpg",
-      "slot": "marketing-stinger",
-      "designation": "PRODUCTION",
-      "status": "LIVE",
-      "qc": 92,
-      "published": false,
-      "alt": "Apex end card: YOUR CONTENT ISN'T DEAD. IT JUST NEEDS APEX. / CONTENT THAT DRIVES BUSINESS.",
-      "brief": "2.1s gold-on-charcoal end card carrying the positioning line. Reusable outro for any future clip.",
-      "qcNote": "Cut from apex_video_01.mp4 at 12.95s. The rest of that file is rejected: seconds 5-12 carry fabricated on-screen text (a jar reading OWNTNGEET, an article reading NEOPTENG SHNT DEX) and fake social feeds - QC hard-fail 4 plus the ban on fake social screenshots. Only this tail is clean and correctly typeset. Lives outside site/ on purpose: tracked, not published."
-    }
   ]
 }

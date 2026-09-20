@@ -44,28 +44,6 @@ else {
     }
   }
   console.log(`  ..    ${live} live, ${pending} pending of ${manifest.assets.length} planned`);
-
-  /* Video carries the same burden of proof as stills. Paths here are relative
-   * to site/, because a clip may deliberately live outside the published root
-   * (a marketing stinger is tracked but never served). */
-  for (const v of manifest.videos || []) {
-    const p = join(siteDir, v.path);
-    if (!existsSync(p)) {
-      if (v.status === 'LIVE') bad(`manifest says ${v.path} is LIVE but the file is missing`);
-      continue;
-    }
-    const kb = Math.round(statSync(p).size / 1024);
-    if (v.status !== 'LIVE') bad(`${v.path} is on disk but manifest says ${v.status}`);
-    else if (v.qc === null || v.qc === undefined) bad(`${v.path} is LIVE with no QC score recorded`);
-    else ok(`${v.path} (${kb}KB, QC ${v.qc}, ${v.designation}${v.published === false ? ', not published' : ''})`);
-    if (v.poster && !existsSync(join(siteDir, v.poster))) bad(`${v.path} names a poster that is missing: ${v.poster}`);
-    if (v.altPath && !existsSync(join(siteDir, v.altPath))) bad(`${v.path} names an alternate encoding that is missing: ${v.altPath}`);
-    if (v.altPath && v.published !== false && !html.includes(v.altPath)) bad(`${v.altPath} exists but the page offers no <source> for it`);
-    /* A published clip must be reachable from the page; an unpublished one must not be. */
-    const referenced = html.includes(v.path);
-    if (v.published !== false && !referenced) bad(`${v.path} is published but nothing on the page references it`);
-    if (v.published === false && referenced) bad(`${v.path} is marked unpublished but the page references it`);
-  }
 }
 
 /* ---------------------------------------------------------------- 2 */
@@ -194,22 +172,6 @@ const gated = imgTags.filter(t => /\bdata-asset\b/.test(t));
 ok(`${gated.length} gated slot(s), ${imgTags.length - gated.length} ungated (logo)`);
 
 /* ---------------------------------------------------------------- 5 */
-const vidTags = [...html.matchAll(/<video\b[^>]*>/g)].map(m => m[0]);
-if (vidTags.length) {
-  const noLabel = vidTags.filter(t => !/aria-label=/.test(t));
-  noLabel.length ? bad(`${noLabel.length} video(s) without an aria-label`)
-                 : ok(`all ${vidTags.length} video(s) carry an aria-label`);
-  const noDims = vidTags.filter(t => !(/\bwidth=/.test(t) && /\bheight=/.test(t)));
-  noDims.length ? bad(`${noDims.length} video(s) do not declare width and height`)
-                : ok('every video declares width and height');
-  const loud = vidTags.filter(t => !/\bmuted\b/.test(t));
-  loud.length ? bad(`${loud.length} video(s) are not muted - autoplay must never make noise at a visitor`)
-              : ok('every video is muted');
-  const noInline = vidTags.filter(t => !/\bplaysinline\b/.test(t));
-  noInline.length ? bad(`${noInline.length} video(s) lack playsinline and will hijack fullscreen on iOS`)
-                  : ok('every video is playsinline');
-}
-
 console.log('\n=== 5 . encoding and language ===');
 if (/[^\x00-\x7F]/.test(html)) bad('non-ASCII bytes present (use HTML entities)');
 else ok('pure ASCII');
