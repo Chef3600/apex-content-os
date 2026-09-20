@@ -236,7 +236,20 @@ nav .links a:hover{color:var(--gold-ink)}
    label stay in the DOM, so a clip that fails to load leaves the original design
    rather than a hole - NO EMPTY BOXES holds for video the same way it does for
    images. The clip is revealed only once a frame has actually decoded. */
-.avid{position:relative;overflow:hidden}
+/* A filled ratio tile: the asset covers the box, the ratio stays legible as a
+   corner badge, and the centred placeholder label is the failure state. If a
+   file never decodes, the visitor gets the original outline - never a hole. */
+.afill,.avid{position:relative;overflow:hidden}
+.afill img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:0;transition:opacity .6s ease}
+.afill img.ready{opacity:1}
+.ashape .ph{transition:opacity .4s ease}
+.ashape.live .ph{opacity:0}
+.ashape .ratio{position:absolute;right:5px;top:5px;z-index:2;font-family:var(--display);
+  font-size:12.5px;font-weight:600;color:var(--bone);background:rgba(22,25,29,.62);
+  border-radius:2px;padding:0 5px;opacity:0;transition:opacity .6s ease}
+.ashape.live .ratio{opacity:1}
+@media (prefers-reduced-motion:reduce){.afill img,.ashape .ph,.ashape .ratio{transition:none}}
 .avid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
   opacity:0;transition:opacity .6s ease}
 .avid video.ready{opacity:1}
@@ -523,14 +536,16 @@ footer .r{margin-left:auto}
       <h2>One product. Many assets.</h2>
       <p class="lede" style="margin-top:20px">A directed shoot is not one photograph. It is a library
         that feeds every channel you sell through.</p>
+      <p class="lede" style="margin-top:14px;font-size:15px;color:var(--ink-soft)">Every frame below is
+        concept and spec work, produced in house to show the formats a single production delivers.</p>
 
       <div class="assets">
-        <article><div class="ashape" style="aspect-ratio:1/1"><span>1:1</span></div><h3>Product Hero</h3><p>The frame that has to carry the sale. Shot static, lit for the material, with the label legible at thumbnail size.</p></article>
-        <article><div class="ashape avid" style="aspect-ratio:9/16"><span>9:16</span><span class="tag">CONCEPT</span><video data-asset muted loop playsinline preload="none" width="480" height="832" poster="videos/social-vertical-macro.jpg" aria-label="CONCEPT: vertical social cut - a cinema lens racks past a plated dish as steam rises"><source src="videos/social-vertical-macro.webm" type="video/webm"><source src="videos/social-vertical-macro.mp4" type="video/mp4"></video></div><h3>Social Video</h3><p>Vertical, legible with sound off, hook in the first second. Cut from the same setup as the hero so the product reads identically.</p></article>
-        <article><div class="ashape" style="aspect-ratio:4/5"><span>4:5</span></div><h3>Ad Creative</h3><p>Paid variants built as a set, with negative space reserved so the copy never lands on the product.</p></article>
-        <article><div class="ashape" style="aspect-ratio:3/2"><span>3:2</span></div><h3>Lifestyle Image</h3><p>The product in a real context: hands, table, service. Shot to make the thing feel used, not displayed.</p></article>
-        <article><div class="ashape" style="aspect-ratio:16/9"><span>16:9</span></div><h3>Website Image</h3><p>Wide banners and section headers cropped from the same production, so the site and the ads agree.</p></article>
-        <article><div class="ashape" style="aspect-ratio:2/1"><span>2:1</span></div><h3>Email Creative</h3><p>Small, bright and high-contrast, because it will be seen in a preview pane on a phone.</p></article>
+        <article><div class="ashape afill" style="aspect-ratio:1/1"><span class="ph">1:1</span><span class="ratio">1:1</span><img data-fill src="images/portfolio/packaged-food/packaged-hero.webp" alt="CONCEPT: packaged goods hero, lit for the material with the label legible at thumbnail size" width="480" height="480" loading="lazy" decoding="async"></div><h3>Product Hero</h3><p>The frame that has to carry the sale. Shot static, lit for the material, with the label legible at thumbnail size.</p></article>
+        <article><div class="ashape avid afill" style="aspect-ratio:9/16"><span class="ph">9:16</span><span class="ratio">9:16</span><video data-asset muted loop playsinline preload="none" width="480" height="832" poster="videos/social-vertical-macro.jpg" aria-label="CONCEPT: vertical social cut - a cinema lens racks past a plated dish as steam rises"><source src="videos/social-vertical-macro.webm" type="video/webm"><source src="videos/social-vertical-macro.mp4" type="video/mp4"></video></div><h3>Social Video</h3><p>Vertical, legible with sound off, hook in the first second. Cut from the same setup as the hero so the product reads identically.</p></article>
+        <article><div class="ashape afill" style="aspect-ratio:4/5"><span class="ph">4:5</span><span class="ratio">4:5</span><img data-fill src="images/portfolio/consumer-products/product-hero.webp" alt="CONCEPT: consumer product frame built as a paid variant, with negative space held for copy" width="480" height="600" loading="lazy" decoding="async"></div><h3>Ad Creative</h3><p>Paid variants built as a set, with negative space reserved so the copy never lands on the product.</p></article>
+        <article><div class="ashape afill" style="aspect-ratio:3/2"><span class="ph">3:2</span><span class="ratio">3:2</span><img data-fill src="images/portfolio/hospitality/hospitality-hero.webp" alt="CONCEPT: hospitality lifestyle frame, the product in a real service context" width="600" height="400" loading="lazy" decoding="async"></div><h3>Lifestyle Image</h3><p>The product in a real context: hands, table, service. Shot to make the thing feel used, not displayed.</p></article>
+        <article><div class="ashape afill" style="aspect-ratio:16/9"><span class="ph">16:9</span><span class="ratio">16:9</span><img data-fill src="images/portfolio/food/food-hero.webp" alt="CONCEPT: wide food frame cropped from the same production for site banners" width="640" height="360" loading="lazy" decoding="async"></div><h3>Website Image</h3><p>Wide banners and section headers cropped from the same production, so the site and the ads agree.</p></article>
+        <article><div class="ashape afill" style="aspect-ratio:2/1"><span class="ph">2:1</span><span class="ratio">2:1</span><img data-fill src="images/portfolio/beverage/beverage-hero.webp" alt="CONCEPT: bright high-contrast beverage frame sized for an email preview pane" width="640" height="320" loading="lazy" decoding="async"></div><h3>Email Creative</h3><p>Small, bright and high-contrast, because it will be seen in a preview pane on a phone.</p></article>
       </div>
     </div>
   </section>
@@ -711,6 +726,19 @@ footer .r{margin-left:auto}
      plays. */
 
   var calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* Ratio tiles filled with a still. Revealed only once the file has actually
+     decoded; on failure the image is removed and the outline underneath is
+     what the visitor keeps. */
+  [].forEach.call(document.querySelectorAll("img[data-fill]"), function (img) {
+    var shell = img.parentNode;
+    function up() { img.classList.add("ready"); if (shell) shell.classList.add("live"); }
+    if (img.complete) { if (img.naturalWidth > 0) up(); return; }
+    img.addEventListener("load", up);
+    img.addEventListener("error", function () {
+      if (img.parentNode) img.parentNode.removeChild(img);
+    });
+  });
 
   [].forEach.call(document.querySelectorAll("video[data-asset]"), function (vid) {
     var shell = vid.parentNode;

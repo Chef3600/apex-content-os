@@ -190,8 +190,22 @@ const noDims = imgTags.filter(t => !(/\bwidth=/.test(t) && /\bheight=/.test(t)))
 if (noDims.length) bad(`${noDims.length} image(s) without width/height (layout shift)`);
 else ok('every image declares width and height');
 
+/* Two gating attributes, one contract: data-asset hides its block until the
+ * file decodes, data-fill reveals the asset over a ratio tile whose outline is
+ * the failure state. Either way a visitor never meets an empty frame. */
 const gated = imgTags.filter(t => /\bdata-asset\b/.test(t));
-ok(`${gated.length} gated slot(s), ${imgTags.length - gated.length} ungated (logo)`);
+const filled = imgTags.filter(t => /\bdata-fill\b/.test(t));
+ok(`${gated.length} gated slot(s), ${filled.length} filled ratio tile(s), ${imgTags.length - gated.length - filled.length} ungated (logo)`);
+
+/* The assets grid is the section that claims one shoot feeds every format.
+ * A ratio tile with nothing in it undercuts the claim, so every tile must
+ * carry a real asset. */
+const shapes = [...html.matchAll(/<div class="ashape[^"]*"[^>]*>[\s\S]*?<\/div>/g)].map(m => m[0]);
+if (shapes.length) {
+  const bare = shapes.filter(t => !/<img\b/.test(t) && !/<video\b/.test(t));
+  bare.length ? bad(`${bare.length} ratio tile(s) in the assets grid carry no image or video`)
+              : ok(`all ${shapes.length} ratio tile(s) carry an asset`);
+}
 
 /* ---------------------------------------------------------------- 5 */
 const vidTags = [...html.matchAll(/<video\b[^>]*>/g)].map(m => m[0]);
