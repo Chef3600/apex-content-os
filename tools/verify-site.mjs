@@ -6,9 +6,9 @@
  * box. Image blocks are hidden by default and revealed only once the file
  * decodes, so this checks the RENDERED page, not just the markup.
  */
-import { readFileSync, existsSync, statSync } from 'node:fs';
+import { readFileSync, existsSync, statSync, readdirSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const siteDir = join(root, 'site');
@@ -224,6 +224,62 @@ if (vidTags.length) {
                   : ok('every video is playsinline');
 }
 
+/* A gated image must never be lazy-loaded. The gate hides its block until the
+ * file decodes; a lazy image inside a display:none block never enters the
+ * viewport, so it never loads, so the block never un-hides. The section
+ * heading then sits above nothing. Caught in the wild on 2026-09-21. */
+const lazyGated = imgTags.filter(x => /\bdata-asset\b/.test(x) && /loading=["']lazy/.test(x));
+lazyGated.length
+  ? wrn(`${lazyGated.length} gated image(s) are loading="lazy". This combination CAN deadlock - ` +
+        `the gate hides the block until the file decodes, and a lazy image inside a display:none ` +
+        `block may never enter the viewport, so it never loads and the block never un-hides. It ` +
+        `currently renders on this page, so this is a warning, not a failure. The rendered-page ` +
+        `check below is the authority. Never add this combination to a NEW page without rendering it.`)
+  : ok('no gated image is lazy-loaded');
+
+/* ---------------------------------------------------------------- 4b
+ * Service pages. Any extra page in site/ is public and must clear the same
+ * bar as the homepage. Without this, a page added for SEO quietly escapes
+ * every check the rest of the site is held to. */
+console.log('\n=== 4b . service pages ===');
+const KNOWN = new Set(['index.html', 'start-a-project.html']);
+const extraPages = readdirSync(siteDir).filter(f => f.endsWith('.html') && !KNOWN.has(f));
+if (!extraPages.length) console.log('  ..    none');
+for (const f of extraPages) {
+  const h = readFileSync(join(siteDir, f), 'utf8');
+  const grab1 = re => (h.match(re) || [])[1];
+  const t1 = grab1(/<title>([^<]+)<\/title>/i);
+  const d1 = grab1(/<meta\s+name="description"\s+content="([^"]+)"/i);
+  const c1 = grab1(/<link\s+rel="canonical"\s+href="([^"]+)"/i);
+  const h1s = [...h.matchAll(/<h1\b/gi)].length;
+
+  t1 && t1.length <= 65 ? ok(`${f}: title (${t1.length} chars)`)
+                        : bad(`${f}: title missing or over 65 chars`);
+  d1 && d1.length >= 70 && d1.length <= 175 ? ok(`${f}: meta description (${d1.length} chars)`)
+                                            : bad(`${f}: meta description missing or outside 70-175 chars`);
+  c1 === `${ORIGIN}/${f}` ? ok(`${f}: canonical self-references`)
+                          : bad(`${f}: canonical is "${c1}", expected ${ORIGIN}/${f}`);
+  h1s === 1 ? ok(`${f}: exactly one h1`) : bad(`${f}: ${h1s} h1 element(s), expected 1`);
+
+  const imgs1 = [...h.matchAll(/<img\b[^>]*>/g)].map(m => m[0]);
+  const bad1 = imgs1.filter(x => !/\balt=/.test(x) || !(/\bwidth=/.test(x) && /\bheight=/.test(x)));
+  bad1.length ? bad(`${f}: ${bad1.length} image(s) missing alt or dimensions`)
+              : ok(`${f}: all ${imgs1.length} image(s) have alt and dimensions`);
+
+  /* The rules that protect the brand apply to every public page, not just the
+   * one the verifier happened to be written against. */
+  const vis = h.replace(/<[^>]+>/g, ' ');
+  /apexcontentstudio\.online/.test(h) ? bad(`${f}: references the retired domain`)
+                                      : ok(`${f}: no retired domain`);
+  /\b(AI-powered|artificial intelligence|generative AI)\b/i.test(vis)
+    ? bad(`${f}: customer-facing AI positioning`) : ok(`${f}: no AI positioning`);
+  /[^\x00-\x7F]/.test(h) ? bad(`${f}: non-ASCII characters`) : ok(`${f}: pure ASCII`);
+  h.includes('start-a-project.html') ? ok(`${f}: routes to the form`)
+                                     : bad(`${f}: no Start a Project route`);
+  const inSitemap = readFileSync(join(siteDir, 'sitemap.xml'), 'utf8').includes(`/${f}`);
+  inSitemap ? ok(`${f}: listed in sitemap.xml`) : bad(`${f}: missing from sitemap.xml`);
+}
+
 console.log('\n=== 5 . encoding and language ===');
 if (/[^\x00-\x7F]/.test(html)) bad('non-ASCII bytes present (use HTML entities)');
 else ok('pure ASCII');
@@ -337,7 +393,33 @@ else {
    * everyone. That makes this page revenue-critical, so it gets tested as
    * hard as the home page - including that it never drops a visitor into a
    * silent failure when the endpoint is not configured. */
-  console.log('\n=== 8 . project request form ===');
+  /* Every public page gets rendered, not just the homepage. This is what
+ * actually catches a gated block that never un-hides - the failure mode that
+ * shipped undetected on a service page on 2026-09-21 because only index.html
+ * was ever rendered. */
+for (const f of extraPages) {
+  const page2 = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  const errs2 = [];
+  page2.on('pageerror', e => errs2.push(String(e)));
+  await page2.goto(pathToFileURL(join(siteDir, f)).href, { waitUntil: 'load' });
+  await page2.waitForTimeout(1200);
+  const r = await page2.evaluate(() => ({
+    total: document.images.length,
+    rendered: [...document.images].filter(i => i.naturalWidth > 0).length,
+    hiddenWithSrc: [...document.querySelectorAll('[data-block]')]
+      .filter(b => getComputedStyle(b).display === 'none').length,
+    overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+  }));
+  errs2.length ? bad(`${f}: ${errs2.length} JS error(s): ${errs2[0]}`) : ok(`${f}: no JS errors`);
+  r.rendered === r.total ? ok(`${f}: all ${r.total} image(s) rendered`)
+                         : bad(`${f}: only ${r.rendered}/${r.total} image(s) rendered`);
+  r.hiddenWithSrc === 0 ? ok(`${f}: no gated block stayed hidden`)
+                        : bad(`${f}: ${r.hiddenWithSrc} gated block(s) never un-hid - heading above nothing`);
+  r.overflow <= 0 ? ok(`${f}: no horizontal overflow`) : bad(`${f}: ${r.overflow}px horizontal overflow`);
+  await page2.close();
+}
+
+console.log('\n=== 8 . project request form ===');
   const formPath = join(siteDir, 'start-a-project.html');
   if (!existsSync(formPath)) bad('site/start-a-project.html is missing - the primary CTA has no target');
   else {
