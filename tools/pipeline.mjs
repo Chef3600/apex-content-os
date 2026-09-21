@@ -22,7 +22,8 @@
  *   node tools/pipeline.mjs list [STATE|industry|p1|a|b|c|signals]
  *   node tools/pipeline.mjs learn              what the market actually said
  *   node tools/pipeline.mjs report
- *   node tools/pipeline.mjs selftest             end-to-end, on a temp copy
+ *   node tools/pipeline.mjs gate                 launch readiness, and what is blocking
+  node tools/pipeline.mjs selftest             end-to-end, on a temp copy
  *
  * States: NEW VERIFY QUALIFIED DISQUALIFIED CONTACTED REPLIED MEETING
  *         PROPOSAL WON LOST
@@ -34,6 +35,7 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { VERTICALS, ANGLES } from './verticals.mjs';
+import { assertLaunchReady, renderStatus } from './launch-gate.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DB = process.env.APEX_DB || join(root, 'data', 'prospects.json');
@@ -103,6 +105,11 @@ function render(r, key) {
 switch (cmd) {
 
 /* ---------------------------------------------------------------- OPEN */
+case 'gate': case 'launch': {
+  console.log(renderStatus());
+  break;
+}
+
 case 'open': case 'show': {
   const r = find(rest[0]);
   console.log('');
@@ -219,6 +226,7 @@ case 'disqualify': {
 
 /* --------------------------------------------------------- COPY MESSAGE */
 case 'msg': {
+  assertLaunchReady('msg');
   const r = find(rest[0]);
   let key = rest[1];
   // Auto-pick follows the record: a published signal beats a general opener,
@@ -294,6 +302,7 @@ case 'set': {
 
 /* ------------------------------------------------------------- CONTACT */
 case 'contact': {
+  assertLaunchReady('contact');
   const [id, channel = 'email', subject] = rest;
   const r = find(id);
   if (r.state !== 'QUALIFIED') die(`${r.company} is ${r.state}. Only QUALIFIED rows get contacted.`);
@@ -343,6 +352,7 @@ case 'log': {
 
 /* ----------------------------------------------------------- FOLLOW UP */
 case 'followup': {
+  assertLaunchReady('followup');
   const r = find(rest[0]);
   if (r.state !== 'CONTACTED') die(`${r.company} is ${r.state}. Follow-ups only apply to CONTACTED.`);
   r.followups = (r.followups || 0) + 1;
@@ -376,6 +386,7 @@ case 'meeting': {
   break;
 }
 case 'proposal': {
+  assertLaunchReady('proposal');
   const r = find(rest[0]);
   const amt = Number(rest[1] || 1500);
   if (!Number.isFinite(amt) || amt <= 0) die('proposal <id> <amount>');
@@ -651,8 +662,27 @@ case 'selftest': {
   writeFileSync(tmp, JSON.stringify(fixture, null, 2));
   const { execFileSync } = await import('node:child_process');
   const { unlinkSync: unlink0 } = await import('node:fs');
+
+  /* The launch gate is real, so the self-test has to satisfy it the same way
+   * production would - by pointing at a company record whose gates are true.
+   * This isolates the test; it cannot widen the production gate, which reads
+   * data/company.json and has no fixture to fall back to. */
+  const tmpCo = join(root, 'data', '.selftest-company.json');
+  writeFileSync(tmpCo, JSON.stringify({ status: {
+    websiteLive: true, httpsVerified: true, formSubmissionVerified: true,
+    emailReceives: true, criticalBlocker: null } }, null, 2));
   const run = (...a) => execFileSync(process.execPath, [join(root, 'tools', 'pipeline.mjs'), ...a],
-    { env: { ...process.env, APEX_DB: tmp }, encoding: 'utf8' });
+    { env: { ...process.env, APEX_DB: tmp, APEX_COMPANY: tmpCo }, encoding: 'utf8' });
+
+  /* And the gate itself is under test: with a gate unsatisfied, every
+   * outreach action must refuse. This is the assertion that would have caught
+   * the old hold, which was only ever a sentence in a document. */
+  const heldCo = join(root, 'data', '.selftest-company-held.json');
+  writeFileSync(heldCo, JSON.stringify({ status: {
+    websiteLive: true, httpsVerified: true, formSubmissionVerified: true,
+    emailReceives: null, criticalBlocker: null } }, null, 2));
+  const runHeld = (...a) => execFileSync(process.execPath, [join(root, 'tools', 'pipeline.mjs'), ...a],
+    { env: { ...process.env, APEX_DB: tmp, APEX_COMPANY: heldCo }, encoding: 'utf8' });
   const state = () => JSON.parse(readFileSync(tmp, 'utf8'))[0];
   const checks = [];
   const ck = (label, got, want) => { checks.push([label, got === want, `${got}`]); };
@@ -696,6 +726,16 @@ case 'selftest': {
   if (doc) unlink0(pf);
 
   run('won', 'T1', '1500');                  ck('won -> WON', state().state, 'WON');
+
+  // The hold, enforced. One unknown gate must close every outreach door.
+  for (const act of ['msg', 'contact', 'followup', 'proposal']) {
+    let held = false;
+    try { runHeld(act, 'T1'); } catch { held = true; }
+    checks.push([`launch gate blocks "${act}" when a gate is unknown`, held, String(held)]);
+  }
+  let readOnlyOk = true;
+  try { runHeld('list'); } catch { readOnlyOk = false; }
+  checks.push(['launch gate does not block read-only commands', readOnlyOk, String(readOnlyOk)]);
 
   // Guard rails
   let guarded = false;
@@ -747,6 +787,10 @@ case 'selftest': {
   checks.push(['learn suppresses rates below the sample size',
     learn.includes('needs 5') || learn.includes('do not act on it'), 'suppressed']);
   checks.push(['learn names the objection', learn.includes('have-someone'), 'named']);
+
+  /* Fixtures live until every run() above has finished; the gate reads them
+     on each child process. */
+  try { unlink0(tmpCo); unlink0(heldCo); } catch { /* already gone */ }
 
   console.log('\n  PIPELINE SELF-TEST\n');
   let fail = 0;
