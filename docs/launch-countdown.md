@@ -37,6 +37,7 @@ passed.
 | **Expected output** | GBP pending verification. `docs/free-presence.md` Tier 1 row updated with a date. |
 | **Completed** | ☐ |
 | **Blocked** | Requires Google login. Owner-only. |
+| **Verification reality (researched 2026-09-21)** | Postcard codes are largely gone. Service-area businesses now usually get **live video verification**, with higher rejection rates and longer waits. Prepare before starting: (1) Google still requires a **real physical mailing address** behind the scenes even though it stays hidden — **a PO Box or virtual office will not pass**. (2) The video must be shot **live from the phone, one unedited take, 30+ seconds, no breaks** — pre-recorded uploads are rejected. (3) Have proof of operations visible on camera: **camera bodies, lenses, lighting gear, and the laptop showing the live site**. That equipment is the strongest evidence this studio is real. Do not start the flow until the gear is staged and the site loads on screen. |
 | **Next day** | Social account shells. |
 
 ## Sept 23 (Wed) — Social shells, consistent
