@@ -1,5 +1,21 @@
 # DNS / email / deployment audit - 2026-09-13
 
+> ## HISTORICAL. DO NOT FOLLOW THE INSTRUCTIONS IN THIS SECTION.
+>
+> Everything from here to the **ADDENDUM - 2026-09-17** heading below concerns
+> the **retired** domain `apexcontentstudio.online` and its dead mailbox
+> `hello@apexcontentstudio.online`. It is kept because the measurements and the
+> reasoning are still worth reading, and because deleting the record of a wrong
+> diagnosis hides how it was corrected.
+>
+> **Tracks A through E below tell you to create forwarders, change MX records
+> and add a domain to Google Workspace. All of that is for the retired domain.
+> Running any of it today would be wrong.**
+>
+> The live domain is **`apexhospitalitygrouplv.org`**, its mailbox is
+> **`hello@apexhospitalitygrouplv.org`** on Namecheap Private Email, and the
+> current state is in the ADDENDUM, in `DEPLOY.md` and in `data/company.json`.
+
 **Every fact below was measured, not inferred.** Public DNS was queried directly
 from this session (port 53 resolves even though HTTPS egress is blocked), and
 the mailbox was tested with a real message that produced a real bounce.
