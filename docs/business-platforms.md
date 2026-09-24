@@ -23,20 +23,33 @@ The table below mirrors that file.
 | Legal entity | Apex Hospitality Group LLC |
 | Primary category | Marketing Agency |
 | Phone | **(702) 480-9198** |
-| Email | hello@apexcontentstudio.online |
-| Website | https://apexcontentstudio.online **- NOT LIVE YET. See below.** |
-| Primary CTA | https://apexcontentstudio.online/start-a-project.html |
+| Email | **hello@apexhospitalitygrouplv.org** |
+| Website | **https://apexhospitalitygrouplv.org** - see the status note below |
+| Primary CTA | https://apexhospitalitygrouplv.org/start-a-project.html |
 | Business type | Service-area business (no storefront shown) |
 | Service areas | Las Vegas, Henderson, North Las Vegas, Summerlin |
 | Hours | Monday-Friday, 9:00 AM - 6:00 PM |
 
-> **CANONICAL URL STATUS: pending.** `apexcontentstudio.online` is the intended
-> canonical destination and it is already declared as canonical in the site's
-> own head, but **nothing is deployed and the domain is not connected.** The
-> first Vercel deploy produces a `*.vercel.app` URL that is usable immediately -
-> put that one on every platform below on day one and swap it for the custom
-> domain when DNS resolves. `DEPLOY.md` has the exact steps. Do not list a URL
-> that does not load.
+> **RETIRED DOMAIN.** `apexcontentstudio.online` and
+> `hello@apexcontentstudio.online` are retired and must never be published to any
+> platform below. The mailbox on that domain was confirmed dead - a live message
+> bounced in four seconds with `554 5.7.1 Relay access denied` on 2026-09-13.
+> Where this repository still names it, it is documenting that history on
+> purpose.
+>
+> **CANONICAL URL STATUS: owner-verified, not repo-verified.**
+> `https://apexhospitalitygrouplv.org` is the canonical destination and is
+> already declared as canonical in every page's head. Whether the domain is
+> serving the site **cannot be confirmed from this repository** - the build
+> environment's egress is blocked, so the URL has never been fetched from here.
+> `data/company.json` holds `websiteLive: false` and `domainConnected: null`
+> until the owner confirms otherwise.
+>
+> **Do not list a URL that does not load.** Confirm it in a browser first. If the
+> custom domain is not yet resolving, the Vercel production deployment's
+> `*.vercel.app` URL is a real, permanent HTTPS address and can carry every
+> platform below on day one - swap it for the custom domain once DNS resolves.
+> `DEPLOY.md` has the exact steps.
 
 **NAP consistency** - name, address/area, phone - is a real local-SEO ranking
 input, not a formality. Google cross-references them. One mismatch between the
@@ -106,7 +119,7 @@ available, and it costs nothing.
 | Name | Apex Content Studio |
 | Primary category | Marketing Agency |
 | Additional categories | Photographer · Commercial Photographer · Video Production Service |
-| Website | https://apexcontentstudio.online |
+| Website | https://apexhospitalitygrouplv.org |
 | Phone | (702) 480-9198 |
 | Business type | Service-area business - **hide the address** |
 | Service areas | Las Vegas, Henderson, North Las Vegas, Summerlin |
@@ -187,7 +200,7 @@ into a maybe. That is its entire job.
 | Company size | 1-10 employees |
 | Type | Privately Held |
 | Location | Las Vegas, Nevada |
-| Website | https://apexcontentstudio.online |
+| Website | https://apexhospitalitygrouplv.org |
 | About | The long bio |
 
 **Specialties:** Commercial Photography · Food Photography · Product

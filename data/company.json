@@ -55,7 +55,7 @@
     "_gate": "Read by tools/launch-gate.mjs. Every gate must be literally true before the outreach pipeline will run msg, contact, followup or proposal. null means unverified, and unverified holds the line. criticalBlocker: null when clear, otherwise a sentence naming what is wrong."
   },
   "workspace": {
-    "_comment": "Primary domain is apexhospitalitygrouplv.org. hello@ routes via Namecheap email forwarding (SPF already present) to the Google Workspace inbox.",
+    "_comment": "Google Workspace account record - SEPARATE from the published mailbox. The published address hello@apexhospitalitygrouplv.org is a Namecheap Private Email mailbox (MX mx1/mx2.privateemail.com), NOT forwarding into Workspace: see status.emailProvider. The earlier note here described Namecheap forwarding into the Google Workspace inbox, which is the retired domain's architecture, not this one. primaryDomain below is the Workspace domain the owner account sits on; docs/dns-audit.md records the open question of whether its spelling is intended. verificationTxt is the Google site-verification token - status.googleDomainVerified and status.googleTxtPublished remain false until the owner confirms publication.",
     "primaryDomain": "apexhospitalitygrouplvcom.com",
     "ownerAccount": "larryhillsjr@apexhospitalitygrouplvcom.com",
     "plannedRelationship": "user alias domain",

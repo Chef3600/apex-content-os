@@ -41,55 +41,85 @@ folder.
 
 ---
 
-## Setup - about 4 minutes
+## Current configuration - already live in the page
 
-**1. Get the key.** Go to **web3forms.com**, enter the destination email, and
-it returns an Access Key by email. No account creation.
+**This section describes what is already true. It is not a set-up checklist.**
 
-**2. THE DESTINATION EMAIL - read this before typing it.**
+| | Value | State |
+|---|---|---|
+| Provider | Web3Forms | configured |
+| Endpoint | `https://api.web3forms.com/submit` | configured |
+| Access key | present in `site/start-a-project.html` | **configured - do not replace** |
+| Destination mailbox | `hello@apexhospitalitygrouplv.org` | Namecheap Private Email |
+| Live end-to-end submission | — | **UNVERIFIED - owner only** |
 
-> **Do NOT use `hello@apexcontentstudio.online`.**
->
-> That address currently **bounces**. Tested 2026-09-13: a live message came
-> back in four seconds with `554 5.7.1 Relay access denied`. Pointing the form
-> at it would drop every lead into nothing, which is a worse outcome than the
-> mailto link this replaced.
->
-> **Use `larryhillsjr@apexhospitalitygrouplvcom.com`** - the working Google
-> Workspace mailbox. Change it to `hello@` on the day that address is verified
-> to receive mail, and not before. See `docs/dns-audit.md`.
+`tools/verify-site.mjs` reports `form endpoint key is configured` on every run,
+and its placeholder-key warning does not fire. Commit `07c8d00` set the real key.
 
-**3. Paste the key.** In `site/start-a-project.html`, near the bottom:
+### The access key is not a secret
 
-```js
-var ACCESS_KEY = 'REPLACE_WITH_WEB3FORMS_ACCESS_KEY';
-```
+A Web3Forms access key is a **front-end identifier**. It is delivered to every
+visitor's browser by design, exactly like a public API key - that is how the
+service works, and Web3Forms documents it that way. It identifies which inbox a
+submission belongs to; it does not grant access to anything.
 
-Replace the placeholder string with the key. That is the entire integration.
+**Do not "fix" it by replacing it with a placeholder**, and do not move it to an
+environment variable - the site is a static folder with no build step and nothing
+to substitute one. The real protections are the honeypot and the provider's own
+filtering, both already in place.
 
-**4. Commit, push, and let Vercel redeploy.**
+### The destination mailbox
 
-**5. Submit the form yourself, once, from a phone.** Confirm the email arrives
-and that every field you filled is in it. Until that happens the form is
-**UNVERIFIED** and should be described that way.
+The form delivers to **`hello@apexhospitalitygrouplv.org`**, a Namecheap Private
+Email mailbox.
+
+> **Historical, for context only.** An earlier revision of this document routed
+> the form to a Google Workspace address because the then-published mailbox,
+> `hello@apexcontentstudio.online`, was confirmed dead - a live test bounced in
+> four seconds with `554 5.7.1 Relay access denied` on 2026-09-13. **That domain
+> and that workaround are both retired.** The Workspace account on
+> `apexhospitalitygrouplvcom.com` is a separate record and is **not** the
+> published mailbox. See `docs/dns-audit.md`.
+
+### What still has to be verified, and by whom
+
+Measured 2026-09-17: `MX -> mx1/mx2.privateemail.com`, `SPF v=spf1
+include:spf.privateemail.com ~all`, no DMARC. A live test message produced **no
+bounce**, rechecked 2026-09-18 past the final non-delivery window.
+
+**Acceptance is not receipt.** No one has yet read that message out of the
+Private Email inbox, and no development session can: Private Email is a separate
+inbox, and `api.web3forms.com` is egress-blocked from the build environment, so
+no live submission has ever been made from here.
+
+**The owner must, once:**
+
+1. Submit the real form from a phone, with every field filled.
+2. Open the Private Email inbox for `hello@apexhospitalitygrouplv.org`.
+3. Confirm that exact submission arrived, with every field intact.
+4. Record the result in `data/company.json` -> `status.formSubmissionVerified`
+   and `status.emailReceives`, with the evidence alongside it.
+
+Until step 3 happens, the form is **UNVERIFIED** and must be described that way.
+`tools/launch-gate.mjs` enforces this: both gates must be literally `true` before
+the outreach pipeline will run. Do not set them to clear the gate.
 
 ---
 
-## What happens while the key is not set
+## If the key ever goes missing
 
-The page **does not pretend to work.** It is built to degrade, not to fail:
+The page **does not pretend to work.** It is built to degrade, not to fail. If
+`ACCESS_KEY` is ever reset to a `REPLACE_WITH...` placeholder:
 
-- The submit handler detects the placeholder before sending anything
-- The visitor gets a panel that says plainly that the form is not connected yet
+- The submit handler detects it before sending anything
+- The visitor gets a panel saying plainly that the form is not connected yet
 - That panel carries a working **Email Apex** button and a **Call Apex** button
 - Focus moves to it, so a screen reader announces it
 
-Nobody is dropped into a spinner or a silent failure. They are handed two
-routes that work right now.
-
-`tools/verify-site.mjs` prints a loud **WARN** on every run while the
-placeholder is there. It is a warning rather than a failure because the page is
-genuinely safe in that state - but it will not go quiet on its own.
+Nobody is dropped into a spinner or a silent failure. They are handed two routes
+that work right now. `tools/verify-site.mjs` prints a loud **WARN** the whole
+time. Leave that guard in place - it is cheap, and it is the difference between a
+quiet failure and a visible one.
 
 ---
 

@@ -1,7 +1,20 @@
-# Deploying apexcontentstudio.online
+# Deploying apexhospitalitygrouplv.org
 
 The site is a static folder. There is no build step, no framework, no server
 code. Anything that can serve files can serve it.
+
+- **Repository:** `Chef3600/apex-content-os`
+- **Production branch:** `main`
+- **Vercel Root Directory:** `site`
+- **Canonical URL:** `https://apexhospitalitygrouplv.org`
+- **Published mailbox:** `hello@apexhospitalitygrouplv.org` (Namecheap Private Email)
+
+> `apexcontentstudio.online` is **retired**. It must not appear in any current
+> deployment step, canonical URL, structured data or published address. Where
+> this repository still mentions it — `docs/dns-audit.md`, the migration note in
+> `SETUP-LAUNCH.md`, the bounce attribution in `data/company.json` — it is
+> documenting history on purpose. Do not revive it, and do not delete the
+> history either.
 
 ## What ships
 
@@ -9,199 +22,196 @@ Publish the contents of `site/`. That directory is the web root:
 
 ```
 site/
-  index.html          the whole page
-  og-image.jpg        social card (1200x630)
+  index.html                        home
+  start-a-project.html              the lead form (primary CTA)
+  food-photography-las-vegas.html   SEO service page
+  og-image.jpg                      social card (1200x630)
   favicon.png
   apple-touch-icon.png
   robots.txt
   sitemap.xml
-  images/             19 production assets + the logo + manifest.json
+  images/                           19 live production assets + logo + manifest.json
+  videos/                           motion assets
 ```
 
-Total transferred weight for a first visit is about 244 KB.
+`site/` is about 888 KB on disk; a first visit transfers far less, because the
+page loads only what it shows.
 
 `site/images/manifest.json` and `site/images/README.md` are internal
-bookkeeping. They are harmless to publish and are not linked from the page.
+bookkeeping. They are harmless to publish and are not linked from any page.
+
+There is deliberately **no `vercel.json`** in this repo. Adding one would move
+deploy behavior out of the dashboard, where the project settings already live.
 
 ## Before you deploy
 
-Run the verifier. It must report zero failures:
+Both must be clean. Neither reaches the network.
 
 ```
 PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers node tools/verify-site.mjs
+node tools/pipeline.mjs selftest
 ```
 
-It checks the manifest against what is actually on disk, the document shell
-and render mode, the SEO and social tags, that every asset the head
-references exists, markup hygiene, encoding, the brand rules, and then the
-rendered page in Chromium at 1440 / 820 / 390.
+The verifier must report **zero failures**. It checks the manifest against what
+is actually on disk, the document shell and render mode, SEO and social tags,
+that every asset the head references exists, markup hygiene, encoding, the brand
+rules, and then renders **every** public page in `site/` in Chromium at 1440 /
+820 / 390 — checking for JS errors, failed requests, images that never decode,
+gated blocks that stay hidden, and horizontal overflow.
 
-## CURRENT STATUS - read this first
+Two warnings are expected and are **not** failures to be silenced:
 
-**MERGE: DONE.** `main` is now `2836880` and carries the verified build.
-**DEPLOYMENT: NOT LIVE.**
-**DOMAIN: NOT CONNECTED.**
-**PUBLIC URL: none yet.**
+1. **MAILBOX UNVERIFIED** — stays until the owner confirms a real message
+   arriving in the Private Email inbox. It is the honest state, not a bug.
+2. **gated + `loading="lazy"` images** — a known latent hazard, documented in
+   the verifier itself. The rendered-page check is the authority, and it passes.
 
-### Why the integration cannot finish this
+## Vercel
 
-Tested 2026-09-12, against the Vercel account "chef3600's projects" (Hobby):
+The project builds nothing. It serves a directory.
 
-| Call | Result |
-|---|---|
-| `list_projects` | `[]` - returns an empty list |
-| `get_project` (by id and by name) | `404 Not Found` |
-| `list_deployments` | **`403 Forbidden` - "You don't have permission to list the deployment."** |
-| `create_git_project` "apex-content-studio" | `409 conflict` - a project by that name already exists |
-| `create_git_project` "apex-content-os" | `409 conflict` - created earlier, cannot be read back or reused |
-
-The integration's token can create projects but cannot read, list or configure
-them, and the documented reuse path returns 409 instead of reusing. That is a
-permissions problem on the connection, not something a different call fixes.
-**No deployment was made and no URL exists.**
-
-Two projects may now exist in the account: `apex-content-studio` (pre-existing)
-and `apex-content-os` (created during this attempt, never linked). Keep one.
-
-### MANUAL PROCEDURE - the only path that works
-
-The integration is done being tried. This is a dashboard job.
-
-**Step 1 - decide which project survives (1 min)**
-
-Open **vercel.com/dashboard**. You may see up to two projects:
-
-- `apex-content-studio` - pre-existing, contents unknown from here
-- `apex-content-os` - created during the integration attempt, **never linked to
-  anything, has no deployments.** Delete it: project -> Settings -> scroll to
-  the bottom -> Delete Project.
-
-**Step 2 - connect the surviving project (2 min)**
-
-Open `apex-content-studio` -> **Settings -> Git**.
-
-- If it shows no repository: **Connect Git Repository -> GitHub ->
-  `Chef3600/apex-content-os`**.
-- If GitHub is not authorized, Vercel prompts to install its GitHub App. Grant
-  it access to `Chef3600/apex-content-os` (or All repositories).
-- If it is already connected to a different or wrong repo: **Disconnect**, then
-  connect this one.
-
-**If the project cannot be connected, or will not open at all - replace it:**
-
-1. Delete `apex-content-studio` (Settings -> Delete Project).
-2. Dashboard -> **Add New -> Project**.
-3. Under Import Git Repository, choose `Chef3600/apex-content-os`. If it is not
-   listed, click **Adjust GitHub App Permissions** and grant access to it.
-4. Name the project `apex-content-studio` - the name sets the
-   `*.vercel.app` hostname, and it is worth having the right one.
-5. Configure per Step 3 **on the import screen**, before clicking Deploy.
-
-Either way the result is **one project**, not two.
-
-**Step 3 - settings (2 min)**
-
-**Settings -> Build & Deployment:**
+**Settings → Build & Deployment:**
 
 | Setting | Value |
 |---|---|
 | Framework Preset | **Other** |
 | Root Directory | **`site`** |
-| Build Command | **empty** - turn the Override toggle OFF |
-| Output Directory | **empty** - Override OFF |
-| Install Command | **empty** - Override OFF |
+| Build Command | **empty** — Override OFF |
+| Output Directory | **empty** — Override OFF |
+| Install Command | **empty** — Override OFF |
 | Node.js Version | irrelevant, nothing runs |
 
-**Settings -> Git -> Production Branch: `main`.**
+**Settings → Git → Production Branch: `main`.**
 
-The single most common failure here is Root Directory left at `./`. That
-serves the repository root, and the result is a 404 at `/` with the site
-sitting one directory down.
+The single most common failure is Root Directory left at `./`. That serves the
+repository root, and the result is a 404 at `/` with the site sitting one
+directory down.
 
-**Step 4 - deploy (1 min)**
+Pushing any commit to `main` triggers a deploy. There is no build step — it is a
+file upload — so it finishes in seconds. To roll back, redeploy an earlier `main`
+commit from the Deployments tab. There is no state to migrate and no cache to
+clear beyond the CDN, which Vercel invalidates on deploy.
 
-**Deployments -> the top deployment -> ... -> Redeploy**, or push any commit to
-`main`. There is no build step - it is a file upload - so it finishes in
-seconds.
+## DNS — copy the values from Vercel, do not copy them from here
 
-If the Deployments tab is empty, deploy by pushing: any commit to `main`
-triggers it once the repo is connected.
+**Do not hardcode DNS values from this document or any other.** Vercel issues
+**per-project** DNS targets (for example `xyz.vercel-dns-016.com`), and they
+differ between projects and change over time. The authoritative values are shown
+on the domain card inside your own Vercel project.
 
-**Step 5 - the URL**
+1. In the Vercel project: **Settings → Domains**, add **both**
+   `apexhospitalitygrouplv.org` and `www.apexhospitalitygrouplv.org`.
+2. Vercel then displays the exact record — type, host and value — required for
+   each. **Copy those, exactly as shown.**
+3. At Namecheap: **Domain List → Manage → Advanced DNS**. Delete any parking or
+   redirect records for `@` and `www` first, or they will conflict.
+4. Set `www` to redirect to the apex. Every page declares the apex form as
+   canonical (`https://apexhospitalitygrouplv.org/...`), so the apex is the
+   destination and `www` is the redirect.
 
-The project's Production deployment shows the domain. It is
-`https://<project-name>.vercel.app`. **Send it back.**
+TLS is issued automatically once the records resolve — usually minutes, up to 48
+hours.
 
-Use it immediately - Google Business Profile, LinkedIn, outreach. It is a real,
-permanent, HTTPS URL. Waiting for DNS before using it costs days for no reason.
+**Namecheap will not be touched from this repository or from any agent session
+without explicit owner authorization.**
 
-**If the deploy fails**, the Deployments tab shows the log. The only realistic
-failures for a static folder are: Root Directory wrong, a Build Command left
-set, or the repository not actually connected.
+### Recorded DNS observation, not an instruction
 
-### DNS, once the deploy is live
+`data/company.json` records that on 2026-09-17, `apexhospitalitygrouplv.org`
+resolved `A -> 216.198.79.1`, and `www` had no record of any type (NXDOMAIN).
+That is a measurement, not a target value. It does not confirm which host serves
+the domain, and it must not be used in place of what the Vercel dashboard shows.
 
-**Vercel now issues per-project DNS targets** (for example
-`xyz.vercel-dns-016.com`), so the exact values are shown on the domain card
-inside your project and cannot be read from here. **Use what the dashboard
-shows.** The legacy values below still work and are what Vercel falls back to:
+## Email — Namecheap Private Email
 
-| Host | Type | Value | TTL |
+`hello@apexhospitalitygrouplv.org` is a **Namecheap Private Email mailbox**. It
+is a real, separate inbox. It is **not** free `eforward` forwarding, and it is
+**not** an alias into Google Workspace — that was the retired domain's
+arrangement, and confusing the two is what produced the earlier bounce.
+
+Measured 2026-09-17 and recorded in `data/company.json`:
+
+- `MX` → `mx1.privateemail.com`, `mx2.privateemail.com` (pref 10)
+- `SPF` → `v=spf1 include:spf.privateemail.com ~all`
+- **No DMARC record.** Worth adding, but it does not block launch.
+
+A live test message sent 2026-09-17 18:51Z produced **no bounce**, rechecked on
+2026-09-18 past the window in which a final non-delivery report would arrive. The
+message was accepted. **Acceptance is not receipt** — nobody has yet read that
+message out of the Private Email inbox, so the mailbox gate stays unverified
+until the owner opens it and confirms.
+
+The Google Workspace account on `apexhospitalitygrouplvcom.com` is a separate
+record. It is not the published mailbox, and `docs/dns-audit.md` carries the open
+question about that domain's spelling.
+
+## The lead form
+
+`site/start-a-project.html` posts to **Web3Forms** at
+`https://api.web3forms.com/submit`. The production access key is already present
+in the page. Web3Forms access keys are front-end identifiers that the service
+expects to be public — it is not a secret, and it is not treated as one. See
+`docs/lead-capture.md`.
+
+The page still carries a guard that detects an unreplaced placeholder key and,
+rather than failing silently, shows the visitor working **Email Apex** and **Call
+Apex** buttons. Leave that guard in place.
+
+## OWNER VERIFICATION CHECKLIST
+
+**None of the following can be verified from a development session.** Egress
+from the build environment is blocked (a `CONNECT` to the domain returns 403),
+so the certificate has never been fetched and no live form submission has ever
+been made from here. Every item below needs the owner, on a real network, in a
+real browser, with a real phone.
+
+Record each result in `data/company.json` under `status`. `tools/launch-gate.mjs`
+reads that file and requires the gates to be **literally `true`**. `null` and
+`false` both hold the line. There is deliberately no bypass flag — do not add
+one, and do not mark an item true without having done it.
+
+| # | Check | Pass looks like | Records into |
 |---|---|---|---|
-| `@` | A | `76.76.21.21` | Automatic |
-| `www` | CNAME | `cname.vercel-dns.com` | Automatic |
+| 1 | **HTTPS** | `https://apexhospitalitygrouplv.org` loads over TLS with no warning interstitial | `httpsVerified` |
+| 2 | **Padlock** | Browser shows the padlock; certificate is issued to this domain and in date | `httpsVerified` |
+| 3 | **Apex domain** | The apex serves the site — not a 404, not a Vercel placeholder, not parking | `websiteLive`, `domainConnected` |
+| 4 | **www behavior** | `www.apexhospitalitygrouplv.org` redirects to the apex, still over HTTPS | `domainConnected` |
+| 5 | **Homepage** | Every section has photographs, no blank gaps, nav and footer links work | `websiteLive` |
+| 6 | **Start a Project page** | `/start-a-project.html` loads; fields, labels and validation behave | — |
+| 7 | **Form submission** | Submit a real filled form and see the success state | `formSubmissionVerified` |
+| 8 | **Private Email receipt** | **Open the Private Email inbox** and confirm that exact submission arrived with every field | `emailReceives` |
+| 9 | **Mobile rendering** | On an actual phone, not a narrow window: no sideways scroll, tap targets reachable | — |
+| 10 | **Desktop rendering** | Full-width browser: nothing overlapping, no sideways scroll | — |
 
-At Namecheap: **Domain List -> Manage -> Advanced DNS**. Delete any parking
-or redirect records for `@` and `www` first, or they will conflict.
+Items 7 and 8 are one test, not two. A success panel in the browser only proves
+the request was accepted. **The lead is real when it is sitting in the inbox.**
 
-**Namecheap will not be touched from here without explicit authorization.**
+Also worth doing once the domain is live, none of it gate-blocking:
 
-In the Vercel project add **both** `apexcontentstudio.online` and
-`www.apexcontentstudio.online`, and set `www` to redirect to the apex. The page
-declares `https://apexcontentstudio.online/` as canonical, so the apex is the
-destination.
+- `https://apexhospitalitygrouplv.org/robots.txt` returns text, not a 404
+- `https://apexhospitalitygrouplv.org/sitemap.xml` returns XML, not a 404
+- Paste the URL into Slack or LinkedIn's composer — **without posting** — and
+  confirm the social card renders
+- Submit the sitemap in Google Search Console
 
-TLS is issued automatically once the records resolve - usually minutes, up to
-48 hours.
+## Historical — the 2026-09-12 integration attempt
 
-## Deploying on Vercel
+Kept because it explains why deployment is a dashboard job rather than an
+automated one, and so nobody spends another afternoon retrying it.
 
-The project root must point at `site/`, with no build command and no output
-directory. In the Vercel dashboard that is:
+Against the Vercel account "chef3600's projects" (Hobby), the integration token
+could create projects but could not read, list or configure them:
 
-- Framework Preset: **Other**
-- Root Directory: **site**
-- Build Command: leave empty
-- Output Directory: leave empty
+| Call | Result |
+|---|---|
+| `list_projects` | `[]` — empty list |
+| `get_project` (by id and by name) | `404 Not Found` |
+| `list_deployments` | `403 Forbidden` |
+| `create_git_project` "apex-content-studio" | `409 conflict` — already exists |
+| `create_git_project` "apex-content-os" | `409 conflict` |
 
-There is deliberately no `vercel.json` in this repo. Adding one would change
-deploy behavior, and the project settings are yours to control.
-
-## DNS
-
-Add the domain in the Vercel project, then create exactly the records Vercel
-shows you for it. Do not copy record values from anywhere else, including
-this file - they are per-project and they change. Vercel issues the TLS
-certificate automatically once the records resolve.
-
-Point both the apex (`apexcontentstudio.online`) and `www` at the project,
-and set one to redirect to the other so the canonical URL has a single form.
-The page declares `https://apexcontentstudio.online/` as canonical, so the
-apex should be the destination and `www` the redirect.
-
-## After it is live
-
-1. **Send a test email to hello@apexcontentstudio.online and confirm it
-   arrives.** That address is the only contact path on the site. If it does
-   not receive mail, every inbound lead is lost silently.
-2. Open the page on a phone, not just a narrow browser window.
-3. Paste the URL into Slack, LinkedIn and iMessage and confirm the social
-   card renders. The card is `og-image.jpg`.
-4. Submit `https://apexcontentstudio.online/sitemap.xml` in Google Search
-   Console.
-
-## Rolling back
-
-Once production tracks `main`, every deploy is a commit on `main`. Redeploy an
-earlier commit from the Vercel dashboard; there is no state to migrate and no cache
-to clear beyond the CDN, which Vercel invalidates on deploy.
+That is a permissions problem on the connection, not something a different call
+fixes. Two projects may have been left in the account — `apex-content-studio`
+and `apex-content-os`. **Keep one**, and delete the other from
+Settings → Delete Project. The surviving project is the one connected to
+`Chef3600/apex-content-os` with the settings in the Vercel section above.
