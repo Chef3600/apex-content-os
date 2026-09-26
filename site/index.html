@@ -125,6 +125,14 @@ nav .links{display:flex;gap:24px;margin-left:auto;font-size:13.5px;color:var(--i
 nav .links a{text-decoration:none}
 nav .links a:hover{color:var(--gold-ink)}
 @media (max-width:920px){nav .links{display:none}}
+/* The nav row has no give: .btn is nowrap and the wordmark holds its full width,
+   so the button is pushed past the viewport edge - with seven links below about
+   1000px, and on a narrow phone where logo + wordmark + button no longer fit.
+   Give the row somewhere to yield. The logomark and the link's aria-label keep
+   the brand present and announced once the wordmark is out. */
+@media (max-width:1080px){nav .links{gap:15px;font-size:13px}}
+@media (max-width:1000px){nav .links{display:none}}
+@media (max-width:380px){.wordmark{display:none}}
 .btn{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.13em;
      text-transform:uppercase;text-decoration:none;padding:14px 26px;border-radius:2px;
      border:1.5px solid var(--gold-ink);background:var(--gold-ink);color:#fff;white-space:nowrap;
@@ -279,6 +287,34 @@ nav .links a:hover{color:var(--gold-ink)}
 .pf-card h3{font-family:var(--body);font-size:14px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
 .pf-card p{font-size:14.5px;color:var(--ink-mid);margin-top:7px;max-width:52ch}
 
+/* ---------- client work ----------
+   Real client work is never gated behind a decorative image. This block carries
+   no [data-block], so no missing file can hide it. The green tag is reserved
+   for paid client work; .tag.spec (gold) stays on concept work. */
+.tag.client{background:#35684A;color:#F5F1E8}
+.vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.clientcard{margin-top:clamp(30px,4.4vw,46px);background:var(--ivory);
+  border:1px solid var(--rule);border-left:3px solid #35684A;border-radius:2px;
+  padding:clamp(24px,3.4vw,40px)}
+.cc-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.cc-head h3{font-family:var(--display);font-size:clamp(25px,3.4vw,38px);letter-spacing:-.02em}
+.cc-sub{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;
+  color:var(--gold-ink);margin-top:10px}
+.cc-body{font-size:clamp(15.5px,1.7vw,17.5px);line-height:1.6;color:var(--ink-mid);
+  margin-top:22px;max-width:64ch}
+.cc-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 26px;
+  margin:26px 0 0;padding:24px 0 0;border-top:1px solid var(--rule-soft)}
+@media (max-width:620px){.cc-facts{grid-template-columns:1fr}}
+.cc-facts dt{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  font-weight:700;color:var(--ink-soft)}
+.cc-facts dd{margin:6px 0 0;font-size:15px;color:var(--ink)}
+.cc-facts a{color:var(--gold-ink);font-weight:600;text-decoration:none;
+  border-bottom:1px solid rgba(132,94,30,.35);overflow-wrap:anywhere}
+.cc-facts a:hover{border-bottom-color:var(--gold-ink)}
+.cc-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+.svc article.wide{grid-column:1/-1}
+
 /* ---------- about ---------- */
 .about{background:var(--char);color:var(--bone)}
 .about h2{color:var(--bone)}
@@ -346,6 +382,7 @@ footer .r{margin-left:auto}
       <span class="wordmark">Apex<i>&middot;</i>Content Studio</span>
     </a>
     <div class="links">
+      <a href="#clients">Clients</a>
       <a href="#work">Work</a>
       <a href="#industries">Industries</a>
       <a href="#craft">The Studio</a>
@@ -562,6 +599,7 @@ footer .r{margin-left:auto}
         <article><div class="n">04</div><h3>Ad Creative</h3><p>Paid assets in the sizes the platforms actually want, built as variants from one shoot.</p></article>
         <article><div class="n">05</div><h3>Campaign Production</h3><p>A full creative plan: direction, shot list, production and delivery on a schedule.</p></article>
         <article><div class="n">06</div><h3>Content Repurposing</h3><p>Existing footage and stills recut and regraded into assets you can keep publishing.</p></article>
+        <article class="wide"><div class="n">07</div><h3>Website Design &amp; Development</h3><p>Commercial websites designed and built for small and mid-sized businesses: layout, page structure, copy placement and front-end build, with the content and the site produced by the same studio. See the <a href="best-yall-cigars-website.html">Best Y&rsquo;all Cigars website project</a>.</p></article>
       </div>
       <p class="cta-alt" style="margin-top:28px">Shooting in the valley?
         <a href="food-photography-las-vegas.html">Food photography in Las Vegas</a>
@@ -570,42 +608,84 @@ footer .r{margin-left:auto}
   </section>
 
   <!-- ============ PORTFOLIO ============ -->
+  <!-- ============ CLIENT WORK ============
+       Paid client work. Deliberately NOT gated by [data-block]/[data-sec]: the
+       only real client project on the site must not be able to disappear
+       because an image failed to decode. -->
+  <section id="clients" style="background:var(--cream);border-top:1px solid var(--rule)">
+    <div class="wrap">
+      <p class="eyebrow">Client Work</p>
+      <h2>Work we were hired to do.</h2>
+      <p class="lede" style="margin-top:20px">Projects delivered for clients. Concept and spec
+        work is shown separately below, and labeled as such.</p>
+
+      <article class="clientcard">
+        <div class="cc-head">
+          <div>
+            <h3>Best Y&rsquo;all Cigars</h3>
+            <p class="cc-sub">Website Design &amp; Development</p>
+          </div>
+          <span class="tag client">Real Client Project</span>
+        </div>
+
+        <p class="cc-body">Apex Content Studio designed and built the website for Best Y&rsquo;all
+          Cigars, a Las Vegas cigar business. Design, page structure and front-end build were
+          produced by Apex Content Studio. The site is live.</p>
+
+        <dl class="cc-facts">
+          <div><dt>Client</dt><dd>Best Y&rsquo;all Cigars</dd></div>
+          <div><dt>Project</dt><dd>Website Design &amp; Development</dd></div>
+          <div><dt>Apex Content Studio</dt><dd>Website design and development</dd></div>
+          <div><dt>Website</dt><dd><a href="https://bestcigarslv.com/" target="_blank" rel="noopener">bestcigarslv.com<span class="vh"> (opens in a new tab)</span></a></dd></div>
+        </dl>
+
+        <div class="cc-cta">
+          <a class="btn" href="best-yall-cigars-website.html">Read the project</a>
+          <a class="btn ghost" href="https://bestcigarslv.com/" target="_blank" rel="noopener">Visit the site<span class="vh"> (opens in a new tab)</span></a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ PORTFOLIO (concept / spec) ============ -->
   <section id="work" data-sechide style="background:var(--cream);border-top:1px solid var(--rule)">
     <div class="wrap">
       <p class="eyebrow">Work</p>
       <h2>Selected work.</h2>
-      <p class="lede" style="margin-top:20px">Food, packaged food, beverage, consumer products, hospitality
-        and production.</p>
+      <p class="lede" style="margin-top:20px">Food, packaged food, beverage, consumer products,
+        hospitality and production. Every frame below is concept and spec work produced by the
+        studio to demonstrate capability, not work commissioned by a client. Client projects are
+        shown above, under <a href="#clients" style="color:var(--gold-ink)">Client Work</a>.</p>
 
       <div class="pf-grid" data-sec>
         <article class="pf-card" data-block>
           <img data-asset src="images/portfolio/food/food-hero.webp" alt="Commercial food photograph of a plated dish in directional daylight" width="470" height="315" decoding="async">
-          <div class="meta"><h3>Food</h3><span class="tag spec">Concept</span></div>
+          <div class="meta"><h3>Food</h3><span class="tag spec">Concept / Spec Work</span></div>
           <p>Plated food shot for menus, delivery platforms and paid social.</p>
         </article>
         <article class="pf-card" data-block>
           <img data-asset src="images/portfolio/packaged-food/packaged-hero.webp" alt="Commercial photograph of an unbranded jar on a warm stone surface" width="760" height="510" decoding="async">
-          <div class="meta"><h3>Packaged Food</h3><span class="tag spec">Concept</span></div>
+          <div class="meta"><h3>Packaged Food</h3><span class="tag spec">Concept / Spec Work</span></div>
           <p>Shelf and e-commerce heroes with the label held still and legible.</p>
         </article>
         <article class="pf-card" data-block>
           <img data-asset src="images/portfolio/beverage/beverage-hero.webp" alt="Commercial beverage photograph with backlight through ice" width="470" height="315" decoding="async">
-          <div class="meta"><h3>Beverage</h3><span class="tag spec">Concept</span></div>
+          <div class="meta"><h3>Beverage</h3><span class="tag spec">Concept / Spec Work</span></div>
           <p>Pour, splash and condensation shot at shutter speeds that hold the physics.</p>
         </article>
         <article class="pf-card" data-block>
           <img data-asset src="images/portfolio/consumer-products/product-hero.webp" alt="Commercial photograph of an unbranded consumer product on a gradient ground" width="760" height="510" decoding="async">
-          <div class="meta"><h3>Consumer Products</h3><span class="tag spec">Concept</span></div>
+          <div class="meta"><h3>Consumer Products</h3><span class="tag spec">Concept / Spec Work</span></div>
           <p>Clean product heroes with negative space reserved for campaign copy.</p>
         </article>
         <article class="pf-card" data-block>
           <img data-asset src="images/portfolio/hospitality/hospitality-hero.webp" alt="Hospitality photograph of a dining room in warm evening light" width="420" height="282" decoding="async">
-          <div class="meta"><h3>Hospitality</h3><span class="tag spec">Concept</span></div>
+          <div class="meta"><h3>Hospitality</h3><span class="tag spec">Concept / Spec Work</span></div>
           <p>Rooms, service and the pass, shot the way guests actually experience them.</p>
         </article>
         <article class="pf-card" data-block>
           <img data-asset src="images/portfolio/production/production-hero.webp" alt="Cinema camera and lit product set during a commercial production" width="380" height="255" decoding="async">
-          <div class="meta"><h3>Production</h3><span class="tag spec">Concept</span></div>
+          <div class="meta"><h3>Production</h3><span class="tag spec">Concept / Spec Work</span></div>
           <p>Camera, lighting and art direction handled in one pass, on one call sheet.</p>
         </article>
       </div>
