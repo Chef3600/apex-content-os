@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Apex Content Studio &mdash; Commercial Content Production</title>
-<meta name="description" content="Apex Content Studio: Las Vegas commercial photography, video and website design and development for food, beverage, consumer product and hospitality brands.">
+<meta name="description" content="Las Vegas commercial content production: photography, video, advertising creative and website design for businesses, brands and creators across every industry.">
 <link rel="canonical" href="https://apexhospitalitygrouplv.org/">
 <meta name="theme-color" content="#B8862F">
 <meta name="robots" content="index,follow,max-image-preview:large">
 
 <meta property="og:site_name" content="Apex Content Studio">
 <meta property="og:title" content="Apex Content Studio">
-<meta property="og:description" content="Commercial content for brands that want to be seen.">
+<meta property="og:description" content="Commercial content for businesses, brands and people who need to be seen.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://apexhospitalitygrouplv.org/">
 <meta property="og:image" content="https://apexhospitalitygrouplv.org/og-image.jpg">
@@ -20,7 +20,7 @@
 <meta property="og:image:alt" content="Apex Content Studio - commercial content production">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Apex Content Studio">
-<meta name="twitter:description" content="Commercial content for brands that want to be seen.">
+<meta name="twitter:description" content="Commercial content for businesses, brands and people who need to be seen.">
 <meta name="twitter:image" content="https://apexhospitalitygrouplv.org/og-image.jpg">
 
 <link rel="preload" as="image" href="images/production/hero-camera-food-set.webp" type="image/webp" fetchpriority="high">
@@ -33,7 +33,7 @@
   "@type": "ProfessionalService",
   "name": "Apex Content Studio",
   "url": "https://apexhospitalitygrouplv.org/",
-  "description": "Commercial content studio producing photography, video and websites for food, packaged goods, beverage, consumer products and hospitality brands.",
+  "description": "Commercial content production company producing photography, video, advertising creative and websites for businesses, brands and creators in Las Vegas.",
   "email": "hello@apexhospitalitygrouplv.org",
   "telephone": "+1-702-480-9198",
   "image": "https://apexhospitalitygrouplv.org/og-image.jpg",
@@ -52,12 +52,17 @@
   },
   "knowsAbout": [
     "Commercial photography",
-    "Short-form video",
-    "Product creative",
+    "Commercial video production",
+    "Creator content",
+    "Brand films",
+    "Social content",
+    "Product photography",
     "Advertising creative",
     "Campaign production",
+    "Website design and development",
     "Content repurposing",
-    "Website design and development"
+    "Recurring content programs",
+    "Post-production"
   ]
 }
 </script>
@@ -156,7 +161,10 @@ nav .links a:hover{color:var(--gold-ink)}
 .heroshot img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;object-position:50% 60%;
   transform:scale(1.04);transition:transform 1.4s cubic-bezier(.16,1,.3,1)}
 .heroshot.ready img{transform:scale(1)}
-@media (max-width:720px){.heroshot img{aspect-ratio:4/3;object-position:34% 78%}}
+/* The source frame is 1100x614 (1.792). A 4/3 mobile box cropped 25.6% of the
+   width and cut the plated dish in half - the camera and the food are the whole
+   point of the picture. 16/9 is 1.778, so the composition survives intact. */
+@media (max-width:720px){.heroshot img{aspect-ratio:16/9;object-position:50% 55%}}
 
 /* Industries strip: reuses the site's existing data-block reveal convention. */
 .industries{padding:clamp(64px,8vw,110px) 0;background:var(--cream, #f6f4ef)}
@@ -264,6 +272,7 @@ nav .links a:hover{color:var(--gold-ink)}
    file never decodes, the visitor gets the original outline - never a hole. */
 .afill,.avid{position:relative;overflow:hidden}
 .afill img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  object-position:50% 45%;
   opacity:0;transition:opacity .6s ease}
 .afill img.ready{opacity:1}
 .ashape .ph{transition:opacity .4s ease}
@@ -329,6 +338,106 @@ nav .links a:hover{color:var(--gold-ink)}
 .cc-facts a:hover{border-bottom-color:var(--gold-ink)}
 .cc-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
 .svc article.wide{grid-column:1/-1}
+
+/* ================= MOBILE NAVIGATION =================
+   A phone gets its own menu rather than a squeezed desktop bar. The button is
+   only rendered where the link row is hidden, so the two can never both show. */
+.navtoggle{display:none;margin-left:auto;align-items:center;gap:8px;background:none;
+  border:1.5px solid var(--rule);border-radius:2px;padding:10px 13px;cursor:pointer;
+  font:inherit;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink)}
+.navtoggle:hover{border-color:var(--gold-ink);color:var(--gold-ink)}
+.navtoggle i{display:block;width:17px;height:10px;position:relative;flex:0 0 auto}
+.navtoggle i::before,.navtoggle i::after,.navtoggle i span{content:"";position:absolute;left:0;
+  width:100%;height:1.5px;background:currentColor;transition:transform .2s ease,opacity .2s ease}
+.navtoggle i::before{top:0}.navtoggle i span{top:4.25px}.navtoggle i::after{bottom:0}
+.navtoggle[aria-expanded="true"] i::before{transform:translateY(4.25px) rotate(45deg)}
+.navtoggle[aria-expanded="true"] i span{opacity:0}
+.navtoggle[aria-expanded="true"] i::after{transform:translateY(-4.25px) rotate(-45deg)}
+.navpanel{display:none;border-top:1px solid var(--rule-soft);background:var(--ivory)}
+.navpanel.open{display:block}
+.navpanel ul{list-style:none;margin:0;padding:8px 24px 20px}
+.navpanel a{display:block;padding:15px 0;text-decoration:none;font-size:16px;font-weight:600;
+  color:var(--ink);border-bottom:1px solid var(--rule-soft)}
+.navpanel a:last-child{border-bottom:0}
+.navpanel .btn{display:block;text-align:center;margin-top:16px;border-bottom:0}
+@media (max-width:1000px){
+  .navtoggle{display:inline-flex}
+  nav .inner .btn{display:none}
+}
+@media (min-width:1001px){.navpanel{display:none!important}}
+
+/* ================= WHO WE SERVE =================
+   Text cards only. Nothing here is image-gated, so no missing file can hide a
+   market we serve. These are TARGET MARKETS, not a client list. */
+.whogrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);
+  border:1px solid var(--rule);margin-top:clamp(34px,5vw,54px)}
+@media (max-width:980px){.whogrid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.whogrid{grid-template-columns:1fr}}
+.whocard{background:var(--ivory);padding:clamp(22px,2.6vw,30px);display:flex;
+  flex-direction:column;gap:10px}
+.whocard .n{font-family:var(--display);font-size:13px;font-weight:600;color:var(--gold-ink);
+  letter-spacing:.06em}
+.whocard h3{font-family:var(--body);font-size:14px;font-weight:800;letter-spacing:.13em;
+  text-transform:uppercase;line-height:1.3}
+.whocard p{font-size:14px;line-height:1.55;color:var(--ink-mid)}
+.whonote{margin-top:clamp(24px,3vw,32px);font-size:14.5px;line-height:1.6;color:var(--ink-soft);
+  max-width:66ch}
+
+/* ================= PROCESS ================= */
+.process{background:var(--char);color:var(--bone)}
+.process h2{color:var(--bone)}
+.process .eyebrow{color:var(--gold)}
+.process .lede{color:var(--bone-dim)}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(18px,2.4vw,30px);
+  margin-top:clamp(36px,5vw,56px)}
+@media (max-width:1040px){.steps{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:700px){.steps{grid-template-columns:1fr;gap:26px}}
+.step{border-top:2px solid var(--gold);padding-top:16px}
+.step .n{font-family:var(--display);font-size:clamp(26px,3vw,36px);font-weight:600;
+  color:var(--gold);line-height:1}
+.step h3{font-family:var(--body);font-size:13px;font-weight:800;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--bone);margin-top:12px}
+.step p{font-size:14px;line-height:1.55;color:var(--bone-dim);margin-top:9px}
+.recurring{margin-top:clamp(34px,4.4vw,52px);padding-top:clamp(28px,3.4vw,38px);
+  border-top:1px solid rgba(245,241,232,.18);display:grid;grid-template-columns:auto 1fr;
+  gap:8px 26px;align-items:baseline}
+@media (max-width:700px){.recurring{grid-template-columns:1fr;gap:10px}}
+.recurring b{font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);white-space:nowrap}
+.recurring p{font-size:15px;line-height:1.6;color:var(--bone-dim);max-width:58ch}
+
+/* ================= OFFERS ================= */
+.offergrid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2vw,24px);
+  margin-top:clamp(34px,5vw,52px)}
+@media (max-width:1040px){.offergrid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:620px){.offergrid{grid-template-columns:1fr}}
+.offer{border:1px solid var(--rule);border-top:3px solid var(--gold);border-radius:2px;
+  background:var(--ivory);padding:clamp(22px,2.6vw,30px);display:flex;flex-direction:column}
+.offer h3{font-family:var(--body);font-size:12.5px;font-weight:800;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--gold-ink)}
+.offer .price{font-family:var(--display);font-size:clamp(28px,3.4vw,38px);font-weight:600;
+  line-height:1.05;margin-top:12px;letter-spacing:-.02em}
+.offer .price small{display:block;font-family:var(--body);font-size:12px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-top:7px}
+.offer ul{list-style:none;margin:18px 0 0;padding:18px 0 0;border-top:1px solid var(--rule-soft);
+  font-size:14px;line-height:1.5;color:var(--ink-mid)}
+.offer li{position:relative;padding-left:15px;margin-top:8px}
+.offer li::before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;
+  border-radius:50%;background:var(--gold)}
+.offernote{margin-top:clamp(24px,3vw,32px);font-size:14.5px;line-height:1.6;color:var(--ink-soft);
+  max-width:70ch}
+
+/* ================= SERVICE LIST (editorial) ================= */
+.caplist{display:grid;grid-template-columns:repeat(2,1fr);gap:0 clamp(30px,5vw,70px);
+  margin-top:clamp(34px,5vw,52px)}
+@media (max-width:760px){.caplist{grid-template-columns:1fr}}
+.caplist div{display:flex;align-items:baseline;gap:16px;padding:17px 0;
+  border-bottom:1px solid var(--rule-soft)}
+.caplist span{font-family:var(--display);font-size:13px;color:var(--gold-ink);flex:0 0 auto;
+  min-width:22px}
+.caplist b{font-size:clamp(16px,1.9vw,19px);font-weight:600;font-family:var(--display);
+  letter-spacing:-.01em;line-height:1.25}
 
 /* ---------- about ---------- */
 .about{background:var(--char);color:var(--bone)}
@@ -397,15 +506,27 @@ footer .r{margin-left:auto}
       <span class="wordmark">Apex<i>&middot;</i>Content Studio</span>
     </a>
     <div class="links">
-      <a href="#clients">Clients</a>
       <a href="#work">Work</a>
-      <a href="#industries">Industries</a>
-      <a href="#craft">The Studio</a>
-      <a href="#method">Method</a>
       <a href="#services">Services</a>
+      <a href="#who">Who We Serve</a>
+      <a href="#process">Process</a>
       <a href="#about">About</a>
     </div>
     <a class="btn" href="start-a-project.html">Start a Project</a>
+    <button class="navtoggle" type="button" aria-expanded="false" aria-controls="navpanel">
+      <i><span></span></i>Menu
+    </button>
+  </div>
+  <div class="navpanel" id="navpanel">
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#who">Who We Serve</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#offers">Offers</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a class="btn" href="start-a-project.html">Start a Project</a></li>
+    </ul>
   </div>
 </nav>
 
@@ -414,9 +535,9 @@ footer .r{margin-left:auto}
   <!-- ============ HERO ============ -->
   <header class="hero">
     <div class="wrap">
-      <p class="eyebrow">Commercial Content Production</p>
-      <h1>Content that drives business.</h1>
-      <p class="sub">Commercial photography, video and visual content for brands that want to be seen.</p>
+      <p class="eyebrow">Commercial Content Production &middot; Las Vegas</p>
+      <h1>Content for businesses, brands and people who need to be seen.</h1>
+      <p class="sub">Photography. Video. Campaign creative. Websites. Content systems.</p>
       <div class="cta">
         <a class="btn" href="start-a-project.html">Start a Project</a>
         <a class="btn ghost" href="#work">View Our Work</a>
@@ -424,7 +545,7 @@ footer .r{margin-left:auto}
 
       <div class="heroshot" data-block>
         <img data-asset src="images/production/hero-camera-food-set.webp"
-             alt="Professional cinema camera on a lit commercial food set, shallow depth of field across a plated dish"
+             alt="Professional cinema camera on a lit commercial set, directed at a plated dish across a marble counter"
              width="1100" height="614" fetchpriority="high">
       </div>
 
@@ -506,9 +627,95 @@ footer .r{margin-left:auto}
   <!-- ============ STRIP ============ -->
   <section class="strip">
     <div class="wrap g">
-      <div class="stat"><b>Product, food and beverage</b><span>Packaged goods, consumer products and hospitality &mdash; with a working chef on the food.</span></div>
+      <div class="stat"><b>Built for any business</b><span>Professional services, medical, legal, property, retail, creators and hospitality &mdash; one production system.</span></div>
       <div class="stat"><b>One shoot, many assets</b><span>A single production feeds paid, organic, site and email.</span></div>
       <div class="stat"><b>Direction first</b><span>Camera, light and composition are decided before anything rolls.</span></div>
+    </div>
+  </section>
+
+
+  <!-- ============ WHO WE SERVE ============
+       TARGET MARKETS, not a client list. The note below states that plainly so
+       no visitor can read this grid as existing clients. Text only - nothing
+       here is image-gated, so no missing file can hide a market. -->
+  <section id="who" style="background:var(--cream);border-top:1px solid var(--rule)">
+    <div class="wrap">
+      <p class="eyebrow">Who We Serve</p>
+      <h2>One production system. Built for different businesses.</h2>
+      <p class="lede" style="margin-top:20px">The camera, the direction and the delivery do not
+        change by industry. What changes is what we point them at.</p>
+
+      <div class="whogrid">
+        <article class="whocard">
+          <p class="n">01</p>
+          <h3>Content Creators</h3>
+          <p>Creator shoots, personal brands, social video, thumbnails, portraits, campaign assets and recurring content.</p>
+        </article>
+        <article class="whocard">
+          <p class="n">02</p>
+          <h3>Law Firms</h3>
+          <p>Attorney profiles, practice-area video, firm photography, website content, social content and campaign creative.</p>
+        </article>
+        <article class="whocard">
+          <p class="n">03</p>
+          <h3>Medical &amp; Dental</h3>
+          <p>Professional photography, provider video, facility content, educational video and brand assets.</p>
+        </article>
+        <article class="whocard">
+          <p class="n">04</p>
+          <h3>Med Spas &amp; Aesthetics</h3>
+          <p>Treatment content, provider profiles, facility photography, social video and campaign creative.</p>
+        </article>
+        <article class="whocard">
+          <p class="n">05</p>
+          <h3>Restaurants &amp; Hospitality</h3>
+          <p>Food photography, menu imagery, beverage content, environment photography, social video and campaigns.</p>
+        </article>
+        <article class="whocard">
+          <p class="n">06</p>
+          <h3>Real Estate</h3>
+          <p>Property photography, video, agent content, commercial property media and marketing assets.</p>
+        </article>
+        <article class="whocard">
+          <p class="n">07</p>
+          <h3>Automotive</h3>
+          <p>Vehicle photography, dealership content, promotional video and campaign assets.</p>
+        </article>
+        <article class="whocard">
+          <p class="n">08</p>
+          <h3>Fitness &amp; Wellness</h3>
+          <p>Trainer content, facility photography, social video, campaign imagery and recurring content.</p>
+        </article>
+        <article class="whocard">
+          <p class="n">09</p>
+          <h3>Home Services</h3>
+          <p>Contractors, landscapers, remodelers, HVAC, roofing, coatings, cleaning and related businesses.</p>
+        </article>
+        <article class="whocard">
+          <p class="n">10</p>
+          <h3>Professional Services</h3>
+          <p>Consultants, financial services, agencies, technology companies and other professional businesses.</p>
+        </article>
+        <article class="whocard">
+          <p class="n">11</p>
+          <h3>Retail &amp; Consumer Brands</h3>
+          <p>Product photography, packaging, lifestyle imagery, advertising creative and e-commerce assets.</p>
+        </article>
+        <article class="whocard">
+          <p class="n">12</p>
+          <h3>Corporate &amp; Events</h3>
+          <p>Corporate video, executive content, event coverage, interviews and campaign assets.</p>
+        </article>
+      </div>
+
+      <p class="whonote">These are the markets Apex Content Studio is built to serve and is
+        available for. They are not a client list. Delivered client work is shown separately
+        under <a href="#clients" style="color:var(--gold-ink);font-weight:600">Client Work</a>,
+        and studio-produced demonstration work is labeled Concept / Spec Work.</p>
+
+      <div class="cta" style="margin-top:32px">
+        <a class="btn" href="start-a-project.html">Request a Project Plan</a>
+      </div>
     </div>
   </section>
 
@@ -612,12 +819,12 @@ footer .r{margin-left:auto}
         concept and spec work, produced in house to show the formats a single production delivers.</p>
 
       <div class="assets">
-        <article><div class="ashape afill" style="aspect-ratio:1/1"><span class="ph">1:1</span><span class="ratio">1:1</span><img data-fill src="images/portfolio/packaged-food/packaged-hero.webp" alt="CONCEPT: packaged goods hero, lit for the material with the label legible at thumbnail size" width="480" height="480" loading="lazy" decoding="async"></div><h3>Product Hero</h3><p>The frame that has to carry the sale. Shot static, lit for the material, with the label legible at thumbnail size.</p></article>
+        <article><div class="ashape afill" style="aspect-ratio:1/1"><span class="ph">1:1</span><span class="ratio">1:1</span><img data-fill src="images/portfolio/packaged-food/packaged-hero.webp" alt="Concept and spec work: packaged goods hero, lit for the material with the label legible at thumbnail size" width="480" height="480" loading="lazy" decoding="async"></div><h3>Product Hero</h3><p>The frame that has to carry the sale. Shot static, lit for the material, with the label legible at thumbnail size.</p></article>
         <article><div class="ashape avid afill" style="aspect-ratio:9/16"><span class="ph">9:16</span><span class="ratio">9:16</span><video data-asset muted loop playsinline preload="none" width="480" height="832" poster="videos/social-vertical-macro.jpg" aria-label="CONCEPT: vertical social cut - a cinema lens racks past a plated dish as steam rises"><source src="videos/social-vertical-macro.webm" type="video/webm"><source src="videos/social-vertical-macro.mp4" type="video/mp4"></video></div><h3>Social Video</h3><p>Vertical, legible with sound off, hook in the first second. Cut from the same setup as the hero so the product reads identically.</p></article>
-        <article><div class="ashape afill" style="aspect-ratio:4/5"><span class="ph">4:5</span><span class="ratio">4:5</span><img data-fill src="images/portfolio/consumer-products/product-hero.webp" alt="CONCEPT: consumer product frame built as a paid variant, with negative space held for copy" width="480" height="600" loading="lazy" decoding="async"></div><h3>Ad Creative</h3><p>Paid variants built as a set, with negative space reserved so the copy never lands on the product.</p></article>
-        <article><div class="ashape afill" style="aspect-ratio:3/2"><span class="ph">3:2</span><span class="ratio">3:2</span><img data-fill src="images/portfolio/hospitality/hospitality-hero.webp" alt="CONCEPT: hospitality lifestyle frame, the product in a real service context" width="600" height="400" loading="lazy" decoding="async"></div><h3>Lifestyle Image</h3><p>The product in a real context: hands, table, service. Shot to make the thing feel used, not displayed.</p></article>
-        <article><div class="ashape afill" style="aspect-ratio:16/9"><span class="ph">16:9</span><span class="ratio">16:9</span><img data-fill src="images/portfolio/food/food-hero.webp" alt="CONCEPT: wide food frame cropped from the same production for site banners" width="640" height="360" loading="lazy" decoding="async"></div><h3>Website Image</h3><p>Wide banners and section headers cropped from the same production, so the site and the ads agree.</p></article>
-        <article><div class="ashape afill" style="aspect-ratio:2/1"><span class="ph">2:1</span><span class="ratio">2:1</span><img data-fill src="images/portfolio/beverage/beverage-hero.webp" alt="CONCEPT: bright high-contrast beverage frame sized for an email preview pane" width="640" height="320" loading="lazy" decoding="async"></div><h3>Email Creative</h3><p>Small, bright and high-contrast, because it will be seen in a preview pane on a phone.</p></article>
+        <article><div class="ashape afill" style="aspect-ratio:4/5"><span class="ph">4:5</span><span class="ratio">4:5</span><img data-fill src="images/portfolio/consumer-products/product-hero.webp" alt="Concept and spec work: consumer product frame built as a paid variant, with negative space held for copy" width="480" height="600" loading="lazy" decoding="async"></div><h3>Ad Creative</h3><p>Paid variants built as a set, with negative space reserved so the copy never lands on the product.</p></article>
+        <article><div class="ashape afill" style="aspect-ratio:3/2"><span class="ph">3:2</span><span class="ratio">3:2</span><img data-fill src="images/portfolio/hospitality/hospitality-hero.webp" alt="Concept and spec work: hospitality frame, the product in a real service context" width="600" height="400" loading="lazy" decoding="async"></div><h3>Lifestyle Image</h3><p>The product in a real context: hands, table, service. Shot to make the thing feel used, not displayed.</p></article>
+        <article><div class="ashape afill" style="aspect-ratio:16/9"><span class="ph">16:9</span><span class="ratio">16:9</span><img data-fill src="images/portfolio/food/food-hero.webp" alt="Concept and spec work: wide food frame cropped from the same production for site banners" width="640" height="360" loading="lazy" decoding="async"></div><h3>Website Image</h3><p>Wide banners and section headers cropped from the same production, so the site and the ads agree.</p></article>
+        <article><div class="ashape afill" style="aspect-ratio:2/1"><span class="ph">2:1</span><span class="ratio">2:1</span><img data-fill src="images/portfolio/beverage/beverage-hero.webp" alt="Concept and spec work: bright high-contrast beverage frame sized for an email preview pane" width="640" height="320" loading="lazy" decoding="async"></div><h3>Email Creative</h3><p>Small, bright and high-contrast, because it will be seen in a preview pane on a phone.</p></article>
       </div>
     </div>
   </section>
@@ -627,16 +834,25 @@ footer .r{margin-left:auto}
     <div class="wrap">
       <p class="eyebrow">Services</p>
       <h2>What we produce.</h2>
-      <div class="svc">
-        <article><div class="n">01</div><h3>Commercial Photography</h3><p>Food, packaging and product shot for advertising, menus, e-commerce and press.</p></article>
-        <article><div class="n">02</div><h3>Short-Form Video</h3><p>Vertical video built for the platform it runs on, with the hook decided before the shoot.</p></article>
-        <article><div class="n">03</div><h3>Product Creative</h3><p>Packaging heroes, texture macros and context frames that hold up at full zoom.</p></article>
-        <article><div class="n">04</div><h3>Ad Creative</h3><p>Paid assets in the sizes the platforms actually want, built as variants from one shoot.</p></article>
-        <article><div class="n">05</div><h3>Campaign Production</h3><p>A full creative plan: direction, shot list, production and delivery on a schedule.</p></article>
-        <article><div class="n">06</div><h3>Content Repurposing</h3><p>Existing footage and stills recut and regraded into assets you can keep publishing.</p></article>
-        <article class="wide"><div class="n">07</div><h3>Website Design &amp; Development</h3><p>Commercial websites designed and built for small and mid-sized businesses: layout, page structure, copy placement and front-end build, with the content and the site produced by the same studio. See the <a href="best-yall-cigars-website.html">Best Y&rsquo;all Cigars website project</a>.</p></article>
+      <p class="lede" style="margin-top:20px">A full commercial production capability, from the
+        direction that happens before anything rolls to the files that land in your channels.</p>
+
+      <div class="caplist">
+        <div><span>01</span><b>Commercial Photography</b></div>
+        <div><span>02</span><b>Commercial Video</b></div>
+        <div><span>03</span><b>Creator Content</b></div>
+        <div><span>04</span><b>Brand Films</b></div>
+        <div><span>05</span><b>Social Content</b></div>
+        <div><span>06</span><b>Product Photography</b></div>
+        <div><span>07</span><b>Advertising Creative</b></div>
+        <div><span>08</span><b>Campaign Production</b></div>
+        <div><span>09</span><b>Website Design &amp; Development</b></div>
+        <div><span>10</span><b>Content Repurposing</b></div>
+        <div><span>11</span><b>Recurring Content Programs</b></div>
+        <div><span>12</span><b>Post-Production</b></div>
       </div>
-      <p class="cta-alt" style="margin-top:28px">Shooting in the valley?
+
+      <p class="cta-alt" style="margin-top:30px">Shooting in the valley?
         <a href="food-photography-las-vegas.html">Food photography in Las Vegas</a>
         &mdash; how we work with restaurants, chefs and food brands.</p>
     </div>
@@ -728,6 +944,75 @@ footer .r{margin-left:auto}
   </section>
 
   <!-- ============ ABOUT ============ -->
+
+  <!-- ============ PROCESS ============ -->
+  <section class="process" id="process">
+    <div class="wrap">
+      <p class="eyebrow">Process</p>
+      <h2>How a production runs.</h2>
+      <p class="lede" style="margin-top:20px">Five steps, the same on every job, whether the
+        subject is a plated dish, an attorney, a treatment room or a truck.</p>
+
+      <div class="steps">
+        <div class="step"><p class="n">01</p><h3>Discovery</h3><p>We understand the business, audience, offer, channels and deadline.</p></div>
+        <div class="step"><p class="n">02</p><h3>Creative Direction</h3><p>We define the visual direction, shot list, locations, props, talent and deliverables.</p></div>
+        <div class="step"><p class="n">03</p><h3>Production</h3><p>Photography and video are produced with the required lighting, composition and direction.</p></div>
+        <div class="step"><p class="n">04</p><h3>Post-Production</h3><p>Editing, color, retouching, captions, resizing and final asset preparation.</p></div>
+        <div class="step"><p class="n">05</p><h3>Delivery</h3><p>Files are delivered in the formats required for web, social, advertising and other channels.</p></div>
+      </div>
+
+      <div class="recurring">
+        <b>Recurring Content</b>
+        <p>For businesses that need ongoing production, the same five steps run on a monthly
+          calendar instead of a single booking, so the channels never run empty.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OFFERS ============
+       Production scopes and starting commercial offers. No result is promised
+       anywhere in this section - we sell production capacity, not outcomes. -->
+  <section id="offers" style="background:var(--cream);border-top:1px solid var(--rule)">
+    <div class="wrap">
+      <p class="eyebrow">Offers</p>
+      <h2>How to buy.</h2>
+      <p class="lede" style="margin-top:20px">Four ways in. Most businesses start with the Pilot
+        and move to a retainer once the assets are working in their channels.</p>
+
+      <div class="offergrid">
+        <article class="offer">
+          <h3>Pilot</h3>
+          <p class="price">$1,500<small>Entry production</small></p>
+          <ul><li>10 assets</li><li>3 formats</li><li>7 business days</li><li>50% upfront</li></ul>
+        </article>
+        <article class="offer">
+          <h3>Retainer</h3>
+          <p class="price">$2,200<small>per month</small></p>
+          <ul><li>Consistent monthly production</li><li>Planned against your channels</li><li>Rolling shot calendar</li><li>Month-to-month</li></ul>
+        </article>
+        <article class="offer">
+          <h3>Retainer Plus</h3>
+          <p class="price">$3,600<small>per month</small></p>
+          <ul><li>Higher production volume</li><li>Campaign-level creative</li><li>Photography and video</li><li>Month-to-month</li></ul>
+        </article>
+        <article class="offer">
+          <h3>Campaign</h3>
+          <p class="price">$6,500+<small>starting at</small></p>
+          <ul><li>Custom commercial production</li><li>Full creative direction</li><li>Multi-format deliverables</li><li>Scoped per project</li></ul>
+        </article>
+      </div>
+
+      <p class="offernote">These are production scopes and starting commercial offers, not
+        guarantees. We sell creative direction and production capacity; we do not promise sales,
+        traffic or performance results. Anything outside a listed scope is quoted before it is
+        produced.</p>
+
+      <div class="cta" style="margin-top:30px">
+        <a class="btn" href="start-a-project.html">Request a Project Plan</a>
+      </div>
+    </div>
+  </section>
+
   <section class="about" id="about">
     <div class="wrap g">
       <div>
@@ -803,6 +1088,44 @@ footer .r{margin-left:auto}
 <script>
 (function () {
   "use strict";
+
+  /* ---- MOBILE NAVIGATION ------------------------------------------------
+     The panel is closed markup-first, so a JS failure leaves a visitor with a
+     visible logo, a visible Start a Project button and a page they can scroll -
+     never a menu that cannot be opened. */
+
+  var toggle = document.querySelector(".navtoggle");
+  var panel  = document.getElementById("navpanel");
+
+  if (toggle && panel) {
+    var setOpen = function (open) {
+      panel.classList.toggle("open", open);
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    };
+
+    toggle.addEventListener("click", function () {
+      setOpen(toggle.getAttribute("aria-expanded") !== "true");
+    });
+
+    // Following a link inside the panel must close it, or the destination
+    // lands underneath an open menu.
+    [].forEach.call(panel.querySelectorAll("a"), function (a) {
+      a.addEventListener("click", function () { setOpen(false); });
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    // Growing past the breakpoint hides the button; a panel left open would
+    // then be stranded with nothing to close it.
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 1000) setOpen(false);
+    });
+  }
 
   /* ---- NO EMPTY BOXES -------------------------------------------------
      A block is revealed only once its image has actually decoded. A missing

@@ -348,7 +348,10 @@ footer .r{margin-left:auto}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:30px}
 @media (max-width:620px){.pair{grid-template-columns:1fr}}
 .pair figure{margin:0}
-.pair img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:3px}
+/* height:auto is required or the height attribute stays definite and
+   aspect-ratio is ignored. The before/after sources are 420x521 (0.806),
+   so 4/5 shows them essentially uncropped instead of losing a third. */
+.pair img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:3px}
 .pair figcaption{margin-top:9px;font-size:13px;color:var(--ink-soft)}
 .napblock{background:var(--cream);border-top:1px solid var(--rule);padding:clamp(40px,5vw,64px) 0}
 .napblock .g{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
@@ -368,12 +371,10 @@ footer .r{margin-left:auto}
       <span class="wordmark">Apex<i>&middot;</i>Content Studio</span>
     </a>
     <div class="links">
-      <a href="index.html#clients">Clients</a>
       <a href="index.html#work">Work</a>
-      <a href="index.html#industries">Industries</a>
-      <a href="index.html#craft">The Studio</a>
-      <a href="index.html#method">Method</a>
       <a href="index.html#services">Services</a>
+      <a href="index.html#who">Who We Serve</a>
+      <a href="index.html#process">Process</a>
       <a href="index.html#about">About</a>
     </div>
     <a class="btn" href="start-a-project.html">Start a Project</a>
@@ -429,13 +430,13 @@ footer .r{margin-left:auto}
         <figure data-block>
           <img data-asset src="images/portfolio/before-after/food-before.webp"
                alt="CONCEPT: a plated dish photographed flat under ordinary overhead light"
-               width="600" height="450" decoding="async">
+               width="420" height="521" decoding="async">
           <figcaption>CONCEPT / SPEC WORK &middot; Before</figcaption>
         </figure>
         <figure data-block>
           <img data-asset src="images/portfolio/before-after/food-after.webp"
                alt="CONCEPT: the same dish directed and lit for commercial use"
-               width="600" height="450" decoding="async">
+               width="420" height="521" decoding="async">
           <figcaption>CONCEPT / SPEC WORK &middot; After</figcaption>
         </figure>
       </div>
