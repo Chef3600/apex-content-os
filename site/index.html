@@ -168,13 +168,27 @@ nav .links a:hover{color:var(--gold-ink)}
 .industrygrid figure:nth-child(3).ready{transition-delay:.16s}
 .industrygrid figure:nth-child(4).ready{transition-delay:.24s}
 .industrygrid figure:nth-child(5).ready{transition-delay:.32s}
-.industrygrid img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px}
-.industrygrid figcaption{margin-top:10px;font-size:14px;font-weight:600}
-.industrygrid .tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.06em;
-  color:var(--ink-mid, #6b7076);border:1px solid currentColor;border-radius:2px;
-  padding:1px 5px;margin-right:8px;vertical-align:middle}
-@media (max-width:900px){.industrygrid{grid-template-columns:repeat(3,1fr)}}
-@media (max-width:560px){.industrygrid{grid-template-columns:repeat(2,1fr)}}
+/* height:auto is REQUIRED. Without it the img keeps its height attribute as a
+   definite height, aspect-ratio is ignored entirely, and the tile renders at the
+   attribute's pixel height at every viewport. 3/2 matches the sources (all ~1.49),
+   so the photographs show essentially uncropped instead of being gutted. */
+.industrygrid img{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:3px;
+  background:var(--sand)}
+.industrygrid figcaption{margin-top:14px;display:flex;flex-direction:column;align-items:flex-start;
+  gap:9px}
+/* The title leads. The status label sits on its own line underneath it and can
+   never run into the title: it is a block-level flex item, not inline text. */
+.industrygrid h3{font-family:var(--body);font-size:16.5px;font-weight:800;line-height:1.25;
+  letter-spacing:-.005em;color:var(--ink)}
+.industrygrid .tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;background:var(--gold-lt);color:#7A5A1E;border-radius:2px;
+  padding:4px 8px;white-space:nowrap}
+.industrygrid .icopy{font-size:13.5px;line-height:1.5;color:var(--ink-mid)}
+@media (max-width:1160px){.industrygrid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:860px){.industrygrid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.industrygrid{grid-template-columns:1fr;gap:28px}
+  .industrygrid h3{font-size:18px}
+  .industrygrid .icopy{font-size:14.5px}}
 @media (prefers-reduced-motion:reduce){
   .heroshot img{transform:none!important;transition:none!important}
   .industrygrid figure{opacity:1!important;transform:none!important;transition:none!important}
@@ -433,33 +447,53 @@ footer .r{margin-left:auto}
       <div class="industrygrid">
         <figure data-block>
           <img data-asset src="images/portfolio/food/food-hero.webp"
-               alt="CONCEPT: directed commercial food photography, campaign-ready plating"
-               width="480" height="600" decoding="async">
-          <figcaption><span class="tag">CONCEPT</span>Food &amp; Restaurant</figcaption>
+               alt="Concept and spec work. Plated dish lit and composed for commercial use."
+               width="600" height="400" decoding="async">
+          <figcaption>
+            <h3>Food &amp; Restaurant</h3>
+            <span class="tag">Concept / Spec Work</span>
+            <p class="icopy">Directed commercial food photography, campaign-ready plating.</p>
+          </figcaption>
         </figure>
         <figure data-block>
           <img data-asset src="images/portfolio/beverage/beverage-hero.webp"
-               alt="CONCEPT: directed commercial beverage photography with backlight and motion"
-               width="480" height="600" decoding="async">
-          <figcaption><span class="tag">CONCEPT</span>Beverage</figcaption>
+               alt="Concept and spec work. Beverage shot with backlight through ice and citrus."
+               width="600" height="400" decoding="async">
+          <figcaption>
+            <h3>Beverage</h3>
+            <span class="tag">Concept / Spec Work</span>
+            <p class="icopy">Directed commercial beverage photography with backlight and motion.</p>
+          </figcaption>
         </figure>
         <figure data-block>
           <img data-asset src="images/portfolio/hospitality/hospitality-hero.webp"
-               alt="CONCEPT: directed commercial hospitality environment photography"
-               width="480" height="600" decoding="async">
-          <figcaption><span class="tag">CONCEPT</span>Hospitality</figcaption>
+               alt="Concept and spec work. Dining room photographed in warm evening light."
+               width="600" height="400" decoding="async">
+          <figcaption>
+            <h3>Hospitality</h3>
+            <span class="tag">Concept / Spec Work</span>
+            <p class="icopy">Directed commercial hospitality environment photography.</p>
+          </figcaption>
         </figure>
         <figure data-block>
           <img data-asset src="images/portfolio/packaged-food/packaged-hero.webp"
-               alt="CONCEPT: directed commercial packaged-goods product photography"
-               width="480" height="600" decoding="async">
-          <figcaption><span class="tag">CONCEPT</span>Packaged Goods</figcaption>
+               alt="Concept and spec work. Packaged product on a warm surface with the label legible."
+               width="600" height="400" decoding="async">
+          <figcaption>
+            <h3>Packaged Goods</h3>
+            <span class="tag">Concept / Spec Work</span>
+            <p class="icopy">Directed commercial packaged-goods product photography.</p>
+          </figcaption>
         </figure>
         <figure data-block>
           <img data-asset src="images/portfolio/consumer-products/product-hero.webp"
-               alt="CONCEPT: directed commercial consumer-product photography"
-               width="480" height="600" decoding="async">
-          <figcaption><span class="tag">CONCEPT</span>Consumer Products</figcaption>
+               alt="Concept and spec work. Consumer product on a clean gradient ground."
+               width="600" height="400" decoding="async">
+          <figcaption>
+            <h3>Consumer Products</h3>
+            <span class="tag">Concept / Spec Work</span>
+            <p class="icopy">Directed commercial consumer-product photography.</p>
+          </figcaption>
         </figure>
       </div>
       <p class="lede" style="margin-top:28px;font-size:15px;color:var(--ink-3, #6b7076)">
