@@ -116,6 +116,14 @@ nav .links{display:flex;gap:24px;margin-left:auto;font-size:13.5px;color:var(--i
 nav .links a{text-decoration:none}
 nav .links a:hover{color:var(--gold-ink)}
 @media (max-width:920px){nav .links{display:none}}
+/* The nav row has no give: .btn is nowrap and the wordmark holds its full width,
+   so the button is pushed past the viewport edge - with seven links below about
+   1000px, and on a narrow phone where logo + wordmark + button no longer fit.
+   Give the row somewhere to yield. The logomark and the link's aria-label keep
+   the brand present and announced once the wordmark is out. */
+@media (max-width:1080px){nav .links{gap:15px;font-size:13px}}
+@media (max-width:1000px){nav .links{display:none}}
+@media (max-width:380px){.wordmark{display:none}}
 .btn{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.13em;
      text-transform:uppercase;text-decoration:none;padding:14px 26px;border-radius:2px;
      border:1.5px solid var(--gold-ink);background:var(--gold-ink);color:#fff;white-space:nowrap;
@@ -360,12 +368,13 @@ footer .r{margin-left:auto}
       <span class="wordmark">Apex<i>&middot;</i>Content Studio</span>
     </a>
     <div class="links">
-      <a href="#work">Work</a>
-      <a href="#industries">Industries</a>
-      <a href="#craft">The Studio</a>
-      <a href="#method">Method</a>
-      <a href="#services">Services</a>
-      <a href="#about">About</a>
+      <a href="index.html#clients">Clients</a>
+      <a href="index.html#work">Work</a>
+      <a href="index.html#industries">Industries</a>
+      <a href="index.html#craft">The Studio</a>
+      <a href="index.html#method">Method</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#about">About</a>
     </div>
     <a class="btn" href="start-a-project.html">Start a Project</a>
   </div>
@@ -453,7 +462,7 @@ footer .r{margin-left:auto}
         anyone telling you otherwise is guessing with your money. What we sell is production
         capacity and consistency: assets built correctly, delivered on a schedule, in the formats
         your channels actually use.</p>
-      <p>Apex Content Studio launches October 1, 2026, and is booking projects now.</p>
+      <p>Apex Content Studio is open in Las Vegas and taking projects now.</p>
     </div>
   </section>
 

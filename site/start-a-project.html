@@ -111,7 +111,11 @@ nav .links a:hover{color:var(--gold-ink)}
 /* ---------- layout ---------- */
 .main{padding:clamp(36px,5vw,64px) 0 clamp(56px,8vw,104px)}
 .cols{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:clamp(32px,5vw,64px);align-items:start}
-@media (max-width:900px){.cols{grid-template-columns:1fr}}
+/* A bare 1fr track is minmax(auto,1fr), and its auto minimum is the content's
+   min-content width, which the form controls hold at about 301px. Below a
+   ~350px viewport that floor pushed the form past the screen edge. minmax(0,1fr)
+   lets the track shrink; the controls are already width:100%. */
+@media (max-width:900px){.cols{grid-template-columns:minmax(0,1fr)}}
 
 /* ---------- form ---------- */
 fieldset{border:0;padding:0;margin:0 0 34px}

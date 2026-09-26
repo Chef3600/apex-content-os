@@ -278,6 +278,14 @@ for (const f of extraPages) {
                                      : bad(`${f}: no Start a Project route`);
   const inSitemap = readFileSync(join(siteDir, 'sitemap.xml'), 'utf8').includes(`/${f}`);
   inSitemap ? ok(`${f}: listed in sitemap.xml`) : bad(`${f}: missing from sitemap.xml`);
+
+  /* The studio is open. Pre-launch copy and the retired launch date are as wrong
+   * on a service page as on the home page. */
+  const stale1 = [...vis.matchAll(/\b(coming soon|opening soon|launching|pre-?launch|ahead of the public launch|will launch)\b/gi)].map(m => m[0]);
+  stale1.length ? [...new Set(stale1)].forEach(h => bad(`${f}: obsolete pre-launch language: "${h}"`))
+                : ok(`${f}: no pre-launch language`);
+  /\bOctober\s+1\b/i.test(vis) ? bad(`${f}: references the retired launch date "October 1"`)
+                                : ok(`${f}: no retired launch date`);
 }
 
 console.log('\n=== 5 . encoding and language ===');
@@ -300,15 +308,28 @@ if (!/Apex Content Studio/i.test(stripped)) bad('"Apex Content Studio" not prese
 else ok('Apex Content Studio present');
 if (!/Apex Hospitality Group LLC/.test(stripped)) bad('legal entity missing');
 else ok('legal entity present');
-/* The launch date is a commitment a visitor may act on, so it carries its year
- * every time it appears. A bare "October 1" reads as this year to a reader and
- * as last year the moment the year turns. */
-const LAUNCH = 'October 1, 2026';
-if (!stripped.includes(LAUNCH)) bad(`launch date "${LAUNCH}" is not on the page`);
-else ok(`launch date present (${LAUNCH})`);
-const bareDate = [...stripped.matchAll(/October\s+1(?!\s*,\s*2026)(?![0-9])/g)];
-if (bareDate.length) bad(`${bareDate.length} bare "October 1" without the year - always write "${LAUNCH}"`);
-else ok('no "October 1" appears without its year');
+/* LIVE STATUS. This replaces the old "October 1, 2026" launch-date assertion.
+ * That date was a commitment a visitor could act on while the studio was still
+ * pre-launch. The studio is now open and has a delivered client project, so
+ * repeating a launch date would misstate the business, and a countdown on a
+ * live company's home page costs it work.
+ *
+ * The assertion is deliberately two-sided: the page must SAY it is open, and
+ * must not drift back into pre-launch language. Either half failing is a
+ * failure, so this cannot be satisfied by simply deleting the copy. */
+const LIVE = /\b(open and taking projects|now open|open in las vegas)\b/i;
+if (!LIVE.test(stripped)) bad('home page never states the studio is open and taking projects');
+else ok(`live status stated (${(stripped.match(LIVE) || [])[0]})`);
+
+const PRELAUNCH = /\b(coming soon|opening soon|launching|pre-?launch|ahead of the public launch|will launch|launch date|countdown)\b/gi;
+const stale = [...stripped.matchAll(PRELAUNCH)].map(m => m[0]);
+if (stale.length) [...new Set(stale)].forEach(h => bad(`obsolete pre-launch language on a live site: "${h}"`));
+else ok('no pre-launch language');
+
+/* The retired launch date must not reappear anywhere, with or without its year. */
+const oldDate = [...stripped.matchAll(/\bOctober\s+1\b/gi)];
+if (oldDate.length) bad(`${oldDate.length} reference(s) to the retired launch date "October 1" - the studio is already open`);
+else ok('no retired launch date');
 // Internal tooling must never surface to a customer, in copy OR metadata.
 const tools = html.match(/\b(Claude|Higgsfield|Runway|Midjourney|Sora|OpenAI|ChatGPT)\b/gi);
 if (tools) bad(`internal tool named publicly: ${[...new Set(tools)].join(', ')}`);
