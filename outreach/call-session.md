@@ -1,5 +1,11 @@
 # Call session — the first 28
 
+> **SUPERSEDED — phone is no longer the first channel.** Apex sells in writing.
+> The live process is `outreach/batch-001/README.md` and
+> `node tools/enrich.mjs sendorder`. What is still true below is the diagnosis
+> of the list and the enrichment worksheet it points to; the call block is a
+> fallback for prospects who reply and ask to talk.
+
 **The situation, stated plainly.** The 123-prospect list has company names,
 categories and some websites. It has **zero phone numbers, zero emails, zero
 social handles** — 0/123 on all three. It is not a contactable list yet.

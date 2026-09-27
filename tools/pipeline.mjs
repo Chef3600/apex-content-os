@@ -379,7 +379,7 @@ case 'followup': {
 case 'meeting': {
   const r = find(rest[0]);
   r.state = 'MEETING'; r.followupAt = rest[1] || plus(2);
-  r.nextAction = `Call ${r.followupAt}. Scope to ONE product. Quote the Pilot at $1,500.`;
+  r.nextAction = `Meeting ${r.followupAt} - call or video, their choice. Scope to ONE product. Quote the Pilot at $1,500.`;
   save(db);
   console.log(`${r.company}: MEETING ${r.followupAt}`);
   console.log('Scope to one product. Do not let the first job sprawl.');

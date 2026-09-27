@@ -15,6 +15,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DB = process.env.APEX_DB || join(root, 'data', 'prospects.json');
+const ENRICH = join(root, 'data', 'enrichment.json');
 const JOBS = process.env.APEX_JOBS || join(root, 'data', 'jobs.json');
 
 const db = JSON.parse(readFileSync(DB, 'utf8'));
@@ -123,7 +124,7 @@ if (due.length) {
 const bottleneck =
   won.length === 0 && proposals > 0 ? ['CLOSING', `${proposals} proposal(s) out and none closed. Chase them.`]
   : meetings > 0 && proposals === 0 ? ['PROPOSALS', `${meetings} meeting(s) held, no proposal sent. Send them.`]
-  : replied > 0 && meetings === 0 ? ['BOOKING', `${replied} reply(ies), no meeting booked. Ask for the call.`]
+  : replied > 0 && meetings === 0 ? ['BOOKING', `${replied} reply(ies), no meeting booked. Ask for the meeting in writing.`]
   : contacted > 0 && replied === 0 ? ['MESSAGE OR LIST', `${contacted} sends, no reply. Change the observation, not the volume.`]
   : qualified > 0 ? ['SENDING', `${qualified} qualified and unsent. This is the only step that creates revenue.`]
   : verified > 0 ? ['QUALIFYING', `${verified} verified, ${qualified} qualified. Finish the decisions.`]
@@ -131,6 +132,16 @@ const bottleneck =
 
 console.log(`\n  BOTTLENECK: ${bottleneck[0]}`);
 console.log(`    ${bottleneck[1]}`);
+/* Two ledgers exist and they count different things. This one is the SALES
+ * pipeline: a row is verified when a human promoted it here. The enrichment
+ * layer counts contact details found. An account can be contactable there and
+ * still be unverified here. Printing the pointer stops the two numbers from
+ * looking like a contradiction. */
+if (verified === 0 && existsSync(ENRICH)) {
+  const e = JSON.parse(readFileSync(ENRICH, 'utf8'));
+  const ready = e.filter(r => (r.email?.status === 'VERIFIED' && r.email?.value) || r.contact_page_url).length;
+  if (ready) console.log(`    ${ready} account(s) are outreach-ready in the enrichment layer and not yet promoted here:\n      node tools/enrich.mjs dashboard`);
+}
 if (contacted > 0) console.log(`\n  node tools/pipeline.mjs learn     what the market has said so far`);
 
 if (process.argv.includes('--week')) {

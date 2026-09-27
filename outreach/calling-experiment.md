@@ -1,5 +1,15 @@
 # Calling experiment — cohort A vs cohort B
 
+> **SUPERSEDED — this is not the active sales process.** Apex sells in writing:
+> email first, contact form second, DM third. See
+> `outreach/batch-001/README.md` for the live sequences and
+> `node tools/enrich.mjs sendorder` for who to write to next. This document is
+> kept because the A/B cohort split it defines is still the experiment being
+> run — the cohorts and the one-opener-per-cohort discipline carry over to
+> email. The phone scripts below are a fallback for an account that has replied
+> and asked to talk, not a step any prospect has to pass through. `callorder`
+> is now `sendorder`.
+
 One opener per cohort. Do not improvise a new pitch per account or the results
 mean nothing. Run all 20, then read the evidence before changing anything.
 
