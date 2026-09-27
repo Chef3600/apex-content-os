@@ -16,12 +16,13 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import * as CONTACT from './contactability.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const FILE = join(root, 'data/enrichment.json');
 const LOG  = join(root, 'data/sales-log.json');
-const STATUSES = ['VERIFIED', 'UNVERIFIED', 'INFERRED', 'BLOCKED'];
-const FIELDS   = ['phone', 'email', 'social', 'website', 'decision_maker'];
+const { FIELDS, STATUSES, channels, reachable, emailReady, formReady, dmReady,
+        outreachReady, primaryChannel, recompute } = CONTACT;
 const WRITTEN  = ['email', 'form', 'dm'];
 const REPLY_CLASSES = ['INTERESTED', 'INFO_REQUEST', 'NOT_NOW', 'NOT_INTERESTED', 'UNSUBSCRIBE'];
 
@@ -33,36 +34,6 @@ const today = () => new Date().toISOString().slice(0, 10);
 const arg = (a, k) => { const m = a.find(x => x.startsWith(`--${k}=`)); return m ? m.slice(k.length + 3) : ''; };
 const pad = (s, n) => String(s ?? '').slice(0, n).padEnd(n);
 const lpad = (s, n) => String(s ?? '').padStart(n);
-
-/* A record is contactable when at least one channel is VERIFIED. Channels that
- * merely exist do not count - the whole point is that the list looked full and
- * was not reachable. */
-const channels = r => FIELDS.filter(f => r[f]?.status === 'VERIFIED' && r[f]?.value).length;
-const reachable = r => ['phone', 'email', 'social'].some(f => r[f]?.status === 'VERIFIED' && r[f]?.value);
-
-/* Readiness on written channels. Each prospect gets exactly ONE primary
- * channel, in order of how well it converts and how little it costs to send,
- * so the three readiness counts add up to outreach-ready with no double
- * counting. A contact page is a route to an email thread, not a dead end. */
-const emailReady = r => r.email?.status === 'VERIFIED' && !!r.email?.value;
-const formReady  = r => !emailReady(r) && !!r.contact_page_url;
-const dmReady    = r => !emailReady(r) && !formReady(r)
-                        && r.social?.status === 'VERIFIED' && !!r.social?.value;
-const outreachReady = r => emailReady(r) || formReady(r) || dmReady(r);
-const primaryChannel = r => emailReady(r) ? 'EMAIL' : formReady(r) ? 'CONTACT_PAGE'
-                          : dmReady(r) ? 'SOCIAL_DM' : '';
-
-function recompute(r) {
-  r.contact_channels = channels(r);
-  r.verification_status = reachable(r) ? 'VERIFIED' : (r.contact_channels ? 'PARTIAL' : 'UNVERIFIED');
-  r.enrichment_status = reachable(r) ? 'CONTACTABLE'
-    : r.contact_channels ? 'IN_PROGRESS'
-    : (r.phone.status === 'BLOCKED' && r.email.status === 'BLOCKED') ? 'BLOCKED' : 'NOT_STARTED';
-  r.contactability = r.enrichment_status === 'CONTACTABLE' ? 'CONTACTABLE' : r.enrichment_status;
-  r.primary_channel = primaryChannel(r);
-  if (r.primary_channel && !r.outreach_state) r.outreach_state = 'AWAITING_APPROVAL';
-  return r;
-}
 
 const cmd = process.argv[2];
 const rest = process.argv.slice(3);

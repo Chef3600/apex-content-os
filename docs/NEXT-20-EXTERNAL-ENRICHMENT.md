@@ -705,6 +705,24 @@ Per prospect, in order, stopping at the first hit:
 3. **Instagram** — `enrich set <id> social <url> --source=<url>`. Last resort, and
    only if the account is active.
 
+### Or fill the spreadsheet instead
+
+`outreach/enrichment-batch-002.csv` holds the same 20 rows, sequenced for speed
+rather than by rank: the ten B accounts with a domain already on file come first,
+then the one A account with one, then the nine without. Every external cell reads
+`MISSING` until a human fills it.
+
+```
+node tools/batch-csv.mjs 002                                  # rebuild the sheet
+node tools/load-batch.mjs outreach/enrichment-batch-002.csv    # dry run, shows the plan
+node tools/load-batch.mjs outreach/enrichment-batch-002.csv --apply
+```
+
+The loader refuses rather than guesses: a row claiming VERIFIED without an
+inspectable http(s) source URL is rejected by name, an unknown id is rejected
+because it never creates a prospect, and VERIFIED ownership without a cited source
+is rejected outright. It never writes `prospects.json`.
+
 Then:
 
 ```
