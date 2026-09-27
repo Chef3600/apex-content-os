@@ -24,7 +24,12 @@ Apex includes both. That is the price justification, and it is a real one.
 
 ## The existing entry offer is underpriced
 
-`docs/offers.md` lists the **5-Angle Test at $750** for 5 concepts x 3 ratios
+> **RESOLVED 2026-09-27.** This section is the historical reasoning that
+> produced the canonical Pilot at $1,500. The $750 tier it argues against
+> is retired and no longer appears in `docs/offers.md`. Kept because the
+> market data and the argument are still the justification for the price.
+
+`docs/offers.md` listed the **5-Angle Test at $750** for 5 concepts x 3 ratios
 = 15 assets. That is **$50 per asset - the absolute floor of the researched
 range**, against a market average of $125.
 
@@ -84,12 +89,16 @@ rewards the decision Apex wants and cheapens nothing.
 
 ## The ladder
 
+Prices are canonical and match the website. The asset counts and per-asset
+figures are **internal planning estimates**; the website publishes an asset
+count only for the Pilot.
+
 | Stage | Offer | Price | Assets | Per asset |
 |---|---|---|---|---|
 | 1 | **Pilot** | $1,500 one-time | 10 (x3 formats) | $150 |
-| 2 | **Retainer - Starter** | $2,200/mo | 16/mo | $137 |
-| 2 | **Retainer - Growth** | $3,600/mo | 30/mo | $120 |
-| 3 | **Campaign Build** | $6,500 | 35 + visual system | $186 |
+| 2 | **Retainer** | $2,200/mo | 16/mo | $137 |
+| 2 | **Retainer Plus** | $3,600/mo | 30/mo | $120 |
+| 3 | **Campaign** | $6,500+ | 35 + visual system | $186 |
 
 Volume lowers the unit price; strategy raises it. Every tier sits at or above
 the market average per asset, and the retainers are where the business

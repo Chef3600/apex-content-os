@@ -252,10 +252,16 @@ Kill criteria are in `docs/offers.md` and are binding.
 
   | Package | Revisions included |
   |---|---|
-  | 5-Angle Test | 1 |
-  | Creative Sprint | 2 |
-  | Campaign Build | 3 |
+  | Pilot | not stated — the default governs |
+  | Retainer | not stated — the default governs |
+  | Retainer Plus | not stated — the default governs |
+  | Campaign | not stated — the default governs |
   | (anything unstated) | 2 — the default |
+
+  The retired stack (5-Angle Test 1, Creative Sprint 2, Campaign Build 3)
+  stated its own limits. The canonical four do not, so the default of two
+  governs all of them until the owner states otherwise. Do not invent a
+  per-package limit.
 
 - **Additional revisions are billable.**
 - **Do not change pricing or revision limits without explicit instruction.**
