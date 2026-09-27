@@ -16,11 +16,16 @@ B is 40 accounts of high-ticket, owner-operated, visually-driven businesses that
 buy content continuously. A med spa books content every quarter; a restaurant
 books it when the menu changes.
 
-## Step 1 — enrich (you, ~20 minutes)
+## Step 1 — enrich (you, ~15 minutes)
 
-`outreach/enrichment-worksheet.csv` has the 20 accounts. For each: search the
-company in Google Maps, copy the **phone**, and copy the **URL you saw it on**
-into `SOURCE_URL`. Grab an email or an Instagram handle if the listing shows one.
+`outreach/enrichment-worksheet.csv` has the 20 accounts, each with a
+**GOOGLE_MAPS_CLICK** column: a pre-built search link. Click it, the listing
+opens, copy the **phone** and the **URL you landed on** into `SOURCE_URL`.
+Grab an email or Instagram handle if the listing shows one.
+
+`outreach/record-contacts.sh` has the same 20 pre-written as commented
+commands. Fill the numbers in, uncomment the lines you verified, delete the
+rest, then `bash outreach/record-contacts.sh` records them all at once.
 
 Then record each one:
 
@@ -38,6 +43,17 @@ node tools/enrich.mjs callorder --n=20
 ```
 
 Contactable accounts sort to the top automatically.
+
+### Sources already checked and dead — do not repeat
+
+| Source | Result |
+|---|---|
+| Direct HTTP from the agent | 403 at the proxy on google.com, maps.google.com, yelp.com and prospect domains. DNS resolves; HTTP does not. |
+| Gmail, relationship signal | **0 hits** across all 20 account names. No prior correspondence with any of them. |
+| Gmail, inbound leads | **0 genuine.** All 7 form-related threads are owner tests. The form works; nobody but the owner has submitted it. |
+
+That third row matters: it confirms outbound is the only path to a first
+customer right now. There is no inbound queue sitting unworked.
 
 ## Step 2 — call, same opener per cohort
 

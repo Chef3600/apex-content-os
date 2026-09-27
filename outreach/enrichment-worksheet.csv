@@ -1,21 +1,21 @@
-cohort,id,company,industry,decision_maker_unverified,website_unverified,PHONE,EMAIL,SOCIAL,SOURCE_URL,record_command
-A,a073,"Slater's 50/50 Las Vegas",restaurant-group,"Andy Kao, Cindy Sun","slaters5050lasvegas.com",,,,,"node tools/enrich.mjs set a073 phone ""<number>"" --status=VERIFIED --source=""<url>"""
-A,p048,"Saucy",packaged-food,"Chef Amy","saucythesauce.com",,,,,"node tools/enrich.mjs set p048 phone ""<number>"" --status=VERIFIED --source=""<url>"""
-A,a114,"Alex Prime at El Cortez",restaurant,"David Robins, Joe Swan","",,,,,"node tools/enrich.mjs set a114 phone ""<number>"" --status=VERIFIED --source=""<url>"""
-A,a120,"Cantina Contramar",restaurant,"Gabriela Camara","",,,,,"node tools/enrich.mjs set a120 phone ""<number>"" --status=VERIFIED --source=""<url>"""
-A,a121,"Maroon by Kwame Onwuachi",restaurant,"Kwame Onwuachi","",,,,,"node tools/enrich.mjs set a121 phone ""<number>"" --status=VERIFIED --source=""<url>"""
-A,a122,"Sartiano's Italian Steakhouse",restaurant,"Scott Sartiano","",,,,,"node tools/enrich.mjs set a122 phone ""<number>"" --status=VERIFIED --source=""<url>"""
-A,p001,"Esther's Kitchen",restaurant,"James Trees, chef-owner","",,,,,"node tools/enrich.mjs set p001 phone ""<number>"" --status=VERIFIED --source=""<url>"""
-A,p002,"Al Solito Posto",restaurant,"James Trees, chef-owner","",,,,,"node tools/enrich.mjs set p002 phone ""<number>"" --status=VERIFIED --source=""<url>"""
-A,p003,"Milpa Mexican Cafe",restaurant,"DJ Flores, chef","",,,,,"node tools/enrich.mjs set p003 phone ""<number>"" --status=VERIFIED --source=""<url>"""
-A,p004,"Johnny C's Diner",restaurant,"Johnny Church, chef-owner","",,,,,"node tools/enrich.mjs set p004 phone ""<number>"" --status=VERIFIED --source=""<url>"""
-B,a067,"Center for Aesthetic Medicine",medspa,"Heather Rohrer","centerforaestheticmedicine.com",,,,,"node tools/enrich.mjs set a067 phone ""<number>"" --status=VERIFIED --source=""<url>"""
-B,p030,"Skinfuzion",medspa,"Kim Hutchinson, owner","",,,,,"node tools/enrich.mjs set p030 phone ""<number>"" --status=VERIFIED --source=""<url>"""
-B,p035,"Advanced Aesthetics",medspa,"Dr. Tracy Hankins, Dr. Samuel Sohn","advancedaestheticslv.com",,,,,"node tools/enrich.mjs set p035 phone ""<number>"" --status=VERIFIED --source=""<url>"""
-B,a069,"Chic la Vie Medical Spa",medspa,"","chiclavie.com",,,,,"node tools/enrich.mjs set a069 phone ""<number>"" --status=VERIFIED --source=""<url>"""
-B,a070,"LuxeFactor Aesthetics",medspa,"","luxefactorlv.com",,,,,"node tools/enrich.mjs set a070 phone ""<number>"" --status=VERIFIED --source=""<url>"""
-B,p031,"DermaBella Medical Spa",beauty,"Dr. Andrea Dempsey, founder","",,,,,"node tools/enrich.mjs set p031 phone ""<number>"" --status=VERIFIED --source=""<url>"""
-B,a058,"Vegas Dental Experts",dental,"Dr. Harvey Chin","vegasdentalexpertsnevada.com",,,,,"node tools/enrich.mjs set a058 phone ""<number>"" --status=VERIFIED --source=""<url>"""
-B,a059,"Infinity Dental",dental,"Dr. Douglas Sanchez","infinitydentallv.com",,,,,"node tools/enrich.mjs set a059 phone ""<number>"" --status=VERIFIED --source=""<url>"""
-B,a119,"Ah Spa by Ageless Humans - Westin Lake Las Vegas",medspa,"","",,,,,"node tools/enrich.mjs set a119 phone ""<number>"" --status=VERIFIED --source=""<url>"""
-B,p032,"Estetica Wellness Medical Spa",beauty,"","",,,,,"node tools/enrich.mjs set p032 phone ""<number>"" --status=VERIFIED --source=""<url>"""
+n,cohort,id,company,industry,decision_maker_UNVERIFIED,GOOGLE_MAPS_CLICK,WEBSITE_UNVERIFIED,PHONE,EMAIL,SOCIAL,SOURCE_URL
+1,A,a073,"Slater's 50/50 Las Vegas",restaurant-group,"Andy Kao, Cindy Sun","https://www.google.com/maps/search/Slater's%2050%2F50%20Las%20Vegas%20Las%20Vegas%2C%20NV","https://slaters5050lasvegas.com",,,,
+2,A,p048,"Saucy",packaged-food,"Chef Amy","https://www.google.com/maps/search/Saucy%20Las%20Vegas%2C%20NV","https://saucythesauce.com",,,,
+3,A,a114,"Alex Prime at El Cortez",restaurant,"David Robins, Joe Swan","https://www.google.com/maps/search/Alex%20Prime%20at%20El%20Cortez%20Las%20Vegas%2C%20NV","",,,,
+4,A,a120,"Cantina Contramar",restaurant,"Gabriela Camara","https://www.google.com/maps/search/Cantina%20Contramar%20Las%20Vegas%2C%20NV","",,,,
+5,A,a121,"Maroon by Kwame Onwuachi",restaurant,"Kwame Onwuachi","https://www.google.com/maps/search/Maroon%20by%20Kwame%20Onwuachi%20Las%20Vegas%2C%20NV","",,,,
+6,A,a122,"Sartiano's Italian Steakhouse",restaurant,"Scott Sartiano","https://www.google.com/maps/search/Sartiano's%20Italian%20Steakhouse%20Las%20Vegas%2C%20NV","",,,,
+7,A,p001,"Esther's Kitchen",restaurant,"James Trees, chef-owner","https://www.google.com/maps/search/Esther's%20Kitchen%20Las%20Vegas%2C%20NV","",,,,
+8,A,p002,"Al Solito Posto",restaurant,"James Trees, chef-owner","https://www.google.com/maps/search/Al%20Solito%20Posto%20Las%20Vegas%2C%20NV","",,,,
+9,A,p003,"Milpa Mexican Cafe",restaurant,"DJ Flores, chef","https://www.google.com/maps/search/Milpa%20Mexican%20Cafe%20Las%20Vegas%2C%20NV","",,,,
+10,A,p004,"Johnny C's Diner",restaurant,"Johnny Church, chef-owner","https://www.google.com/maps/search/Johnny%20C's%20Diner%20Las%20Vegas%2C%20NV","",,,,
+11,B,a067,"Center for Aesthetic Medicine",medspa,"Heather Rohrer","https://www.google.com/maps/search/Center%20for%20Aesthetic%20Medicine%20Las%20Vegas%2C%20NV","https://centerforaestheticmedicine.com",,,,
+12,B,p030,"Skinfuzion",medspa,"Kim Hutchinson, owner","https://www.google.com/maps/search/Skinfuzion%20Las%20Vegas%2C%20NV","",,,,
+13,B,p035,"Advanced Aesthetics",medspa,"Dr. Tracy Hankins, Dr. Samuel Sohn","https://www.google.com/maps/search/Advanced%20Aesthetics%20Las%20Vegas%2C%20NV","https://advancedaestheticslv.com",,,,
+14,B,a069,"Chic la Vie Medical Spa",medspa,"","https://www.google.com/maps/search/Chic%20la%20Vie%20Medical%20Spa%20Las%20Vegas%2C%20NV","https://chiclavie.com",,,,
+15,B,a070,"LuxeFactor Aesthetics",medspa,"","https://www.google.com/maps/search/LuxeFactor%20Aesthetics%20Las%20Vegas%2C%20NV","https://luxefactorlv.com",,,,
+16,B,p031,"DermaBella Medical Spa",beauty,"Dr. Andrea Dempsey, founder","https://www.google.com/maps/search/DermaBella%20Medical%20Spa%20Las%20Vegas%2C%20NV","",,,,
+17,B,a058,"Vegas Dental Experts",dental,"Dr. Harvey Chin","https://www.google.com/maps/search/Vegas%20Dental%20Experts%20Las%20Vegas%2C%20NV","https://vegasdentalexpertsnevada.com",,,,
+18,B,a059,"Infinity Dental",dental,"Dr. Douglas Sanchez","https://www.google.com/maps/search/Infinity%20Dental%20Las%20Vegas%2C%20NV","https://infinitydentallv.com",,,,
+19,B,a119,"Ah Spa by Ageless Humans - Westin Lake Las Vegas",medspa,"","https://www.google.com/maps/search/Ah%20Spa%20by%20Ageless%20Humans%20-%20Westin%20Lake%20Las%20Vegas%20Las%20Vegas%2C%20NV","",,,,
+20,B,p032,"Estetica Wellness Medical Spa",beauty,"","https://www.google.com/maps/search/Estetica%20Wellness%20Medical%20Spa%20Las%20Vegas%2C%20NV","",,,,
