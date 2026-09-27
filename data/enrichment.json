@@ -85,18 +85,18 @@
    "source_date": ""
   },
   "phone": {
-   "value": "",
-   "status": "BLOCKED",
-   "source_url": "",
-   "source_note": "no egress from the agent session; requires a human lookup",
-   "source_date": ""
+   "value": "702-463-6781",
+   "status": "VERIFIED",
+   "source_url": "https://alsolito.com/contact-us/",
+   "source_note": "",
+   "source_date": "2026-09-27"
   },
   "email": {
-   "value": "",
-   "status": "BLOCKED",
-   "source_url": "",
-   "source_note": "no egress from the agent session; requires a human lookup",
-   "source_date": ""
+   "value": "info@alsolito.com",
+   "status": "VERIFIED",
+   "source_url": "https://alsolito.com/contact-us/",
+   "source_note": "",
+   "source_date": "2026-09-27"
   },
   "social": {
    "value": "",
@@ -105,9 +105,9 @@
    "source_note": "no egress from the agent session; requires a human lookup",
    "source_date": ""
   },
-  "verification_status": "UNVERIFIED",
-  "enrichment_status": "NOT_STARTED",
-  "contact_channels": 0,
+  "verification_status": "VERIFIED",
+  "enrichment_status": "CONTACTABLE",
+  "contact_channels": 2,
   "outreach_status": "NOT_CONTACTED",
   "last_contact": "",
   "next_follow_up": "",
@@ -1885,18 +1885,18 @@
    "source_date": ""
   },
   "phone": {
-   "value": "",
-   "status": "BLOCKED",
-   "source_url": "",
-   "source_note": "no egress from the agent session; requires a human lookup",
-   "source_date": ""
+   "value": "702-476-9462",
+   "status": "VERIFIED",
+   "source_url": "https://www.esteticawellness.com/about",
+   "source_note": "",
+   "source_date": "2026-09-27"
   },
   "email": {
-   "value": "",
-   "status": "BLOCKED",
-   "source_url": "",
-   "source_note": "no egress from the agent session; requires a human lookup",
-   "source_date": ""
+   "value": "info@esteticawellness.com",
+   "status": "VERIFIED",
+   "source_url": "https://www.esteticawellness.com/about",
+   "source_note": "",
+   "source_date": "2026-09-27"
   },
   "social": {
    "value": "",
@@ -1905,9 +1905,9 @@
    "source_note": "no egress from the agent session; requires a human lookup",
    "source_date": ""
   },
-  "verification_status": "UNVERIFIED",
-  "enrichment_status": "NOT_STARTED",
-  "contact_channels": 0,
+  "verification_status": "VERIFIED",
+  "enrichment_status": "CONTACTABLE",
+  "contact_channels": 2,
   "outreach_status": "NOT_CONTACTED",
   "last_contact": "",
   "next_follow_up": "",
@@ -2065,11 +2065,11 @@
    "source_date": ""
   },
   "phone": {
-   "value": "",
-   "status": "BLOCKED",
-   "source_url": "",
-   "source_note": "no egress from the agent session; requires a human lookup",
-   "source_date": ""
+   "value": "702-838-4644",
+   "status": "VERIFIED",
+   "source_url": "https://advancedaestheticslv.com/contact/",
+   "source_note": "",
+   "source_date": "2026-09-27"
   },
   "email": {
    "value": "",
@@ -2085,9 +2085,9 @@
    "source_note": "no egress from the agent session; requires a human lookup",
    "source_date": ""
   },
-  "verification_status": "UNVERIFIED",
-  "enrichment_status": "NOT_STARTED",
-  "contact_channels": 0,
+  "verification_status": "VERIFIED",
+  "enrichment_status": "CONTACTABLE",
+  "contact_channels": 1,
   "outreach_status": "NOT_CONTACTED",
   "last_contact": "",
   "next_follow_up": "",
@@ -3985,18 +3985,18 @@
    "source_date": ""
   },
   "phone": {
-   "value": "",
-   "status": "BLOCKED",
-   "source_url": "",
-   "source_note": "no egress from the agent session; requires a human lookup",
-   "source_date": ""
+   "value": "702-333-4896",
+   "status": "VERIFIED",
+   "source_url": "https://www.centerforaestheticmedicine.com/contact/",
+   "source_note": "",
+   "source_date": "2026-09-27"
   },
   "email": {
-   "value": "",
-   "status": "BLOCKED",
-   "source_url": "",
-   "source_note": "no egress from the agent session; requires a human lookup",
-   "source_date": ""
+   "value": "info@camhplv.com",
+   "status": "VERIFIED",
+   "source_url": "https://www.centerforaestheticmedicine.com/contact/",
+   "source_note": "",
+   "source_date": "2026-09-27"
   },
   "social": {
    "value": "",
@@ -4005,9 +4005,9 @@
    "source_note": "no egress from the agent session; requires a human lookup",
    "source_date": ""
   },
-  "verification_status": "UNVERIFIED",
-  "enrichment_status": "NOT_STARTED",
-  "contact_channels": 0,
+  "verification_status": "VERIFIED",
+  "enrichment_status": "CONTACTABLE",
+  "contact_channels": 2,
   "outreach_status": "NOT_CONTACTED",
   "last_contact": "",
   "next_follow_up": "",
@@ -4165,11 +4165,11 @@
    "source_date": ""
   },
   "phone": {
-   "value": "",
-   "status": "BLOCKED",
-   "source_url": "",
-   "source_note": "no egress from the agent session; requires a human lookup",
-   "source_date": ""
+   "value": "702-805-0777",
+   "status": "VERIFIED",
+   "source_url": "https://www.luxefactorlv.com/contact/",
+   "source_note": "",
+   "source_date": "2026-09-27"
   },
   "email": {
    "value": "",
@@ -4185,9 +4185,9 @@
    "source_note": "no egress from the agent session; requires a human lookup",
    "source_date": ""
   },
-  "verification_status": "UNVERIFIED",
-  "enrichment_status": "NOT_STARTED",
-  "contact_channels": 0,
+  "verification_status": "VERIFIED",
+  "enrichment_status": "CONTACTABLE",
+  "contact_channels": 1,
   "outreach_status": "NOT_CONTACTED",
   "last_contact": "",
   "next_follow_up": "",
@@ -4326,16 +4326,16 @@
   "industry": "restaurant-group",
   "market": "Las Vegas, NV",
   "priority": 1,
-  "lane": "A",
+  "lane": "B",
   "account_score": 28,
-  "first_sale_fit": 12,
+  "first_sale_fit": 9,
   "cohort": "A_FOOD_CHEF",
   "decision_maker": {
-   "value": "Andy Kao, Cindy Sun",
-   "status": "UNVERIFIED",
-   "source_url": "",
-   "source_note": "WebSearch 2026-09: \"Las Vegas restaurant group multiple concepts locally owned locations\"",
-   "source_date": ""
+   "value": "Andy Kao and Cindy Sun, owner-operators",
+   "status": "VERIFIED",
+   "source_url": "https://www.slaters5050lasvegas.com/contact",
+   "source_note": "",
+   "source_date": "2026-09-27"
   },
   "website": {
    "value": "slaters5050lasvegas.com",
@@ -4345,11 +4345,11 @@
    "source_date": ""
   },
   "phone": {
-   "value": "",
-   "status": "BLOCKED",
-   "source_url": "",
-   "source_note": "no egress from the agent session; requires a human lookup",
-   "source_date": ""
+   "value": "702-766-5050 (Silverado Ranch) / 702-625-5050 (Lake Mead)",
+   "status": "VERIFIED",
+   "source_url": "https://www.slaters5050lasvegas.com/contact",
+   "source_note": "",
+   "source_date": "2026-09-27"
   },
   "email": {
    "value": "",
@@ -4365,9 +4365,9 @@
    "source_note": "no egress from the agent session; requires a human lookup",
    "source_date": ""
   },
-  "verification_status": "UNVERIFIED",
-  "enrichment_status": "NOT_STARTED",
-  "contact_channels": 0,
+  "verification_status": "VERIFIED",
+  "enrichment_status": "CONTACTABLE",
+  "contact_channels": 2,
   "outreach_status": "NOT_CONTACTED",
   "last_contact": "",
   "next_follow_up": "",
@@ -4377,7 +4377,7 @@
   "outcome": "",
   "revenue": 0,
   "use_case": "",
-  "notes": ""
+  "notes": "LANE CORRECTED 2026-09-27 A->B. Official site confirms two Las Vegas locations (Silverado Ranch, Lake Mead), source https://www.slaters5050lasvegas.com/contact. The Lane A single-location bonus (+3) was awarded on a false premise; first_sale_fit 12 -> 9."
  },
  {
   "id": "a074",
