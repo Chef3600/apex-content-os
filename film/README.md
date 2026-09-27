@@ -74,6 +74,7 @@ whichever tool or composer does it.
 | `edit-plan.md` | Cut structure, timings, typography, the 4 deliverable cuts |
 | `assemble.sh` | ffmpeg script that builds all 4 cuts once clips exist |
 | `cost-model.md` | What each production tier actually costs |
+| `runway-master-prompt.md` | Paste-into-ChatGPT prompt to produce the film in Runway instead, preserving Higgsfield credits for client work |
 
 ## The honest recommendation
 
