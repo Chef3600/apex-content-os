@@ -1,0 +1,23 @@
+# Apex Content Studio - "Get Seen" 15s. Five generated assets.
+# Higgsfield project: "Apex Content Studio - Get Seen 15s"
+# project_id 6f519023-412e-4d94-b9c8-ac15c20c97bb
+# Generated 2026-09-28. Download each into ./src/ under the name on the left.
+#
+# These are CDN links from the Higgsfield account and may expire. If one 404s,
+# open the project in Higgsfield and download that job again.
+
+src/shot1.mp4  https://d8j0ntlcm91z4.cloudfront.net/user_3Id1HePf5pDZmckXblMaMJiPooh/hf_20260928_033305_aca886ae-40e5-4b05-b703-c3e9819caf70.mp4
+src/shot2.mp4  https://d8j0ntlcm91z4.cloudfront.net/user_3Id1HePf5pDZmckXblMaMJiPooh/hf_20260928_033530_5f789090-52e6-46ad-ae2a-f014a9f71a69.mp4
+src/shot3.mp4  https://d8j0ntlcm91z4.cloudfront.net/user_3Id1HePf5pDZmckXblMaMJiPooh/hf_20260928_033530_a1e251df-aa35-4016-856c-14a87adb16c3.mp4
+src/shot4.mp4  https://d8j0ntlcm91z4.cloudfront.net/user_3Id1HePf5pDZmckXblMaMJiPooh/hf_20260928_033928_75fcd02f-4a32-451a-a0d2-53387f928f57.mp4
+src/vo.wav     https://d8j0ntlcm91z4.cloudfront.net/user_3Id1HePf5pDZmckXblMaMJiPooh/hf_20260928_034000_1e16d5ce-a84e-4313-bf0f-c4f3b6aa953d.wav
+
+# The title card is in this folder already - copy it in:
+#   cp title-card.png src/title-card.png
+#
+# job ids, for reference in the Higgsfield project:
+#   shot1 aca886ae-40e5-4b05-b703-c3e9819caf70   studio move
+#   shot2 5f789090-52e6-46ad-ae2a-f014a9f71a69   food set
+#   shot3 a1e251df-aa35-4016-856c-14a87adb16c3   business subject
+#   shot4 75fcd02f-4a32-451a-a0d2-53387f928f57   montage
+#   vo    1e16d5ce-a84e-4313-bf0f-c4f3b6aa953d   voiceover, Maya, 14.23s
