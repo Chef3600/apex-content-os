@@ -60,6 +60,8 @@
     "primaryDomain": "apexhospitalitygrouplvcom.com",
     "ownerAccount": "larryhillsjr@apexhospitalitygrouplvcom.com",
     "plannedRelationship": "user alias domain",
-    "verificationTxt": "google-site-verification=E_cQb7PmJqiSDwQD1cPd7DZWZoYh1EPAv4FeL5GHi3Q"
+    "verificationTxt": "google-site-verification=E_cQb7PmJqiSDwQD1cPd7DZWZoYh1EPAv4FeL5GHi3Q",
+    "ownerAccountStatus": "RETIRED - DO NOT SEND FROM OR PUBLISH",
+    "_retiredNote": "larryhillsjr@apexhospitalitygrouplvcom.com is a RETIRED identity. It is recorded here only because it is the Google Workspace owner account that DNS and domain-verification work has to reference. It must never appear in outreach, on the site, in metadata, in structured data or as a reply-to. The only published business address is hello@apexhospitalitygrouplv.org. No code reads this field."
   }
 }

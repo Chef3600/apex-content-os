@@ -189,9 +189,18 @@ footer .g{display:flex;gap:20px;flex-wrap:wrap;align-items:center}
 .footmark{width:62px;height:auto;opacity:.85}
 footer .r{margin-left:auto}
 @media (max-width:640px){footer .r{margin-left:0}}
+
+/* Skip link - WCAG 2.4.1. Off-screen until focused, then it lands in the top
+   left as a real, visible control. A keyboard visitor should not have to tab
+   the whole nav on every page to reach the content. */
+.skip-link{position:absolute;left:-9999px;top:0;z-index:999;
+  background:#111;color:#fff;padding:12px 18px;border-radius:0 0 6px 0;
+  font-size:15px;text-decoration:none;font-weight:600}
+.skip-link:focus{left:0}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#top">Skip to content</a>
 
 <nav>
   <div class="inner">
@@ -223,7 +232,7 @@ footer .r{margin-left:auto}
   </div>
 </header>
 
-<main class="main">
+<main class="main" id="top">
   <div class="wrap cols">
 
     <div>
@@ -429,7 +438,7 @@ footer .r{margin-left:auto}
 
 <footer>
   <div class="wrap g">
-    <img class="footmark" src="images/apex-logo.png" alt="Apex Content Studio" width="124" height="90" decoding="async">
+    <img class="footmark" src="images/apex-logo.png" alt="Apex Content Studio" width="124" height="90" decoding="async" loading="lazy">
     <span>Commercial content production &middot; Apex Hospitality Group LLC</span>
     <span class="r">&copy; 2026 Apex Hospitality Group LLC</span>
   </div>

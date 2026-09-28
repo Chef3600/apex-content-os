@@ -400,6 +400,22 @@ else {
   if (reallyStuck.length) reallyStuck.forEach(s => bad(`BLOCK HIDDEN but file exists: ${s}`));
   else ok(`no block is hidden while its file exists (${stuck.length} hidden total)`);
 
+  // The CAUSE, not just the symptom. A [data-block] is display:none until its
+  // image fires load. A loading="lazy" image inside a display:none ancestor has
+  // no box, so it never intersects the viewport, never loads, and the block
+  // stays hidden for good. This checks the real condition - lazy AND an
+  // ancestor that is actually display:none - rather than guessing from
+  // attributes, because img[data-fill] is a different contract that reveals
+  // itself and is safe to lazy-load.
+  const deadlocked = await page.evaluate(() =>
+    [...document.querySelectorAll('img[loading="lazy"]')]
+      .filter(i => { for (let n = i.parentElement; n; n = n.parentElement)
+                       if (getComputedStyle(n).display === 'none') return true;
+                     return false; })
+      .map(i => i.getAttribute('src')));
+  if (deadlocked.length) deadlocked.forEach(s => bad(`LAZY IMAGE UNDER A display:none ANCESTOR - it can never load and never reveal: ${s}`));
+  else ok(`no lazy image is trapped under a hidden ancestor`);
+
   // Every in-page anchor must resolve to a real target.
   const deadAnchors = await page.evaluate(() =>
     [...document.querySelectorAll('a[href^="#"]')]

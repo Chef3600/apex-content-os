@@ -17,6 +17,7 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as CONTACT from './contactability.mjs';
+import { STATES, canMove, assertMove, isSendable } from './outreach-state.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const FILE = join(root, 'data/enrichment.json');
@@ -87,6 +88,51 @@ else if (cmd === 'page') {
   console.log(`  primary channel: ${r.primary_channel || '(none yet)'}`);
 }
 
+/* ---------------------------------------------------------------- approve */
+/* The authorization gate. Nothing can be logged as SENT until a human has run
+ * this against that exact record, which is what keeps the system a sales tool
+ * rather than a spam cannon. It deliberately takes one id at a time: there is no
+ * "approve all", because approving in bulk is how nobody reads anything. */
+else if (cmd === 'approve') {
+  const id = rest.find(a => !a.startsWith('--'));
+  const d = db(); const r = d.find(x => x.id === id);
+  if (!r) { console.error(`no prospect ${id}`); process.exit(1); }
+  const move = canMove(r.outreach_state, 'APPROVED');
+  if (!move.ok) { console.error(`  refused: ${move.why}`); process.exit(1); }
+  if (!arg(rest, 'read') && !rest.includes('--read')) {
+    console.error(`  ${r.id} ${r.company}`);
+    console.error(`  channel: ${r.primary_channel}  ->  ${r.email?.value || r.contact_page_url}`);
+    console.error(``);
+    console.error(`  Approving means you have READ the drafted message for this account.`);
+    console.error(`  Re-run with --read once you have:`);
+    console.error(`    node tools/enrich.mjs approve ${r.id} --read`);
+    process.exit(1);
+  }
+  r.outreach_state = assertMove(r.outreach_state, 'APPROVED', r.id);
+  r.approved_at = today();
+  save(d);
+  console.log(`  ${r.id} ${r.company}  APPROVED`);
+  console.log(`  channel: ${r.primary_channel}  ->  ${r.email?.value || r.contact_page_url}`);
+  console.log(`  Larry sends it by hand. Then log it:`);
+  console.log(`    node tools/enrich.mjs log ${r.id} --channel=${r.primary_channel === 'EMAIL' ? 'email' : 'form'} --result=sent --touch=1`);
+}
+
+/* ---------------------------------------------------------------- states */
+else if (cmd === 'states') {
+  const d = db(); const g = {};
+  d.forEach(r => { const k = r.outreach_state || '(none)'; (g[k] ||= []).push(r); });
+  console.log(`\n  OUTREACH STATES\n`);
+  for (const st of [...STATES, '(none)']) {
+    if (!g[st]) continue;
+    console.log(`  ${pad(st, 20)}${String(g[st].length).padStart(4)}`);
+    if (g[st].length <= 12 && st !== '(none)')
+      g[st].forEach(r => console.log(`      ${pad(r.id, 6)}${pad(r.company, 34)}${r.primary_channel || ''}`));
+  }
+  console.log(`\n  DRAFT -> AWAITING_APPROVAL -> APPROVED -> SENT -> REPLIED -> MEETING`);
+  console.log(`        -> PROPOSAL -> WON.  No step can be skipped. DO_NOT_CONTACT`);
+  console.log(`  is reachable from anywhere and is final.\n`);
+}
+
 /* ---------------------------------------------------------------- log */
 else if (cmd === 'log') {
   const id = rest.find(a => !a.startsWith('--'));
@@ -114,19 +160,40 @@ else if (cmd === 'log') {
     revenue: Number(arg(rest, 'revenue') || 0),
     note: arg(rest, 'note') || ''
   };
+  /* Work out the state this log entry implies, then ask the machine whether the
+   * move is legal BEFORE writing anything. A send that was never approved, or a
+   * deal that jumps from a reply straight to won, is refused here rather than
+   * quietly recorded. */
+  let target = '';
+  if (entry.result === 'sent') target = 'SENT';
+  if (replyClass || entry.result === 'reply') target = 'REPLIED';
+  if (entry.meeting) target = 'MEETING';
+  if (entry.proposal) target = 'PROPOSAL';
+  if (entry.revenue) target = 'WON';
+  if (entry.result === 'unsubscribe' || replyClass === 'UNSUBSCRIBE') target = 'DO_NOT_CONTACT';
+  if (entry.result === 'not-interested' || replyClass === 'NOT_INTERESTED') target = 'LOST';
+
+  if (target) {
+    const move = canMove(r.outreach_state, target);
+    if (!move.ok) {
+      console.error(`  refused: ${move.why}`);
+      if (target === 'SENT' && r.outreach_state === 'AWAITING_APPROVAL')
+        console.error(`  approve it first:  node tools/enrich.mjs approve ${r.id}`);
+      process.exit(1);
+    }
+  }
+
   const L = log(); L.push(entry); saveLog(L);
 
   if (entry.result === 'sent') {
     if (channel === 'email') r.emails_sent = (r.emails_sent || 0) + 1;
-    r.outreach_state = 'SENT';
     r.first_contact_at ||= entry.date;
   }
   if (replyClass || entry.result === 'reply') {
     r.replies = (r.replies || 0) + 1;
     r.reply_class = replyClass || r.reply_class;
-    r.outreach_state = replyClass === 'UNSUBSCRIBE' ? 'DO_NOT_CONTACT' : 'REPLIED';
   }
-  if (entry.result === 'unsubscribe' || replyClass === 'UNSUBSCRIBE') r.outreach_state = 'DO_NOT_CONTACT';
+  if (target) r.outreach_state = target;
   r.outreach_status = entry.result ? entry.result.toUpperCase() : 'CONTACTED';
   r.last_contact = entry.date;
   if (entry.followup) r.next_follow_up = entry.followup;
@@ -134,7 +201,7 @@ else if (cmd === 'log') {
   if (entry.proposal) r.proposal = true;
   if (entry.revenue) {
     r.revenue = entry.revenue; r.deal_value = entry.revenue;
-    r.outcome = 'WON'; r.outreach_state = 'CLOSED_WON'; r.closed_at = entry.date;
+    r.outcome = 'WON'; r.closed_at = entry.date;
   }
   save(d);
   console.log(`  logged: ${entry.company} / ${entry.channel} / ${entry.result || '(no result)'}${replyClass ? ' / ' + replyClass : ''}`);
@@ -166,7 +233,7 @@ else if (cmd === 'sendorder' || cmd === 'callorder') {
   /* Opt-outs and won accounts are not prospects to write to. An account already
    * written to stays on the list - it still needs touch 2 and touch 3 - but it
    * ranks below everyone nobody has contacted yet. */
-  const DONE = ['DO_NOT_CONTACT', 'CLOSED_WON', 'CLOSED_LOST'];
+  const DONE = ['DO_NOT_CONTACT', 'WON', 'LOST'];
   let d = db().filter(r => r.cohort !== 'HOLDOUT' && !DONE.includes(r.outreach_state));
   if (want) d = d.filter(r => r.cohort.startsWith(want));
   const rank = r => emailReady(r) ? 3 : formReady(r) ? 2 : dmReady(r) ? 1 : 0;
@@ -277,6 +344,12 @@ else {
       channels: ${WRITTEN.join(' | ')} | phone      (email is the default)
       results: sent | no-reply | reply | not-interested | unsubscribe | meeting
       reply classes: ${REPLY_CLASSES.join(' | ')}
+
+  enrich approve <id> --read        AWAITING_APPROVAL -> APPROVED
+      The authorization gate. Nothing can be logged as sent until this runs.
+      One id at a time on purpose - there is no bulk approve.
+
+  enrich states                     every record by outreach state
 
   enrich cohorts                    cohort split and industry mix
   enrich sendorder [--cohort=A|B] [--n=10]   who to write to next
