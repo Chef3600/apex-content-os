@@ -21,7 +21,13 @@ import { recompute, outreachReady } from './contactability.mjs';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const FILE = join(root, 'data/enrichment.json');
 const args = process.argv.slice(2);
-const apply = args.includes('--apply');
+/* --dry-run is the default and is accepted explicitly so the safe spelling of the
+ * command is never a typo that does something else. */
+const apply = args.includes('--apply') && !args.includes('--dry-run');
+if (args.includes('--apply') && args.includes('--dry-run')) {
+  console.error('--apply and --dry-run contradict each other. Pick one.');
+  process.exit(1);
+}
 const csvPath = args.find(a => !a.startsWith('--'));
 if (!csvPath) {
   console.error('usage: node tools/load-batch.mjs <worksheet.csv> [--apply]');
