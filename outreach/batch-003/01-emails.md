@@ -197,7 +197,7 @@ creative — the material a business runs on its site, its ads and its social.
 Our Pilot is $1,500: ten finished assets in three formats, delivered in seven
 business days, half up front.
 
-If your Las Vegas location handles its own marketing, I'd like fifteen minutes
+If this location handles its own marketing, I'd like fifteen minutes
 with whoever runs it.
 
 Larry Hills Jr.
