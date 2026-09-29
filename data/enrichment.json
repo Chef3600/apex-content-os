@@ -172,12 +172,13 @@
   "repeat_purchase": false,
   "retainer_converted": false,
   "primary_channel": "EMAIL",
-  "outreach_state": "AWAITING_APPROVAL",
+  "outreach_state": "APPROVED",
   "contact_page_url": "",
   "form_status": "",
   "emails_sent": 0,
   "replies": 0,
-  "reply_class": ""
+  "reply_class": "",
+  "approved_at": "2026-09-29"
  },
  {
   "id": "p003",
@@ -2872,12 +2873,13 @@
   "repeat_purchase": false,
   "retainer_converted": false,
   "primary_channel": "EMAIL",
-  "outreach_state": "AWAITING_APPROVAL",
+  "outreach_state": "APPROVED",
   "contact_page_url": "",
   "form_status": "",
   "emails_sent": 0,
   "replies": 0,
-  "reply_class": ""
+  "reply_class": "",
+  "approved_at": "2026-09-29"
  },
  {
   "id": "p033",
@@ -4942,12 +4944,13 @@
   "repeat_purchase": false,
   "retainer_converted": false,
   "primary_channel": "EMAIL",
-  "outreach_state": "AWAITING_APPROVAL",
+  "outreach_state": "APPROVED",
   "contact_page_url": "https://smiththerapypartners.com/contact-us/",
   "form_status": "VERIFIED",
   "emails_sent": 0,
   "replies": 0,
-  "reply_class": ""
+  "reply_class": "",
+  "approved_at": "2026-09-29"
  },
  {
   "id": "a056",
@@ -6022,12 +6025,13 @@
   "repeat_purchase": false,
   "retainer_converted": false,
   "primary_channel": "EMAIL",
-  "outreach_state": "AWAITING_APPROVAL",
+  "outreach_state": "APPROVED",
   "contact_page_url": "",
   "form_status": "",
   "emails_sent": 0,
   "replies": 0,
-  "reply_class": ""
+  "reply_class": "",
+  "approved_at": "2026-09-29"
  },
  {
   "id": "a068",
@@ -9892,12 +9896,13 @@
   "repeat_purchase": false,
   "retainer_converted": false,
   "primary_channel": "EMAIL",
-  "outreach_state": "AWAITING_APPROVAL",
+  "outreach_state": "APPROVED",
   "contact_page_url": "https://thegentsplace.com/book-now/",
   "form_status": "VERIFIED",
   "emails_sent": 0,
   "replies": 0,
-  "reply_class": ""
+  "reply_class": "",
+  "approved_at": "2026-09-29"
  },
  {
   "id": "a111",
