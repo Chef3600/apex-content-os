@@ -1,12 +1,40 @@
-# Batch 003 — email drafts
+# Batch 003 — email drafts (revision 2, 2026-09-29)
 
-Send from **hello@apexhospitalitygrouplv.org**. Plain text. No tracking pixel, no
-link shortener — both hurt deliverability from a new domain and neither tells you
-anything you cannot learn from a reply.
+Send from **hello@apexhospitalitygrouplv.org** only. See `outreach/SENDER-SETUP.md`
+— no send is legitimate until Gmail shows that address as a Send-As identity.
+Plain text. No tracking pixel, no link shortener.
+
+## What changed in revision 2, and why
+
+Revision 1 carried a factual claim about the business in four of the five
+emails — a seasonal menu, an opening date, a location count, a neighbourhood and
+a trade. Every one of those traced to a September web search that nobody opened a
+page to confirm.
+
+On 2026-09-29 I tried to confirm them directly. DNS resolves for all five
+domains, but this environment's egress proxy denies the connection (HTTP 403 on
+CONNECT, via both curl and a headless browser). So the claims could not be
+verified, and an unverifiable claim about someone's own business is exactly the
+thing they notice when it is wrong.
+
+**All four claims are removed.** Nothing was invented to replace them. What is
+left is what can actually be stood behind: what Apex does, what the Pilot costs,
+and an honest statement that Apex has not looked at their operation yet. That
+last part is not a weakness in a cold email — it is the part almost nobody else
+is willing to write, and it is checkable in the recipient's favour.
+
+The only verified fact behind every one of these is the recipient address and the
+page it was published on. That is cited per email below.
 
 ---
 
 ## 1. a067 — Center for Aesthetic Medicine → info@camhplv.com
+
+**Verified:** `info@camhplv.com`, published on
+https://www.centerforaestheticmedicine.com/contact/
+**Claims about the business:** none. The category sentence is a statement about
+how aesthetics businesses buy in general, not an assertion about this one.
+**Changed in rev 2:** nothing. This draft never carried a business claim.
 
 **Subject:** Commercial photo + video for Center for Aesthetic Medicine
 
@@ -38,24 +66,30 @@ https://apexhospitalitygrouplv.org
 
 ## 2. p002 — Al Solito Posto → info@alsolito.com
 
-**Subject:** Food photography for Al Solito Posto — from another chef
+**Verified:** `info@alsolito.com`, published on https://alsolito.com/contact-us/
+**Claims about the business:** none.
+**Removed in rev 2:** "a menu that changes with the season" — traced to an
+unverified search note.
+
+**Subject:** Food photography in Las Vegas — from another chef
 
 Hello,
 
 I'm Larry Hills Jr. I'm a chef, and I run Apex Content Studio, a commercial
 content production company in Las Vegas.
 
-I'm reaching out because a menu that changes with the season creates a content
-problem most restaurants never solve: the dishes turn over faster than anyone can
-shoot them, so the best plates on the menu are the ones with no usable picture.
-That is the specific gap we're built for — not a one-off gallery, but production
-that keeps pace with a kitchen.
+I'll be straight with you: I haven't eaten in your dining room and I'm not going
+to pretend I have. I'm writing because I spent years on the line before I did
+this, and the restaurants I work with tend to have the same problem — the food
+is better than the pictures of it, and the pictures are what people decide on.
 
-The Pilot is $1,500 for ten finished assets in three formats, seven business
-days, half up front. For a room that sells on images, it is a cheap way to find
-out whether the photography moves anything.
+What we do is commercial food and beverage production: menu stills, short
+vertical video, the material a room actually runs on.
 
-Worth fifteen minutes? Reply and I'll send what I'd shoot and in what order.
+The Pilot is $1,500 — ten finished assets in three formats, seven business days,
+half up front. Small enough to judge on results rather than on a pitch.
+
+If that's worth fifteen minutes, reply and tell me what you'd want shot first.
 
 Larry Hills Jr.
 Apex Content Studio · Apex Hospitality Group LLC
@@ -66,23 +100,34 @@ https://apexhospitalitygrouplv.org
 
 ## 3. p032 — Estetica Wellness Medical Spa → info@esteticawellness.com
 
-**Subject:** Building a content library from zero
+**Verified:** `info@esteticawellness.com`, published on
+https://www.esteticawellness.com/about
+**Claims about the business:** none.
+**Removed in rev 2:** "A business that opened this year" — traced to the note
+*"Opened March 2026 in Las Vegas."* Attempted to verify on the official site
+2026-09-29; the connection was denied by this environment's network policy, so
+the claim could not be confirmed and the whole argument that rested on it is
+gone. Nothing was invented in its place.
+
+**Subject:** Commercial photo + video, Las Vegas
 
 Hello,
 
 I'm Larry Hills Jr., founder of Apex Content Studio — commercial photography,
-video and campaign creative, based in Las Vegas.
+video and campaign creative, based here in Las Vegas.
 
-A business that opened this year is in the one position where content work pays
-back fastest: there is no library yet, so the first proper shoot fills the site,
-the ads, the social feed and the email list at once. Everything after that is
-maintenance. The first one is the one that matters.
+I'm reaching out cold, and I'd rather be useful than clever about it, so here is
+the offer plainly. Our Pilot is $1,500: ten finished assets across three formats,
+delivered in seven business days, 50% up front. It exists so a business can find
+out what professional production actually does for it without signing up to
+anything ongoing.
 
-Our Pilot is $1,500 — ten finished assets across three formats, seven business
-days, 50% up front. It is deliberately small enough to be a test.
+If you already have someone producing your content, ignore this. If you don't, or
+if what you have isn't earning its place, I'd like fifteen minutes to hear what
+you need and tell you honestly whether we're the right fit.
 
-If you're the right person for this, reply and I'll put together a short plan. If
-not, would you forward it to whoever handles marketing?
+If you're not the right person, would you forward this to whoever handles
+marketing?
 
 Larry Hills Jr.
 Apex Content Studio · Apex Hospitality Group LLC
@@ -93,9 +138,14 @@ https://apexhospitalitygrouplv.org
 
 ## 4. a055 — Smith Therapy Partners → referrals@stplv.com
 
-> **Note before sending:** this is the only email address published on the site,
-> and it reads as a clinical-referral inbox. Expect it to be the wrong desk. The
-> message is written to be forwarded rather than answered directly.
+**Verified:** `referrals@stplv.com`, published on
+https://smiththerapypartners.com/contact-us/
+**Claims about the business:** none.
+**Removed in rev 2:** "a practice with more than one location" — traced to an
+unverified search note.
+**Known weakness, unchanged:** this is the only address published on the site and
+it reads as a clinical-referral inbox on a different domain. Written to be
+forwarded, not answered.
 
 **Subject:** For whoever handles marketing — commercial photo/video
 
@@ -109,14 +159,11 @@ I'm Larry Hills Jr., founder of Apex Content Studio, a commercial content
 production company in Las Vegas. We produce photography, video and campaign
 creative for businesses across the valley.
 
-For a practice with more than one location, the usual problem is that each site
-ends up with a different standard of imagery — some rooms shot properly, some
-shot on a phone years ago. One production pass fixes that across every location
-at once.
+I'm not going to pretend to know what your marketing needs — I haven't seen it.
+What I can tell you is the offer: our Pilot is $1,500 for ten finished assets in
+three formats, delivered in seven business days, half up front.
 
-The Pilot is $1,500: ten finished assets, three formats, seven business days.
-
-Who would be the right person for this?
+Who would be the right person to send that to?
 
 Larry Hills Jr.
 Apex Content Studio · Apex Hospitality Group LLC
@@ -125,31 +172,32 @@ https://apexhospitalitygrouplv.org
 
 ---
 
-## 5. a110 — The Gents Place, Summerlin → book@thegentsplace.com
+## 5. a110 — The Gents Place → book@thegentsplace.com
 
-> **Note before sending:** this is a brand-level booking address, not a
-> Summerlin-specific inbox. It may reach a central desk. The message asks to be
-> routed to whoever owns marketing for the Summerlin location.
+**Verified:** `book@thegentsplace.com`, published on
+https://thegentsplace.com/book-now/
+**Claims about the business:** none.
+**Removed in rev 2:** "the Summerlin location" and the men's-grooming framing —
+both traced to unverified search notes. The record also carries an unsourced
+franchise note, which is not referenced anywhere and never was.
+**Known weakness, unchanged:** this is a brand-level booking address on the root
+domain. It may never reach a local owner.
 
-**Subject:** Commercial content for the Summerlin location
+**Subject:** Commercial photo + video — Las Vegas
 
 Hello,
 
-This came from the booking address on the site — if there's a better contact for
-marketing at the Summerlin location, I'd appreciate a pointer.
+This came from the booking address on your site, so it may well be the wrong
+desk — if there's a better contact for marketing, I'd appreciate a pointer.
 
 I'm Larry Hills Jr., founder of Apex Content Studio, a commercial content
 production company in Las Vegas. We produce photography, video and campaign
-creative.
+creative — the material a business runs on its site, its ads and its social.
 
-Men's grooming is a category that sells on craft and atmosphere, and both are
-things you have to photograph properly to communicate — the room, the detail, the
-finish. Stock imagery actively works against that.
+Our Pilot is $1,500: ten finished assets in three formats, delivered in seven
+business days, half up front.
 
-Our Pilot is $1,500 for ten finished assets in three formats, delivered in seven
-business days.
-
-If the Summerlin location handles its own marketing, I'd like fifteen minutes
+If your Las Vegas location handles its own marketing, I'd like fifteen minutes
 with whoever runs it.
 
 Larry Hills Jr.
